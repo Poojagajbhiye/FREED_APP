@@ -13,7 +13,7 @@ class Background extends StatelessWidget {
       width: SizeConfig.screenWidth,
       height: SizeConfig.screenHeight,
       color: Colors.white,
-      child: Stack(alignment: Alignment.center, children: [
+      child: Stack(children: [
         Positioned(
             top: SizeConfig.safeBlockHorizontal -
                 SizeConfig.safeBlockHorizontal * 25,
