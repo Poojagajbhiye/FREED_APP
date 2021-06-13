@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart' hide Colors;
-import 'package:freed/screen/SignIn.dart';
-import 'package:freed/screen/onBoarding.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/SizeConfig.dart';
-import 'package:simple_animations/simple_animations/controlled_animation.dart';
 
 import 'Background.dart';
 
