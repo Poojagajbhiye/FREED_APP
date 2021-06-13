@@ -159,7 +159,8 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                   height: 40.0,
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(context, '/sign in');
+                                        Navigator.pushNamed(
+                                            context, '/sign in');
                                       },
                                       style: ButtonStyle(
                                           backgroundColor:
@@ -215,94 +216,6 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
               ),
             ))
       ],
-    )
-        //     Column(
-        //   children: [
-        //     Center(
-        //         child: AnimatedOpacity(
-        //       opacity: _visible ? 1.0 : 0.0,
-        //       duration: Duration(microseconds: 900),
-        //       child: RaisedButton(
-        //         child: Text('Show / Hide'),
-        //         onPressed: () {
-        // if (controller.isCompleted) {
-        //   controller.reverse(from: 1.0);
-        //   setState(() {
-        //     _visible = !_visible;
-        //   });
-        // }
-        //         },
-        //       ),
-        //     )),
-        // Expanded(child: Align(
-        //   alignment: Alignment.bottomCenter,
-        //   child: SlideTransition(
-        //     position: offset,
-        //     child: Container(
-        //       height: 150,
-        //       width: double.infinity,
-        //       decoration: BoxDecoration(color: Colors.yellow),
-        //     ),
-        //   ),
-        // ),)
-        //   ],
-        // )
-        // Align(
-        //   alignment: Alignment(0.0, -0.4),
-        //   child: Container(
-        //       height: SizeConfig.safeBlockVertical * 30,
-        //       child: Column(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           Text(
-        //             "FREED",
-        //             textAlign: TextAlign.center,
-        //             style: TextStyle(
-        //                 height: 0.8,
-        //                 letterSpacing: 1.5,
-        //                 fontFamily: 'poppins',
-        //                 fontWeight: FontWeight.w200,
-        //                 fontSize: 58.0,
-        //                 color: Colors.black,
-        //                 decoration: TextDecoration.none),
-        //           ),
-        //           Text(
-        //             "Let's take a legal escape",
-        //             textAlign: TextAlign.center,
-        //             style: TextStyle(
-        //                 letterSpacing: 1.2,
-        //                 fontFamily: 'poppins',
-        //                 fontWeight: FontWeight.w200,
-        //                 fontSize: 20.0,
-        //                 color: Colors.black,
-        //                 decoration: TextDecoration.none),
-        //           ),
-        //           Padding(padding: EdgeInsets.all(15)),
-        //           Container(
-        //             width: SizeConfig.safeBlockHorizontal * 45,
-        //             child: ElevatedButton(
-        //               onPressed: () {
-        //                 Navigator.push(context,
-        //                     MaterialPageRoute(builder: (context) => onBoarding()));
-        //               },
-        //               child: Text(
-        //                 "Let's Go",
-        //                 style: TextStyle(
-        //                     fontFamily: 'roboto',
-        //                     fontWeight: FontWeight.w400,
-        //                     fontSize: 16.0),
-        //               ),
-        //               style: ButtonStyle(
-        //                   backgroundColor: MaterialStateProperty.all(Colors.black),
-        //                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
-        //                       borderRadius: BorderRadius.circular(30.0))),
-        //                   foregroundColor: MaterialStateProperty.all(Colors.white),
-        //                   shadowColor: MaterialStateProperty.all(Colors.black)),
-        //             ),
-        //           )
-        //         ],
-        //       )),
-        // )
-        );
+    ));
   }
 }

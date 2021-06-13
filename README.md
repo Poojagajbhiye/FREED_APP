@@ -1,6 +1,6 @@
 # freed
 
-A new Flutter project.
+Let's take a legal escape.
 
 ## Getting Started
 
