@@ -26,7 +26,9 @@ class SignIn extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 15.0),
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/sign up');
+                      },
                       child: Text(
                         "Register",
                         style: TextStyle(
@@ -48,7 +50,9 @@ class SignIn extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       child: SignInForm(),
-                      height: SizeConfig.screenWidth > 400 ? SizeConfig.safeBlockVertical * 67 : SizeConfig.safeBlockVertical * 70,
+                      height: SizeConfig.screenWidth > 400
+                          ? SizeConfig.safeBlockVertical * 67
+                          : SizeConfig.safeBlockVertical * 70,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -97,7 +101,9 @@ class DoodleImage extends StatelessWidget {
           ),
           Image.asset(
             dancingDoodle,
-            width: SizeConfig.screenWidth > 400 ? SizeConfig.safeBlockHorizontal * 60 : SizeConfig.safeBlockHorizontal * 75,
+            width: SizeConfig.screenWidth > 400
+                ? SizeConfig.safeBlockHorizontal * 60
+                : SizeConfig.safeBlockHorizontal * 75,
           ),
         ],
       ),
@@ -113,7 +119,6 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInForm extends State<SignInForm> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -190,7 +195,9 @@ class _SignInForm extends State<SignInForm> {
             height: SizeConfig.safeBlockVertical * 1.5,
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/sign up');
+              },
               child: Text(
                 "Don't have an account ?",
                 style: TextStyle(
