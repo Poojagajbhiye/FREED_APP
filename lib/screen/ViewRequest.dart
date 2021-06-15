@@ -37,10 +37,12 @@ class ViewRequest extends StatelessWidget {
               child: Column(
                 children: [
                   Header(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  DetailedCard()
+                  SizedBox(height: 15),
+                  DetailedCard(),
+                  SizedBox(height: 20),
+                  ReasonExpendedCard(),
+                  SizedBox(height: 50),
+                  CancelButton(),
                 ],
               ),
             ))
@@ -48,6 +50,78 @@ class ViewRequest extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CancelButton extends StatelessWidget {
+  const CancelButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 35),
+      child: ElevatedButton(
+        onPressed: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            "Cancel Request",
+            style: TextStyle(
+                fontFamily: 'roboto',
+                fontWeight: FontWeight.w400,
+                fontSize: 18.0,
+                color: Colors.default_color),
+          ),
+        ),
+        style: ButtonStyle(
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0))),
+            side: MaterialStateProperty.all(
+                BorderSide(color: Colors.gray, width: 2.0)),
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shadowColor: MaterialStateProperty.all(Colors.transparent)),
+      ),
+    );
+  }
+}
+
+class ReasonExpendedCard extends StatelessWidget {
+  const ReasonExpendedCard({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.gray),
+        child: Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+            title: Text(
+              "Reason for leave",
+              style: TextStyle(
+                  fontFamily: 'roboto',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.0,
+                  color: Colors.black),
+            ),
+            childrenPadding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            children: [
+              Text(
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae.",
+                style: TextStyle(
+                    fontFamily: 'roboto',
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.0,
+                    color: Colors.default_color),
+              )
+            ],
+          ),
+        ));
   }
 }
 
