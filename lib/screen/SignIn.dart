@@ -136,6 +136,9 @@ class _SignInForm extends State<SignInForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Registration No",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -155,6 +158,9 @@ class _SignInForm extends State<SignInForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Password",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -167,7 +173,9 @@ class _SignInForm extends State<SignInForm> {
             margin: EdgeInsets.only(top: 20, bottom: 5),
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/request form');
+              },
               child: Text(
                 "Sign In",
                 style: TextStyle(

@@ -129,6 +129,9 @@ class _SignUpForm extends State<SignUpForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Registration No",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -147,6 +150,9 @@ class _SignUpForm extends State<SignUpForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Email address",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -165,6 +171,9 @@ class _SignUpForm extends State<SignUpForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Password",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -183,6 +192,9 @@ class _SignUpForm extends State<SignUpForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Confirm Password",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -201,6 +213,9 @@ class _SignUpForm extends State<SignUpForm> {
                 style: TextStyle(fontSize: 16.0),
                 decoration: InputDecoration(
                     hintText: "Contact No",
+                    isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -213,7 +228,9 @@ class _SignUpForm extends State<SignUpForm> {
             margin: EdgeInsets.only(top: 30, bottom: 15),
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/dashboard');
+              },
               child: Text(
                 "Sign Up",
                 style: TextStyle(

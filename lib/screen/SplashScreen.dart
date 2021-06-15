@@ -184,7 +184,10 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                   margin: EdgeInsets.only(left: 5.0),
                                   height: 40.0,
                                   child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, '/sign up');
+                                      },
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
