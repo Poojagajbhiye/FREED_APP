@@ -49,6 +49,7 @@ flutter:
   assets:
     - assets/images/RollerSkatingDoodle.png
     - assets/images/DancingDoodle.png
+    - assets/images/SitReadingDoodle.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
