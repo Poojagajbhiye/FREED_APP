@@ -12,6 +12,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _Dashboard extends State<Dashboard> {
+  var top;
+
   Widget draggableSheetInnerContent() {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -172,22 +174,42 @@ class _Dashboard extends State<Dashboard> {
             ),
             Positioned(
               bottom: 0.0,
-              child: Container(
-                width: SizeConfig.screenWidth,
-                height: SizeConfig.blockSizeVertical * 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(45),
-                        topRight: Radius.circular(45)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.shadow,
-                        offset: Offset(0.0, -2.0),
-                        blurRadius: 10.0,
-                      )
-                    ]),
-                child: draggableSheetInnerContent(),
+              top: top,
+              child: GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  setState(() {
+                    if (details.globalPosition.dy <
+                        SizeConfig.blockSizeVertical * 40) {
+                      top = details.globalPosition.dy;
+                      print(top);
+                      if (top < 200) {
+                        Navigator.pushNamed(context, '/expend records')
+                            .then((value) {
+                          setState(() {
+                            top = null;
+                          });
+                        });
+                      }
+                    }
+                  });
+                },
+                child: Container(
+                  width: SizeConfig.screenWidth,
+                  height: SizeConfig.blockSizeVertical * 60,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(45),
+                          topRight: Radius.circular(45)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.shadow,
+                          offset: Offset(0.0, -2.0),
+                          blurRadius: 10.0,
+                        )
+                      ]),
+                  child: draggableSheetInnerContent(),
+                ),
               ),
             )
           ],
