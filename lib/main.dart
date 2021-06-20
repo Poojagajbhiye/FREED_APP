@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:freed/screen/Dashboard.dart';
+import 'package:freed/screen/ExpendedRecords.dart';
 import 'package:freed/screen/RequestForm.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/SignUp.dart';
@@ -20,6 +19,7 @@ void main() {
       '/dashboard': (context) => Dashboard(),
       '/request form': (context) => RequestForm(),
       '/view request': (context) => ViewRequest(),
+      '/expend records': (context) => ExpendedRecords(),
     },
   ));
 }
