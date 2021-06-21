@@ -12,10 +12,11 @@ class ExpendedRecords extends StatefulWidget {
 class _ExpendedRecords extends State<ExpendedRecords> {
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Hero(
+      tag: 'expend',
       child: Container(
-        width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight,
+        width: SizeConfig.safeBlockVertical,
+        height: SizeConfig.safeBlockVertical,
         decoration: BoxDecoration(color: Colors.white),
         child: Column(
           children: [
@@ -89,8 +90,10 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                 child: ListView.builder(
               padding: EdgeInsets.all(0.0),
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text("item : $index"),
+                return Material(
+                  child: ListTile(
+                    title: Text("item : $index"),
+                  ),
                 );
               },
               itemCount: 25,

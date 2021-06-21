@@ -174,7 +174,7 @@ class _SignInForm extends State<SignInForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/request form');
+                Navigator.pushNamed(context, '/dashboard');
               },
               child: Text(
                 "Sign In",

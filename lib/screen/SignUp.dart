@@ -229,7 +229,7 @@ class _SignUpForm extends State<SignUpForm> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/dashboard');
+                Navigator.pushNamed(context, '/sign in');
               },
               child: Text(
                 "Sign Up",
