@@ -55,7 +55,7 @@ class SignUp extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        left: 40, right: 40, top: 20, bottom: 40),
+                        left: 40, right: 40, top: 20, bottom: 50),
                     child: Text(
                       "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
                       textAlign: TextAlign.center,
@@ -108,7 +108,7 @@ class _SignUpForm extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 50, right: 50, top: 30),
+      padding: EdgeInsets.only(left: 50, right: 50, top: 40),
       child: Column(
         children: [
           Text(
@@ -130,29 +130,8 @@ class _SignUpForm extends State<SignUpForm> {
                 decoration: InputDecoration(
                     hintText: "Registration No",
                     isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
-                    hintMaxLines: 1,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(30.0)))),
-          ),
-          Container(
-            height: 45,
-            margin: EdgeInsets.only(top: 20),
-            width: double.infinity,
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLines: 1,
-                style: TextStyle(fontSize: 16.0),
-                decoration: InputDecoration(
-                    hintText: "Email address",
-                    isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -172,8 +151,8 @@ class _SignUpForm extends State<SignUpForm> {
                 decoration: InputDecoration(
                     hintText: "Password",
                     isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
@@ -193,29 +172,8 @@ class _SignUpForm extends State<SignUpForm> {
                 decoration: InputDecoration(
                     hintText: "Confirm Password",
                     isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
-                    hintMaxLines: 1,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(30.0)))),
-          ),
-          Container(
-            height: 45,
-            margin: EdgeInsets.only(top: 20),
-            width: double.infinity,
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLines: 1,
-                style: TextStyle(fontSize: 16.0),
-                decoration: InputDecoration(
-                    hintText: "Contact No",
-                    isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                     hintMaxLines: 1,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0)),
