@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter/rendering.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
@@ -119,103 +120,140 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInForm extends State<SignInForm> {
+  final loginKey = GlobalKey<FormState>();
+
+  TextEditingController _rid = TextEditingController();
+  TextEditingController _pass = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          top: SizeConfig.safeBlockVertical * 20, left: 50, right: 50),
-      child: Column(
-        children: [
-          Container(
-            height: 45,
-            width: double.infinity,
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLines: 1,
-                style: TextStyle(fontSize: 16.0),
-                decoration: InputDecoration(
-                    hintText: "Registration No",
-                    isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
-                    hintMaxLines: 1,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(30.0)))),
-          ),
-          Container(
-            height: 62,
-            margin: EdgeInsets.only(top: 20),
-            width: double.infinity,
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                maxLines: 1,
-                maxLength: 6,
-                style: TextStyle(fontSize: 16.0),
-                decoration: InputDecoration(
-                    hintText: "Password",
-                    isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 15.0),
-                    hintMaxLines: 1,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 1.5),
-                        borderRadius: BorderRadius.circular(30.0)))),
-          ),
-          Container(
-            height: 45,
-            margin: EdgeInsets.only(top: 20, bottom: 5),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/dashboard');
-              },
-              child: Text(
-                "Sign In",
-                style: TextStyle(
-                    fontFamily: 'roboto',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0),
-              ),
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+    return Form(
+      key: loginKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: SizeConfig.safeBlockVertical * 20, left: 50, right: 50),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "*field required";
+                    } else if (!value.toUpperCase().contains("UG")) {
+                      return "please enter valid id";
+                    }
+                    return null;
+                  },
+                  controller: _rid,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.text,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 16.0),
+                  decoration: InputDecoration(
+                      hintText: "Registration No",
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 15.0),
+                      hintMaxLines: 1,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 1.5),
+                          borderRadius: BorderRadius.circular(30.0)))),
             ),
-          ),
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "Forgot Password ?",
-                style: TextStyle(
-                    fontFamily: 'robot',
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.default_color),
-              )),
-          SizedBox(
-            height: SizeConfig.safeBlockVertical * 1.5,
-          ),
-          TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/sign up');
-              },
-              child: Text(
-                "Don't have an account ?",
-                style: TextStyle(
-                    fontFamily: 'robot',
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.default_color),
-              ))
-        ],
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: double.infinity,
+              child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return "*required field";
+                    } else if (value.length < 6) {
+                      return "please enter min 6 char.";
+                    }
+                    return null;
+                  },
+                  controller: _pass,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 16.0),
+                  decoration: InputDecoration(
+                      hintText: "Password",
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 15.0),
+                      hintMaxLines: 1,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.black, width: 1.5),
+                          borderRadius: BorderRadius.circular(30.0)))),
+            ),
+            Container(
+              height: 45,
+              margin: EdgeInsets.only(top: 25, bottom: 5),
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  var isvalid = loginKey.currentState.validate();
+                  if (isvalid) {
+                    String id = _rid.text;
+                    String pass = _pass.text;
+
+                    _loginControler(id, pass);
+                  }
+                },
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0),
+                ),
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(30.0)))),
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+              ),
+            ),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Forgot Password ?",
+                  style: TextStyle(
+                      fontFamily: 'robot',
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.default_color),
+                )),
+            SizedBox(
+              height: SizeConfig.safeBlockVertical * 1.5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/sign up');
+                },
+                child: Text(
+                  "Don't have an account ?",
+                  style: TextStyle(
+                      fontFamily: 'robot',
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.default_color),
+                ))
+          ],
+        ),
       ),
     );
+  }
+
+  void _loginControler(String id, String pass) {
+    print("$id, $pass");
   }
 }
