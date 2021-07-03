@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:freed/model/SignUpResponse.dart';
+import 'package:freed/services/ApiClient.dart';
 import 'package:freed/value/Colors.dart';
 
 class SignUp extends StatelessWidget {
@@ -133,7 +136,7 @@ class _SignUpForm extends State<SignUpForm> {
               child: TextFormField(
                   controller: _rid,
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return "*required field";
                     } else if (!value.toUpperCase().contains("UG")) {
                       return "please enter valid id";
@@ -163,7 +166,7 @@ class _SignUpForm extends State<SignUpForm> {
               child: TextFormField(
                   controller: _pass,
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return "*required field";
                     } else if (value.length < 6) {
                       return "please enter min 6 char.";
@@ -194,7 +197,7 @@ class _SignUpForm extends State<SignUpForm> {
               child: TextFormField(
                   textAlign: TextAlign.center,
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return "*required field";
                     } else if (value != password) {
                       return "password does't match";
@@ -223,11 +226,11 @@ class _SignUpForm extends State<SignUpForm> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  var isvalid = signupKey.currentState.validate();
-                  if (isvalid) {
+                  var isvalid = signupKey.currentState?.validate();
+                  if (isvalid!) {
                     String id = _rid.text;
                     String pass = _pass.text;
-                    _signUpControler(id, pass);
+                    _signUpControler(context, id, pass);
                   }
                 },
                 child: Text(
@@ -262,7 +265,22 @@ class _SignUpForm extends State<SignUpForm> {
     );
   }
 
-  void _signUpControler(String id, String pass) {
+  void _signUpControler(BuildContext context, String id, String pass) {
     print("$id, $pass");
+    Map<String, dynamic> reqData = {"RID": id, "password": pass};
+    // FutureBuilder<SignUpResponse> _builtBody(context) {
+    //   print("cksjcs");
+    // final client = ApiClient(dio);
+    // FutureBuilder<SignUpResponse>(
+    //     future: client.requestSignUp(reqData),
+    //     builder: (context, snapshot) {
+    //       final SignUpResponse? res = snapshot.data;
+    //       print(res);
+    //       throw ("somthing was wrong!!");
+    //     });
+    ApiClient.getServices().requestSignUp(reqData).then((value) {
+      SignUpResponse response = signUpResponseFromJson(value);
+      print(response.msg);
+    });
   }
 }

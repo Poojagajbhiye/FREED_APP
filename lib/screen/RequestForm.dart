@@ -11,8 +11,8 @@ class RequestForm extends StatefulWidget {
 }
 
 class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
-  AnimationController controller, reqStatusCtrl;
-  Animation<Offset> offset, reqStatusOffset;
+  AnimationController? controller, reqStatusCtrl;
+  Animation<Offset>? offset, reqStatusOffset;
   bool _visible = true;
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 2.5))
-        .animate(controller);
+        .animate(controller!);
   }
 
   Widget leaveRequestForm() {
@@ -190,8 +190,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                if (controller.isDismissed) {
-                  controller.forward();
+                if (controller!.isDismissed) {
+                  controller!.forward();
                 }
                 setState(() {
                   _visible = !_visible;
@@ -338,7 +338,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                   child: Container(
                     child: _reqStatusContainer(),
                     width: SizeConfig.screenWidth,
-                    height: SizeConfig.safeBlockVertical * 50,
+                    height: SizeConfig.safeBlockVertical! * 50,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -356,8 +356,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                 Align(
                     alignment: Alignment(1.0, -0.3),
                     child: Container(
-                      width: SizeConfig.safeBlockHorizontal * 60,
-                      height: SizeConfig.safeBlockHorizontal * 50,
+                      width: SizeConfig.safeBlockHorizontal! * 60,
+                      height: SizeConfig.safeBlockHorizontal! * 50,
                       child: Image.asset(sitReadingDoodle),
                     )),
                 Column(
@@ -383,7 +383,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: SlideTransition(
-                          position: offset,
+                          position: offset!,
                           child: Container(
                             child: leaveRequestForm(),
                             width: double.infinity,

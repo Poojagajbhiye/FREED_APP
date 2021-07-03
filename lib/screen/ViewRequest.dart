@@ -55,7 +55,7 @@ class ViewRequest extends StatelessWidget {
 
 class CancelButton extends StatelessWidget {
   const CancelButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -90,7 +90,7 @@ class CancelButton extends StatelessWidget {
 
 class ReasonExpendedCard extends StatelessWidget {
   const ReasonExpendedCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -127,7 +127,7 @@ class ReasonExpendedCard extends StatelessWidget {
 
 class DetailedCard extends StatelessWidget {
   const DetailedCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -214,7 +214,7 @@ class DetailedCard extends StatelessWidget {
 
 class Header extends StatelessWidget {
   const Header({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

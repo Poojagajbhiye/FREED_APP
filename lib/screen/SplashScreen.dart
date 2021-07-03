@@ -12,8 +12,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
-  AnimationController controller;
-  Animation<Offset> offset;
+  AnimationController? controller;
+  Animation<Offset>? offset;
   bool _visible = true;
 
   @override
@@ -25,8 +25,8 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
 
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 5.0))
-        .animate(controller);
-    controller.forward(from: 0.0);
+        .animate(controller!);
+    controller?.forward(from: 0.0);
   }
 
   @override
@@ -37,7 +37,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
         child: Column(
       children: [
         SizedBox(
-          height: SizeConfig.safeBlockVertical * 15,
+          height: SizeConfig.safeBlockVertical! * 15,
         ),
         Expanded(
           child: Align(
@@ -71,14 +71,14 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                   ),
                   Padding(padding: EdgeInsets.all(15)),
                   Container(
-                      width: SizeConfig.safeBlockHorizontal * 45,
+                      width: SizeConfig.safeBlockHorizontal! * 45,
                       child: AnimatedOpacity(
                         opacity: _visible ? 1.0 : 0.0,
                         duration: Duration(seconds: 1),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (controller.isCompleted) {
-                              controller.reverse(from: 1.0);
+                            if (controller!.isCompleted) {
+                              controller?.reverse(from: 1.0);
                               setState(() {
                                 _visible = !_visible;
                               });
@@ -110,9 +110,9 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
         Align(
             alignment: Alignment.bottomCenter,
             child: SlideTransition(
-              position: offset,
+              position: offset!,
               child: Container(
-                height: SizeConfig.safeBlockVertical * 50,
+                height: SizeConfig.safeBlockVertical! * 50,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.yellow,

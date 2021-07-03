@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
+import 'package:freed/services/ApiClient.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
-
-// class SignIn extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _SignIn();
-//   }
-// }
+import 'package:freed/model/LoginResponse.dart';
 
 class SignIn extends StatelessWidget {
   @override
@@ -51,9 +46,9 @@ class SignIn extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       child: SignInForm(),
-                      height: SizeConfig.screenWidth > 400
-                          ? SizeConfig.safeBlockVertical * 67
-                          : SizeConfig.safeBlockVertical * 70,
+                      height: SizeConfig.screenWidth! > 400
+                          ? SizeConfig.safeBlockVertical! * 67
+                          : SizeConfig.safeBlockVertical! * 70,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -102,9 +97,9 @@ class DoodleImage extends StatelessWidget {
           ),
           Image.asset(
             dancingDoodle,
-            width: SizeConfig.screenWidth > 400
-                ? SizeConfig.safeBlockHorizontal * 60
-                : SizeConfig.safeBlockHorizontal * 75,
+            width: SizeConfig.screenWidth! > 400
+                ? SizeConfig.safeBlockHorizontal! * 60
+                : SizeConfig.safeBlockHorizontal! * 75,
           ),
         ],
       ),
@@ -132,14 +127,14 @@ class _SignInForm extends State<SignInForm> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Padding(
         padding: EdgeInsets.only(
-            top: SizeConfig.safeBlockVertical * 20, left: 50, right: 50),
+            top: SizeConfig.safeBlockVertical! * 20, left: 50, right: 50),
         child: Column(
           children: [
             Container(
               width: double.infinity,
               child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return "*field required";
                     } else if (!value.toUpperCase().contains("UG")) {
                       return "please enter valid id";
@@ -169,7 +164,7 @@ class _SignInForm extends State<SignInForm> {
               width: double.infinity,
               child: TextFormField(
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value == null) {
                       return "*required field";
                     } else if (value.length < 6) {
                       return "please enter min 6 char.";
@@ -200,8 +195,8 @@ class _SignInForm extends State<SignInForm> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  var isvalid = loginKey.currentState.validate();
-                  if (isvalid) {
+                  var isvalid = loginKey.currentState?.validate();
+                  if (isvalid!) {
                     String id = _rid.text;
                     String pass = _pass.text;
 
@@ -217,8 +212,7 @@ class _SignInForm extends State<SignInForm> {
                 ),
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(30.0)))),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)))),
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
               ),
             ),
@@ -233,7 +227,7 @@ class _SignInForm extends State<SignInForm> {
                       color: Colors.default_color),
                 )),
             SizedBox(
-              height: SizeConfig.safeBlockVertical * 1.5,
+              height: SizeConfig.safeBlockVertical! * 1.5,
             ),
             TextButton(
                 onPressed: () {
@@ -255,5 +249,12 @@ class _SignInForm extends State<SignInForm> {
 
   void _loginControler(String id, String pass) {
     print("$id, $pass");
+    Map<String, dynamic> reqdata = {"RID": id, "password": pass};
+
+    ApiClient.getServices().requestLogin(reqdata).then((value) {
+      LoginResponse response = loginResponseFromJson(value);
+
+      print(response.msg);
+    });
   }
 }

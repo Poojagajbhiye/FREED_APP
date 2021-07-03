@@ -180,7 +180,7 @@ class _Dashboard extends State<Dashboard> {
               onVerticalDragUpdate: (details) {
                 setState(() {
                   if (details.globalPosition.dy <
-                      SizeConfig.blockSizeVertical * 40) {
+                      SizeConfig.blockSizeVertical! * 40) {
                     top = details.globalPosition.dy;
                     print(top);
                     if (top < 300) {
@@ -198,7 +198,7 @@ class _Dashboard extends State<Dashboard> {
                 tag: 'expend',
                 child: Container(
                   width: SizeConfig.screenWidth,
-                  height: SizeConfig.blockSizeVertical * 60,
+                  height: SizeConfig.blockSizeVertical! * 60,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
