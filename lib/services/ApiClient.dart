@@ -18,4 +18,8 @@ abstract class ApiClient {
   //student login
   @POST('api/auth/login/student')
   Future<String> requestLogin(@Body() Map<String, dynamic> map);
+
+  //get info from token
+  @POST('api/auth/spread_token')
+  Future<String> tokenDecodeRequest(@Header('x-leave-auth-token') String token);
 }
