@@ -22,4 +22,8 @@ abstract class ApiClient {
   //get info from token
   @POST('api/auth/spread_token')
   Future<String> tokenDecodeRequest(@Header('x-leave-auth-token') String token);
+
+  //student new leave request
+  @POST('api/records/new')
+  Future<String> newLeaveRequest(@Body() Map<String, dynamic> requestBody);
 }
