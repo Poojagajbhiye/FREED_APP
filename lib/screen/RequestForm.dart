@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
+import 'package:intl/intl.dart';
 
 class RequestForm extends StatefulWidget {
   @override
@@ -14,6 +15,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   AnimationController? controller, reqStatusCtrl;
   Animation<Offset>? offset, reqStatusOffset;
   bool _visible = true;
+  DateTime? pickedToDate, pickedFromDate;
+  String? formatToDate, formatFromDate;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -26,206 +30,234 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   }
 
   Widget leaveRequestForm() {
-    return Padding(
-      padding: EdgeInsets.only(left: 35, right: 35, top: 30),
-      child: Column(
-        children: [
-          Text(
-            "Escape Request Form",
-            style: TextStyle(
-                fontFamily: 'roboto',
-                fontWeight: FontWeight.w700,
-                fontSize: 20),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Row(
+    return ListView(
+      padding: EdgeInsets.all(0.0),
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 35, right: 35, top: 30),
+          child: Column(
             children: [
-              Expanded(
-                  child: Container(
-                height: 45,
-                width: double.infinity,
-                child: TextFormField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.datetime,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 16.0),
-                    decoration: InputDecoration(
-                        hintText: "Out Date",
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        hintMaxLines: 1,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(4.0)))),
-              )),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Container(
-                height: 45,
-                width: double.infinity,
-                child: TextFormField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.datetime,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 16.0),
-                    decoration: InputDecoration(
-                        hintText: "In Date",
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        hintMaxLines: 1,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(4.0)))),
-              ))
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: Container(
-                height: 45,
-                width: double.infinity,
-                child: TextFormField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.text,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 16.0),
-                    decoration: InputDecoration(
-                        hintText: "To",
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        hintMaxLines: 1,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(4.0)))),
-              )),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Container(
-                height: 45,
-                width: double.infinity,
-                child: TextFormField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.text,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 16.0),
-                    decoration: InputDecoration(
-                        hintText: "From",
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        hintMaxLines: 1,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5),
-                            borderRadius: BorderRadius.circular(4.0)))),
-              ))
-            ],
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Container(
-            width: double.infinity,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Reason for escape",
-                  style: TextStyle(
-                      fontFamily: 'roboto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      color: Colors.black),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  child: TextFormField(
-                    maxLines: 5,
-                    maxLength: 250,
-                    style: TextStyle(fontSize: 16.0),
-                    decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0)),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 1.5))),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 45,
-            margin: EdgeInsets.only(top: 30, bottom: 15, right: 15, left: 15),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (controller!.isDismissed) {
-                  controller!.forward();
-                }
-                setState(() {
-                  _visible = !_visible;
-                });
-              },
-              child: Text(
-                "Process Request",
+              Text(
+                "Escape Request Form",
                 style: TextStyle(
                     fontFamily: 'roboto',
                     fontWeight: FontWeight.w700,
-                    fontSize: 18.0),
+                    fontSize: 20),
               ),
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)))),
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
-            ),
+              SizedBox(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    child: TextFormField(
+                        onTap: () async {
+                          DateTime? pickedDate = await _toDatePicker();
+
+                          if (pickedDate != null) {
+                            formatToDate =
+                                DateFormat('dd MMM').format(pickedDate);
+                            setState(() {
+                              pickedToDate = pickedDate;
+                            });
+                          }
+                        },
+                        controller: TextEditingController(
+                            text: formatToDate != null ? formatToDate : null),
+                        textAlign: TextAlign.center,
+                        readOnly: true,
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "To",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(4.0)))),
+                  )),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Expanded(
+                      child: Container(
+                    height: 45,
+                    width: double.infinity,
+                    child: TextFormField(
+                        onTap: () async {
+                          DateTime? pickedDate = await _fromDatePicker();
+
+                          if (pickedDate != null) {
+                            formatFromDate =
+                                DateFormat('dd MMM').format(pickedDate);
+                            setState(() {
+                              pickedFromDate = pickedDate;
+                            });
+                          }
+                        },
+                        controller: TextEditingController(
+                            text:
+                                formatFromDate != null ? formatFromDate : null),
+                        textAlign: TextAlign.center,
+                        readOnly: true,
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "From",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(4.0)))),
+                  ))
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 45,
+                width: double.infinity,
+                child: TextFormField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.text,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 16.0),
+                    decoration: InputDecoration(
+                        hintText: "Destination",
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        hintMaxLines: 1,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.5),
+                            borderRadius: BorderRadius.circular(4.0)))),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Reason for escape",
+                      style: TextStyle(
+                          fontFamily: 'roboto',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.0,
+                          color: Colors.black),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      child: TextFormField(
+                        maxLines: 5,
+                        maxLength: 250,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0),
+                                borderSide: BorderSide(
+                                    color: Colors.black, width: 1.5))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 45,
+                margin:
+                    EdgeInsets.only(top: 30, bottom: 15, right: 15, left: 15),
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (controller!.isDismissed) {
+                      controller!.forward();
+                    }
+                    setState(() {
+                      _visible = !_visible;
+                    });
+                  },
+                  child: Text(
+                    "Process Request",
+                    style: TextStyle(
+                        fontFamily: 'roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0),
+                  ),
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0)))),
+                      backgroundColor: MaterialStateProperty.all(Colors.black)),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/view request');
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontFamily: 'robot',
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.default_color),
+                ),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/view request');
-            },
-            child: Text(
-              "Cancel",
-              style: TextStyle(
-                  fontFamily: 'robot',
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.default_color),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  _toDatePicker() async {
+    DateTime? dateTime = await showDatePicker(
+        context: context,
+        initialDate: pickedToDate ?? DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(DateTime.now().year + 2));
+    if (dateTime != null) {
+      return dateTime;
+    }
+  }
+
+  _fromDatePicker() async {
+    DateTime? dateTime = await showDatePicker(
+        context: context,
+        initialDate: pickedToDate ?? DateTime.now(),
+        firstDate: pickedToDate ?? DateTime.now(),
+        lastDate: DateTime(DateTime.now().year + 2));
+    if (dateTime != null) {
+      return dateTime;
+    }
   }
 
   Widget _reqStatusContainer() {
