@@ -1,8 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
+import 'package:freed/model/RecordListModel.dart';
+import 'package:freed/services/ApiClient.dart';
+import 'package:freed/storage/TempStorage.dart';
+import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
+import 'package:intl/intl.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -13,51 +19,14 @@ class Dashboard extends StatefulWidget {
 
 class _Dashboard extends State<Dashboard> {
   var top;
+  List<Record>? recordList;
 
-  Widget draggableSheetInnerContent() {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 35,
-              child: Opacity(
-                opacity: 0.1,
-                child: Icon(
-                  Icons.drag_handle,
-                  size: 25.0,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 20.0, top: 5.0),
-              child: Text(
-                "Escape Records",
-                style: TextStyle(
-                    fontFamily: 'roboto',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20.0,
-                    decoration: TextDecoration.none,
-                    color: Colors.black),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(0.0),
-                itemBuilder: (context, index) {
-                  return Material(
-                    child: ListTile(
-                      title: Text("item : $index"),
-                    ),
-                  );
-                },
-                itemCount: 25,
-              ),
-            ),
-          ],
-        ));
+  @override
+  void initState() {
+    super.initState();
+
+    //fatch student records from api
+    this._getRecordList();
   }
 
   @override
@@ -219,5 +188,108 @@ class _Dashboard extends State<Dashboard> {
         ],
       ),
     );
+  }
+
+  Widget draggableSheetInnerContent() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 35,
+            child: Opacity(
+              opacity: 0.1,
+              child: Icon(
+                Icons.drag_handle,
+                size: 25.0,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 20.0, top: 5.0),
+            child: Text(
+              "Escape Records",
+              style: TextStyle(
+                  fontFamily: 'roboto',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20.0,
+                  decoration: TextDecoration.none,
+                  color: Colors.black),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: recordList == null ? 0 : recordList?.length,
+              padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              itemBuilder: (context, index) {
+                DateTime? date = recordList![index].from;
+                String formatedDate =
+                    DateFormat("dd MMM yyyy").format(date!);
+                return Card(
+                  elevation: 0.0,
+                  child: Container(
+                    height: 65.0,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 25.0),
+                    decoration: BoxDecoration(
+                        color: Colors.gray,
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          formatedDate,
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              fontFamily: 'roboto',
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "View",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black),
+                            ))
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _getRecordList() async {
+    String sid = await TempStorage.getUserId();
+
+    try {
+      var response = await ApiClient.getServices().getStudentRecords(sid);
+
+      if (response.isNotEmpty) {
+        RecordListModel recordListModel = recordListModelFromJson(response);
+        bool? isSuccess = recordListModel.success;
+        List<Record>? list = recordListModel.records;
+
+        if (isSuccess!) {
+          setState(() {
+            recordList = list;
+          });
+        }
+      }
+    } catch (e) {
+      var err = e as DioError;
+      var error = DioExceptions.fromDioError(err).toString();
+      print(error);
+    }
   }
 }

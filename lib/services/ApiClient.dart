@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:retrofit/http.dart';
 part 'ApiClient.g.dart';
 
@@ -26,4 +27,8 @@ abstract class ApiClient {
   //student new leave request
   @POST('api/records/new')
   Future<String> newLeaveRequest(@Body() Map<String, dynamic> requestBody);
+
+  //get student records
+  @GET('api/records/sid/{sid}')
+  Future<String> getStudentRecords(@Path("sid") String studentId);
 }
