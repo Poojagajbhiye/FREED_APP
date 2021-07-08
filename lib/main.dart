@@ -18,7 +18,7 @@ void main() {
       '/sign up': (context) => SignUp(),
       '/dashboard': (context) => Dashboard(),
       '/request form': (context) => RequestForm(),
-      '/view request': (context) => ViewRequest(),
+      // '/view request': (context) => ViewRequest(),
       '/expend records': (context) => ExpendedRecords(),
     },
   ));

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/value/Colors.dart';
 
 class ViewRequest extends StatelessWidget {
+  final recordId;
+
+  ViewRequest({Key? key, @required this.recordId}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Material(

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
 import 'package:freed/model/RecordListModel.dart';
+import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -224,9 +225,10 @@ class _Dashboard extends State<Dashboard> {
               itemCount: recordList == null ? 0 : recordList?.length,
               padding: EdgeInsets.only(left: 5.0, right: 5.0),
               itemBuilder: (context, index) {
-                DateTime? date = recordList![index].from;
-                String formatedDate =
-                    DateFormat("dd MMM yyyy").format(date!);
+                Record record = recordList![index];
+                DateTime? date = record.from;
+                String formatedDate = DateFormat("dd MMM yyyy").format(date!);
+                String? _recordId = record.id;
                 return Card(
                   elevation: 0.0,
                   child: Container(
@@ -248,7 +250,13 @@ class _Dashboard extends State<Dashboard> {
                               color: Colors.black),
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ViewRequest(recordId: _recordId)));
+                            },
                             child: Text(
                               "View",
                               style: TextStyle(
