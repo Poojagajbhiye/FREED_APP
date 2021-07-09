@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
 import 'package:freed/model/RecordListModel.dart';
+import 'package:freed/screen/ExpendedRecords.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
@@ -21,6 +22,7 @@ class Dashboard extends StatefulWidget {
 class _Dashboard extends State<Dashboard> {
   var top;
   List<Record>? recordList;
+  String? sid;
 
   @override
   void initState() {
@@ -154,8 +156,11 @@ class _Dashboard extends State<Dashboard> {
                     top = details.globalPosition.dy;
                     print(top);
                     if (top < 300) {
-                      Navigator.pushNamed(context, '/expend records')
-                          .then((value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ExpendedRecords(sid: sid),
+                          )).then((value) {
                         setState(() {
                           top = null;
                         });
@@ -278,10 +283,10 @@ class _Dashboard extends State<Dashboard> {
   }
 
   _getRecordList() async {
-    String sid = await TempStorage.getUserId();
+    String _sid = await TempStorage.getUserId();
 
     try {
-      var response = await ApiClient.getServices().getStudentRecords(sid);
+      var response = await ApiClient.getServices().getStudentRecords(_sid);
 
       if (response.isNotEmpty) {
         RecordListModel recordListModel = recordListModelFromJson(response);
@@ -291,6 +296,7 @@ class _Dashboard extends State<Dashboard> {
         if (isSuccess!) {
           setState(() {
             recordList = list;
+            sid = _sid;
           });
         }
       }

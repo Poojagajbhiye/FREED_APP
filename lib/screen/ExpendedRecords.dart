@@ -1,15 +1,35 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:freed/model/RecordListModel.dart';
+import 'package:freed/screen/ViewRequest.dart';
+import 'package:freed/services/ApiClient.dart';
+import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/SizeConfig.dart';
+import 'package:intl/intl.dart';
 
 class ExpendedRecords extends StatefulWidget {
+  final sid;
+
+  ExpendedRecords({Key? key, @required this.sid}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _ExpendedRecords();
+    return _ExpendedRecords(sid);
   }
 }
 
 class _ExpendedRecords extends State<ExpendedRecords> {
+  List<Record>? recordList;
+  String? sid;
+
+  _ExpendedRecords(this.sid);
+
+  @override
+  void initState() {
+    this._getRecordList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Hero(
@@ -87,20 +107,82 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                   ],
                 )),
             Expanded(
-                child: ListView.builder(
-              padding: EdgeInsets.all(0.0),
-              itemBuilder: (context, index) {
-                return Material(
-                  child: ListTile(
-                    title: Text("item : $index"),
-                  ),
-                );
-              },
-              itemCount: 25,
-            ))
+              child: ListView.builder(
+                itemCount: recordList == null ? 0 : recordList?.length,
+                padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                itemBuilder: (context, index) {
+                  Record record = recordList![index];
+                  DateTime? date = record.from;
+                  String formatedDate = DateFormat("dd MMM yyyy").format(date!);
+                  String? _recordId = record.id;
+                  return Card(
+                    elevation: 0.0,
+                    child: Container(
+                      height: 65.0,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      decoration: BoxDecoration(
+                          color: Colors.gray,
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            formatedDate,
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            ViewRequest(recordId: _recordId)));
+                              },
+                              child: Text(
+                                "View",
+                                style: TextStyle(
+                                    fontFamily: 'roboto',
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ))
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  _getRecordList() async {
+    try {
+      var response = await ApiClient.getServices().getStudentRecords(sid!);
+
+      if (response.isNotEmpty) {
+        RecordListModel recordListModel = recordListModelFromJson(response);
+        bool? isSuccess = recordListModel.success;
+        List<Record>? list = recordListModel.records;
+
+        if (isSuccess!) {
+          setState(() {
+            recordList = list;
+          });
+        }
+      }
+    } catch (e) {
+      var err = e as DioError;
+      var error = DioExceptions.fromDioError(err).toString();
+      print(error);
+    }
   }
 }
