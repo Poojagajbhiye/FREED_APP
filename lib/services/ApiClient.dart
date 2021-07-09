@@ -31,4 +31,8 @@ abstract class ApiClient {
   //get student records
   @GET('api/records/sid/{sid}')
   Future<String> getStudentRecords(@Path("sid") String studentId);
+
+  //get particuler record
+  @GET('api/records/{recordId}')
+  Future<String> getParticulerRecord(@Path("recordId") String recordId);
 }
