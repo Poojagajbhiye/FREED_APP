@@ -11,6 +11,7 @@ import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _Dashboard extends State<Dashboard> {
   var top;
   List<Record>? recordList;
   String? sid;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -226,7 +228,7 @@ class _Dashboard extends State<Dashboard> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: _isLoading? _loadingEffect() : ListView.builder(
               itemCount: recordList == null ? 0 : recordList?.length,
               padding: EdgeInsets.only(left: 5.0, right: 5.0),
               itemBuilder: (context, index) {
@@ -295,6 +297,7 @@ class _Dashboard extends State<Dashboard> {
 
         if (isSuccess!) {
           setState(() {
+            _isLoading = false;
             recordList = list;
             sid = _sid;
           });
@@ -302,8 +305,32 @@ class _Dashboard extends State<Dashboard> {
       }
     } catch (e) {
       var err = e as DioError;
+      setState(() {
+        _isLoading = false;
+      });
       var error = DioExceptions.fromDioError(err).toString();
       print(error);
     }
+  }
+
+  Widget _loadingEffect() {
+    return Shimmer.fromColors(
+      child: ListView.builder(
+          padding: EdgeInsets.symmetric(horizontal: 5.0),
+          itemCount: 6,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 0.0,
+              child: Container(
+                height: 65.0,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              ),
+            );
+          }),
+      baseColor: Colors.gray,
+      highlightColor: Color(0xFFD0D0D0),
+      enabled: _isLoading,
+    );
   }
 }

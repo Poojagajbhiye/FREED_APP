@@ -7,6 +7,7 @@ import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/SizeConfig.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ExpendedRecords extends StatefulWidget {
   final sid;
@@ -21,6 +22,7 @@ class ExpendedRecords extends StatefulWidget {
 class _ExpendedRecords extends State<ExpendedRecords> {
   List<Record>? recordList;
   String? sid;
+  bool isLoading = true;
 
   _ExpendedRecords(this.sid);
 
@@ -107,56 +109,60 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                   ],
                 )),
             Expanded(
-              child: ListView.builder(
-                itemCount: recordList == null ? 0 : recordList?.length,
-                padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                itemBuilder: (context, index) {
-                  Record record = recordList![index];
-                  DateTime? date = record.from;
-                  String formatedDate = DateFormat("dd MMM yyyy").format(date!);
-                  String? _recordId = record.id;
-                  return Card(
-                    elevation: 0.0,
-                    child: Container(
-                      height: 65.0,
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 25.0),
-                      decoration: BoxDecoration(
-                          color: Colors.gray,
-                          borderRadius: BorderRadius.circular(10.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            formatedDate,
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w300,
-                                color: Colors.black),
+              child: isLoading
+                  ? _loadingEffect()
+                  : ListView.builder(
+                      itemCount: recordList == null ? 0 : recordList?.length,
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                      itemBuilder: (context, index) {
+                        Record record = recordList![index];
+                        DateTime? date = record.from;
+                        String formatedDate =
+                            DateFormat("dd MMM yyyy").format(date!);
+                        String? _recordId = record.id;
+                        return Card(
+                          elevation: 0.0,
+                          child: Container(
+                            height: 65.0,
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(horizontal: 25.0),
+                            decoration: BoxDecoration(
+                                color: Colors.gray,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  formatedDate,
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontFamily: 'roboto',
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ViewRequest(
+                                                      recordId: _recordId)));
+                                    },
+                                    child: Text(
+                                      "View",
+                                      style: TextStyle(
+                                          fontFamily: 'roboto',
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black),
+                                    ))
+                              ],
+                            ),
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            ViewRequest(recordId: _recordId)));
-                              },
-                              child: Text(
-                                "View",
-                                style: TextStyle(
-                                    fontFamily: 'roboto',
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
-                              ))
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             )
           ],
         ),
@@ -175,14 +181,39 @@ class _ExpendedRecords extends State<ExpendedRecords> {
 
         if (isSuccess!) {
           setState(() {
+            isLoading = false;
             recordList = list;
           });
         }
       }
     } catch (e) {
       var err = e as DioError;
+      setState(() {
+        isLoading = false;
+      });
       var error = DioExceptions.fromDioError(err).toString();
       print(error);
     }
+  }
+
+  Widget _loadingEffect() {
+    return Shimmer.fromColors(
+      child: ListView.builder(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          itemCount: 8,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 0.0,
+              child: Container(
+                height: 65.0,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+              ),
+            );
+          }),
+      baseColor: Colors.gray,
+      highlightColor: Color(0xFFD0D0D0),
+      enabled: isLoading,
+    );
   }
 }
