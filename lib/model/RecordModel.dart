@@ -16,24 +16,23 @@ class RecordModel {
   });
 
   bool? success;
-  List<Record>? record;
+  Record? record;
 
   factory RecordModel.fromJson(Map<String, dynamic> json) => RecordModel(
         success: json["success"],
-        record:
-            List<Record>.from(json["record"].map((x) => Record.fromJson(x))),
+        record: Record.fromJson(json["record"]),
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "record": List<dynamic>.from(record!.map((x) => x.toJson())),
+        "record": record?.toJson(),
       };
 }
 
 class Record {
   Record({
     this.issuedDate,
-    this.permitted,
+    this.status,
     this.id,
     this.rid,
     this.studentId,
@@ -45,7 +44,7 @@ class Record {
   });
 
   DateTime? issuedDate;
-  bool? permitted;
+  String? status;
   String? id;
   String? rid;
   String? studentId;
@@ -57,7 +56,7 @@ class Record {
 
   factory Record.fromJson(Map<String, dynamic> json) => Record(
         issuedDate: DateTime.parse(json["issuedDate"]),
-        permitted: json["permitted"],
+        status: json["status"],
         id: json["_id"],
         rid: json["RID"],
         studentId: json["studentId"],
@@ -69,13 +68,13 @@ class Record {
       );
 
   Map<String, dynamic> toJson() => {
-        "issuedDate": issuedDate?.toIso8601String(),
-        "permitted": permitted,
+        "issuedDate": issuedDate!.toIso8601String(),
+        "status": status,
         "_id": id,
         "RID": rid,
         "studentId": studentId,
-        "from": from?.toIso8601String(),
-        "to": to?.toIso8601String(),
+        "from": from!.toIso8601String(),
+        "to": to!.toIso8601String(),
         "destination": destination,
         "reason": reason,
         "__v": v,

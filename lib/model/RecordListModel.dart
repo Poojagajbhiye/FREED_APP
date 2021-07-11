@@ -4,58 +4,62 @@
 
 import 'dart:convert';
 
-RecordListModel recordListModelFromJson(String str) => RecordListModel.fromJson(json.decode(str));
+RecordListModel recordListModelFromJson(String str) =>
+    RecordListModel.fromJson(json.decode(str));
 
-String recordListModelToJson(RecordListModel data) => json.encode(data.toJson());
+String recordListModelToJson(RecordListModel data) =>
+    json.encode(data.toJson());
 
 class RecordListModel {
-    RecordListModel({
-        this.success,
-        this.records,
-    });
+  RecordListModel({
+    this.success,
+    this.records,
+  });
 
-    bool? success;
-    List<Record>? records;
+  bool? success;
+  List<Record>? records;
 
-    factory RecordListModel.fromJson(Map<String, dynamic> json) => RecordListModel(
+  factory RecordListModel.fromJson(Map<String, dynamic> json) =>
+      RecordListModel(
         success: json["success"],
-        records: List<Record>.from(json["records"].map((x) => Record.fromJson(x))),
-    );
+        records:
+            List<Record>.from(json["records"].map((x) => Record.fromJson(x))),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "success": success,
         "records": List<dynamic>.from(records!.map((x) => x.toJson())),
-    };
+      };
 }
 
 class Record {
-    Record({
-        this.issuedDate,
-        this.permitted,
-        this.id,
-        this.rid,
-        this.studentId,
-        this.from,
-        this.to,
-        this.destination,
-        this.reason,
-        this.v,
-    });
+  Record({
+    this.issuedDate,
+    this.status,
+    this.id,
+    this.rid,
+    this.studentId,
+    this.from,
+    this.to,
+    this.destination,
+    this.reason,
+    this.v,
+  });
 
-    DateTime? issuedDate;
-    bool? permitted;
-    String? id;
-    String? rid;
-    String? studentId;
-    DateTime? from;
-    DateTime? to;
-    String? destination;
-    String? reason;
-    int? v;
+  DateTime? issuedDate;
+  String? status;
+  String? id;
+  String? rid;
+  String? studentId;
+  DateTime? from;
+  DateTime? to;
+  String? destination;
+  String? reason;
+  int? v;
 
-    factory Record.fromJson(Map<String, dynamic> json) => Record(
+  factory Record.fromJson(Map<String, dynamic> json) => Record(
         issuedDate: DateTime.parse(json["issuedDate"]),
-        permitted: json["permitted"],
+        status: json["status"],
         id: json["_id"],
         rid: json["RID"],
         studentId: json["studentId"],
@@ -64,11 +68,11 @@ class Record {
         destination: json["destination"],
         reason: json["reason"],
         v: json["__v"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "issuedDate": issuedDate?.toIso8601String(),
-        "permitted": permitted,
+        "status": status,
         "_id": id,
         "RID": rid,
         "studentId": studentId,
@@ -77,7 +81,5 @@ class Record {
         "destination": destination,
         "reason": reason,
         "__v": v,
-    };
+      };
 }
-
-

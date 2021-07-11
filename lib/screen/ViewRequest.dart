@@ -98,20 +98,20 @@ class _ViewRequest extends State<ViewRequest> {
           await ApiClient.getServices().getParticulerRecord(recordId);
 
       if (response.isNotEmpty) {
-        RecordModel recordListModel = recordModelFromJson(response);
-        bool? isSuccess = recordListModel.success;
-        DateTime? _fromdate = recordListModel.record![0].from;
-        DateTime? _todate = recordListModel.record![0].to;
+        RecordModel recordModel = recordModelFromJson(response);
+        bool? isSuccess = recordModel.success;
+        DateTime? _fromdate = recordModel.record!.from;
+        DateTime? _todate = recordModel.record!.to;
 
         if (isSuccess!) {
           setState(() {
             isprocess = false;
-            if (recordListModel.record != null) {
-              rid = recordListModel.record![0].rid!;
+            if (recordModel.record != null) {
+              rid = recordModel.record!.rid!;
               fromDate = DateFormat('dd MMM yyyy').format(_fromdate!);
               toDate = DateFormat('dd MMM yyyy').format(_todate!);
-              destination = recordListModel.record![0].destination!;
-              reason = recordListModel.record![0].reason!;
+              destination = recordModel.record!.destination!;
+              reason = recordModel.record!.reason!;
             }
           });
         }
@@ -236,13 +236,17 @@ class _ViewRequest extends State<ViewRequest> {
             childrenPadding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
             children: [
               //reason value from api
-              Text(
-                reason,
-                style: TextStyle(
-                    fontFamily: 'roboto',
-                    fontWeight: FontWeight.w300,
-                    fontSize: 16.0,
-                    color: Colors.default_color),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  reason,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.0,
+                      color: Colors.default_color),
+                ),
               )
             ],
           ),

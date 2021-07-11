@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ViewRequest.dart';
@@ -80,29 +81,60 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "Accepted",
-                          style: TextStyle(
-                              fontFamily: 'roboto',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
+                        Container(
+                          width: 90.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(50.0),
                               color: Colors.black),
+                          child: Center(
+                            child: Text(
+                              "Accepted",
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  color: Colors.white),
+                            ),
+                          ),
                         ),
-                        Text(
-                          "Declined",
-                          style: TextStyle(
-                              fontFamily: 'roboto',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
-                              color: Colors.black),
+                        Container(
+                          width: 90.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(50.0)),
+                          child: Center(
+                            child: Text(
+                              "Declined",
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  color: Colors.black),
+                            ),
+                          ),
                         ),
-                        Text(
-                          "Process",
-                          style: TextStyle(
-                              fontFamily: 'roboto',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
-                              color: Colors.black),
+                        Container(
+                          width: 90.0,
+                          height: 30.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(50.0)),
+                          child: Center(
+                            child: Text(
+                              "Process",
+                              style: TextStyle(
+                                  decoration: TextDecoration.none,
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  color: Colors.black),
+                            ),
+                          ),
                         ),
                       ],
                     )
