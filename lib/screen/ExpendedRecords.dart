@@ -175,11 +175,14 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                 TextButton(
                                     onPressed: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  ViewRequest(
-                                                      recordId: _recordId)));
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          ViewRequest(
+                                                              recordId:
+                                                                  _recordId)))
+                                          .then((value) => _getRecordList());
                                     },
                                     child: Text(
                                       "View",
@@ -220,6 +223,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
       }
     } catch (e) {
       var err = e as DioError;
+      recordList?.clear();
       setState(() {
         isLoading = false;
       });

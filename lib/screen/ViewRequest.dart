@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/model/RecordListModel.dart';
@@ -25,6 +27,8 @@ class _ViewRequest extends State<ViewRequest> {
   String destination = "";
   String reason = "";
   bool isprocess = true;
+
+  bool isCancel = false;
 
   _ViewRequest(this.recordId);
 
@@ -193,20 +197,32 @@ class _ViewRequest extends State<ViewRequest> {
   Widget _cancelButton() {
     return Container(
       width: double.infinity,
+      height: 45.0,
       margin: EdgeInsets.symmetric(horizontal: 35),
       child: ElevatedButton(
-        onPressed: () {},
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            "Cancel Request",
-            style: TextStyle(
-                fontFamily: 'roboto',
-                fontWeight: FontWeight.w400,
-                fontSize: 18.0,
-                color: Colors.default_color),
-          ),
-        ),
+        onPressed: () {
+          _deleteRecord(recordId);
+          setState(() {
+            isCancel = true;
+          });
+        },
+        child: isCancel
+            ? SizedBox(
+              height: 25.0,
+              width: 25.0,
+              child: CircularProgressIndicator(
+                  color: Colors.default_color,
+                  strokeWidth: 2.0,
+                ),
+            )
+            : Text(
+                "Cancel Request",
+                style: TextStyle(
+                    fontFamily: 'roboto',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18.0,
+                    color: Colors.default_color),
+              ),
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0))),
@@ -216,6 +232,32 @@ class _ViewRequest extends State<ViewRequest> {
             shadowColor: MaterialStateProperty.all(Colors.transparent)),
       ),
     );
+  }
+
+  _deleteRecord(String recordId) async {
+    try {
+      var response = await ApiClient.getServices().deleteRecord(recordId);
+      if (response.isNotEmpty) {
+        Map<String, dynamic> fromJson = jsonDecode(response);
+        String msg = fromJson["msg"];
+        bool success = fromJson["success"];
+
+        if (success) {
+          Navigator.pop(context);
+          setState(() {
+            isCancel = false;
+          });
+        }
+      }
+    } catch (e) {
+      print(e);
+      setState(() {
+        isCancel = false;
+      });
+      var dioError = e as DioError;
+      var error = DioExceptions.fromDioError(dioError).toString();
+      _snackBar(error);
+    }
   }
 
   Widget _reasonExpendedCard() {
@@ -334,5 +376,10 @@ class _ViewRequest extends State<ViewRequest> {
         ],
       ),
     );
+  }
+
+  _snackBar(String msg) {
+    var snackbar = SnackBar(content: Text(msg));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }

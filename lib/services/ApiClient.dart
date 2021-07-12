@@ -35,4 +35,8 @@ abstract class ApiClient {
   //get particuler record
   @GET('api/records/{recordId}')
   Future<String> getParticulerRecord(@Path("recordId") String recordId);
+
+  //cancel request
+  @DELETE('api/records/{recordId}')
+  Future<String> deleteRecord(@Path("recordId") String recordId);
 }

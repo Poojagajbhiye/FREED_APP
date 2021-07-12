@@ -67,7 +67,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                   children: [
                     Expanded(
                         child: Container(
-                      height: 45,
+                     
                       width: double.infinity,
                       child: TextFormField(
                           validator: (String? value) {
@@ -114,7 +114,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     ),
                     Expanded(
                         child: Container(
-                      height: 45,
+                      
                       width: double.infinity,
                       child: TextFormField(
                           validator: (String? value) {
@@ -255,10 +255,12 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       }
                     },
                     child: isProgress
-                        ? Padding(
-                            padding: EdgeInsets.all(5.0),
+                        ? SizedBox(
+                            height: 25.0,
+                            width: 25.0,
                             child: CircularProgressIndicator(
                               color: Colors.white,
+                              strokeWidth: 2.0,
                             ),
                           )
                         : Text(

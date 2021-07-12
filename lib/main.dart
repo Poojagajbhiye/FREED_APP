@@ -19,7 +19,7 @@ void main() {
       '/dashboard': (context) => Dashboard(),
       '/request form': (context) => RequestForm(),
       // '/view request': (context) => ViewRequest(),
-      '/expend records': (context) => ExpendedRecords(),
+      // '/expend records': (context) => ExpendedRecords(),
     },
   ));
 }

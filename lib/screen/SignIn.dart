@@ -16,68 +16,70 @@ class SignIn extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Material(
-      child: Container(
-        color: Colors.yellow,
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: Colors.yellow,
-              automaticallyImplyLeading: false,
-              shadowColor: Colors.transparent,
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/sign up');
-                      },
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.0,
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w700),
-                      )),
-                )
+          child: Container(
+            color: Colors.yellow,
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.yellow,
+                  automaticallyImplyLeading: false,
+                  shadowColor: Colors.transparent,
+                  actions: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/sign up');
+                          },
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w700),
+                          )),
+                    )
+                  ],
+                ),
+                Expanded(
+                    child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          child: SignInForm(),
+                          height: SizeConfig.screenWidth! > 400
+                              ? SizeConfig.safeBlockVertical! * 67
+                              : SizeConfig.safeBlockVertical! * 70,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(45),
+                                  topRight: Radius.circular(45)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.shadow,
+                                  offset: Offset(0.0, -2.0),
+                                  blurRadius: 10.0,
+                                )
+                              ]),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment(0.0, -0.9),
+                          child: _doodleImage())
+                    ],
+                  ),
+                ))
               ],
             ),
-            Expanded(
-                child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      child: SignInForm(),
-                      height: SizeConfig.screenWidth! > 400
-                          ? SizeConfig.safeBlockVertical! * 67
-                          : SizeConfig.safeBlockVertical! * 70,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(45),
-                              topRight: Radius.circular(45)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.shadow,
-                              offset: Offset(0.0, -2.0),
-                              blurRadius: 10.0,
-                            )
-                          ]),
-                    ),
-                  ),
-                  Align(alignment: Alignment(0.0, -0.9), child: _doodleImage())
-                ],
-              ),
-            ))
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 }
 
@@ -215,10 +217,11 @@ class _SignInForm extends State<SignInForm> {
                       }
                     },
                     child: isprogress
-                        ? Padding(
-                            padding: EdgeInsets.all(5.0),
+                        ? SizedBox(
+                            height: 25.0,
+                            width: 25.0,
                             child:
-                                CircularProgressIndicator(color: Colors.white))
+                                CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,))
                         : Text(
                             "Sign In",
                             style: TextStyle(

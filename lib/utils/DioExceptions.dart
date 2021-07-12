@@ -29,11 +29,13 @@ class DioExceptions implements Exception {
   }
 
   String _handleError(int? statusCode, dynamic error) {
+    Map<String, dynamic> map = jsonDecode(error);
     switch (statusCode) {
       case 400:
         return 'Bad request';
       case 401:
-        Map<String, dynamic> map = jsonDecode(error);
+        return map["msg"];
+      case 404:
         return map["msg"];
       case 500:
         return 'Internal server error';

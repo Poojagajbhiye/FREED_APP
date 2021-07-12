@@ -246,10 +246,13 @@ class _SignUpForm extends State<SignUpForm> {
                       }
                     },
                     child: isProgress
-                        ? Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child:
-                                CircularProgressIndicator(color: Colors.white))
+                        ? SizedBox(
+                            height: 25.0,
+                            width: 25.0,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.0,
+                            ))
                         : Text(
                             "Sign Up",
                             style: TextStyle(
