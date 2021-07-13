@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter/painting.dart';
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
@@ -22,8 +23,14 @@ class ExpendedRecords extends StatefulWidget {
 
 class _ExpendedRecords extends State<ExpendedRecords> {
   List<Record>? recordList;
+  List<Record>? filteredRecordList;
   String? sid;
   bool isLoading = true;
+
+  //filter buttons
+  bool clickAccept = true;
+  bool clickDecline = false;
+  bool clickProcess = false;
 
   _ExpendedRecords(this.sid);
 
@@ -81,58 +88,102 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 90.0,
-                          height: 30.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(50.0),
-                              color: Colors.black),
-                          child: Center(
-                            child: Text(
-                              "Accepted",
-                              style: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'roboto',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
-                                  color: Colors.white),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              clickAccept = true;
+                              clickDecline = false;
+                              clickProcess = false;
+
+                              _filtered("ACCEPTED");
+                            });
+                          },
+                          child: Container(
+                            width: 90.0,
+                            height: 30.0,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(50.0),
+                                color:
+                                    clickAccept ? Colors.black : Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Accepted",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    color: clickAccept
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: 90.0,
-                          height: 30.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(50.0)),
-                          child: Center(
-                            child: Text(
-                              "Declined",
-                              style: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'roboto',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
-                                  color: Colors.black),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              clickAccept = false;
+                              clickDecline = true;
+                              clickProcess = false;
+
+                              _filtered("DECLINED");
+                            });
+                          },
+                          child: Container(
+                            width: 90.0,
+                            height: 30.0,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(50.0),
+                                color:
+                                    clickDecline ? Colors.black : Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Declined",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    color: clickDecline
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: 90.0,
-                          height: 30.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.circular(50.0)),
-                          child: Center(
-                            child: Text(
-                              "Process",
-                              style: TextStyle(
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'roboto',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
-                                  color: Colors.black),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              clickAccept = false;
+                              clickDecline = false;
+                              clickProcess = true;
+
+                              _filtered("PROCESS");
+                            });
+                          },
+                          child: Container(
+                            width: 90.0,
+                            height: 30.0,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(50.0),
+                                color:
+                                    clickProcess ? Colors.black : Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Process",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    color: clickProcess
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
                             ),
                           ),
                         ),
@@ -143,66 +194,88 @@ class _ExpendedRecords extends State<ExpendedRecords> {
             Expanded(
               child: isLoading
                   ? _loadingEffect()
-                  : ListView.builder(
-                      itemCount: recordList == null ? 0 : recordList?.length,
-                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                      itemBuilder: (context, index) {
-                        Record record = recordList![index];
-                        DateTime? date = record.from;
-                        String formatedDate =
-                            DateFormat("dd MMM yyyy").format(date!);
-                        String? _recordId = record.id;
-                        return Card(
-                          elevation: 0.0,
-                          child: Container(
-                            height: 65.0,
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(horizontal: 25.0),
-                            decoration: BoxDecoration(
-                                color: Colors.gray,
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  formatedDate,
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: 'roboto',
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
+                  : filteredRecordList == null || filteredRecordList?.length == 0
+                      ? Center(
+                          child: Text(
+                            "No Records Found",
+                            style: TextStyle(
+                                decoration: TextDecoration.none,
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.0,
+                                color: Colors.default_color),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: filteredRecordList?.length,
+                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                          itemBuilder: (context, index) {
+                            Record record = filteredRecordList![index];
+                            DateTime? date = record.from;
+                            String formatedDate =
+                                DateFormat("dd MMM yyyy").format(date!);
+                            String? _recordId = record.id;
+                            return Card(
+                              elevation: 0.0,
+                              child: Container(
+                                height: 65.0,
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.gray,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      formatedDate,
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: 'roboto',
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black),
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          ViewRequest(
-                                                              recordId:
-                                                                  _recordId)))
-                                          .then((value) => _getRecordList());
-                                    },
-                                    child: Text(
-                                      "View",
-                                      style: TextStyle(
-                                          fontFamily: 'roboto',
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      ViewRequest(
+                                                          recordId:
+                                                              _recordId))).then(
+                                              (value) => _getRecordList());
+                                        },
+                                        child: Text(
+                                          "View",
+                                          style: TextStyle(
+                                              fontFamily: 'roboto',
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
             )
           ],
         ),
       ),
     );
+  }
+
+  _filtered(String status) {
+    filteredRecordList?.clear();
+    if (recordList != null) {
+      filteredRecordList = recordList!
+          .where((record) => (record.status!.contains(status.toUpperCase())))
+          .toList();
+    }
   }
 
   _getRecordList() async {
@@ -218,15 +291,24 @@ class _ExpendedRecords extends State<ExpendedRecords> {
           setState(() {
             isLoading = false;
             recordList = list;
+
+            if (clickAccept)
+              _filtered("ACCEPTED");
+            else if (clickDecline)
+              _filtered("DECLINED");
+            else
+              _filtered("PROCESS");
           });
         }
       }
     } catch (e) {
-      var err = e as DioError;
-      recordList?.clear();
       setState(() {
         isLoading = false;
       });
+      var err = e as DioError;
+      recordList?.clear();
+      filteredRecordList?.clear();
+
       var error = DioExceptions.fromDioError(err).toString();
       print(error);
     }

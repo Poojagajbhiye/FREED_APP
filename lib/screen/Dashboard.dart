@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
 import 'package:freed/model/RecordListModel.dart';
@@ -101,7 +102,7 @@ class _Dashboard extends State<Dashboard> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Aman Vishwakarma",
+                      "Welcome Student",
                       style: TextStyle(
                           fontFamily: 'roboto',
                           fontWeight: FontWeight.w700,
@@ -237,59 +238,74 @@ class _Dashboard extends State<Dashboard> {
           Expanded(
             child: _isLoading
                 ? _loadingEffect()
-                : ListView.builder(
-                    itemCount: recordList == null ? 0 : recordList?.length,
-                    padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                    itemBuilder: (context, index) {
-                      Record record = recordList![index];
-                      DateTime? date = record.from;
-                      String formatedDate =
-                          DateFormat("dd MMM yyyy").format(date!);
-                      String? _recordId = record.id;
-                      return Card(
-                        elevation: 0.0,
-                        child: Container(
-                          height: 65.0,
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 25.0),
-                          decoration: BoxDecoration(
-                              color: Colors.gray,
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                formatedDate,
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'roboto',
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                ViewRequest(
-                                                    recordId: _recordId))).then(
-                                        (value) => _getRecordList());
-                                  },
-                                  child: Text(
-                                    "View",
-                                    style: TextStyle(
-                                        fontFamily: 'roboto',
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black),
-                                  ))
-                            ],
-                          ),
+                : recordList == null || recordList?.length == 0
+                    ? Center(
+                        child: Text(
+                          "No Records Found",
+                          style: TextStyle(
+                              fontFamily: 'roboto',
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                              color: Colors.default_color),
                         ),
-                      );
-                    },
-                  ),
+                      )
+                    : ListView.builder(
+                        itemCount: recordList == null ? 0 : recordList?.length,
+                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                        itemBuilder: (context, index) {
+                          Record record = recordList![index];
+                          DateTime? date = record.from;
+                          String formatedDate =
+                              DateFormat("dd MMM yyyy").format(date!);
+                          String? _recordId = record.id;
+                          return Card(
+                            elevation: 0.0,
+                            child: Container(
+                              height: 65.0,
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: 25.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.gray,
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    formatedDate,
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontFamily: 'roboto',
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.black),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        ViewRequest(
+                                                            recordId:
+                                                                _recordId)))
+                                            .then((value) => _getRecordList());
+                                      },
+                                      child: Text(
+                                        "View",
+                                        style: TextStyle(
+                                            fontFamily: 'roboto',
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      ))
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),
@@ -298,7 +314,9 @@ class _Dashboard extends State<Dashboard> {
 
   _getRecordList() async {
     String _sid = await TempStorage.getUserId();
-
+    setState(() {
+      sid = _sid;
+    });
     try {
       var response = await ApiClient.getServices().getStudentRecords(_sid);
 
@@ -311,16 +329,16 @@ class _Dashboard extends State<Dashboard> {
           setState(() {
             _isLoading = false;
             recordList = list;
-            sid = _sid;
           });
         }
       }
     } catch (e) {
-      var err = e as DioError;
-      recordList?.clear();
       setState(() {
         _isLoading = false;
       });
+      recordList?.clear();
+
+      var err = e as DioError;
       var error = DioExceptions.fromDioError(err).toString();
       print(error);
     }
