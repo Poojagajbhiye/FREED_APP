@@ -17,4 +17,8 @@ class Colors {
   static const Color transparent = Color(0x00000000);
   static const Color shadow = Color(0x50000000);
   static const Color default_color = Color(0xFF797B7D);
+
+  //list background colors
+  static const Color blue_50 = Color(0x50468CF8);
+  static const Color red_50 = Color(0x50FE5F55);
 }

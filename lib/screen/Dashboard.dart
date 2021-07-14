@@ -55,14 +55,6 @@ class _Dashboard extends State<Dashboard> {
                   backgroundColor: Colors.yellow,
                   automaticallyImplyLeading: false,
                   shadowColor: Colors.transparent,
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Icon(
-                      Icons.filter_list,
-                      color: Colors.black,
-                      size: 35,
-                    ),
-                  ),
                   actions: [
                     Padding(
                       padding: const EdgeInsets.only(right: 16),

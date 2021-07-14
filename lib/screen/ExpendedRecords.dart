@@ -223,7 +223,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                 width: double.infinity,
                                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                                 decoration: BoxDecoration(
-                                    color: Colors.gray,
+                                    color: _cardColorPicker(),
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Row(
                                   mainAxisAlignment:
@@ -268,6 +268,16 @@ class _ExpendedRecords extends State<ExpendedRecords> {
         ),
       ),
     );
+  }
+
+  Color _cardColorPicker() {
+    if (clickAccept) {
+      return Colors.blue_50;
+    } else if (clickDecline) {
+      return Colors.red_50;
+    } else {
+      return Colors.gray;
+    }
   }
 
   _filtered(String status) {
