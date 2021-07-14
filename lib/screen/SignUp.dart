@@ -20,20 +20,15 @@ class SignUp extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 shadowColor: Colors.transparent,
                 leadingWidth: 70,
-                leading: Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        "Back",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.0,
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w700),
-                      )),
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
                 ),
                 actions: [
                   Padding(

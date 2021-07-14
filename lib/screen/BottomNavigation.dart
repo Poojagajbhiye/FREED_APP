@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/screen/Dashboard.dart';
-import 'package:freed/screen/ExpendedRecords.dart';
+import 'package:freed/screen/FreedNotification.dart';
+import 'package:freed/screen/StudentProfile.dart';
 import 'package:freed/value/Colors.dart';
+import 'package:freed/value/custom_icons.dart';
 
 class BottomNavigation extends StatefulWidget {
   final sid;
@@ -20,6 +22,8 @@ class _BottomNavigation extends State<BottomNavigation> {
 
   late final List<Widget> tabs = <Widget>[
     Dashboard(sid: _sid),
+    StudentProfile(),
+    FreedNotification(),
   ];
 
   @override
@@ -28,6 +32,7 @@ class _BottomNavigation extends State<BottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: Colors.default_color,
           selectedItemColor: Colors.black,
+          selectedFontSize: 12.0,
           type: BottomNavigationBarType.shifting,
           currentIndex: _currentIndex,
           onTap: (index) {
@@ -38,23 +43,18 @@ class _BottomNavigation extends State<BottomNavigation> {
           items: [
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.home,
+                  CustomIcons.home,
                 ),
                 backgroundColor: Colors.white,
                 label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                backgroundColor: Colors.white,
-                label: "Track"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.supervised_user_circle),
+                icon: Icon(CustomIcons.user),
                 backgroundColor: Colors.white,
                 label: "Profile"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home),
+                icon: Icon(CustomIcons.bell),
                 backgroundColor: Colors.white,
-                label: "Setting"),
-            // BottomNavigationBarItem(icon: Icon(Icons.home), label: "Logout"),
+                label: "Notification"),
           ]),
       body: tabs[_currentIndex],
     );
