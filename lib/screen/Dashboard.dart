@@ -16,17 +16,21 @@ import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Dashboard extends StatefulWidget {
+  final sid;
+  Dashboard({Key? key, @required this.sid}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _Dashboard();
+    return _Dashboard(sid);
   }
 }
 
 class _Dashboard extends State<Dashboard> {
   var top;
   List<Record>? recordList;
-  String? sid;
+  String? _sid;
   bool _isLoading = true;
+
+  _Dashboard(this._sid);
 
   @override
   void initState() {
@@ -38,170 +42,162 @@ class _Dashboard extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: SizeConfig.screenWidth,
-      height: SizeConfig.screenHeight,
-      decoration: BoxDecoration(color: Colors.yellow),
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              AppBar(
-                backgroundColor: Colors.yellow,
-                automaticallyImplyLeading: false,
-                shadowColor: Colors.transparent,
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Icon(
-                    Icons.filter_list,
-                    color: Colors.black,
-                    size: 35,
-                  ),
-                ),
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
+    return Scaffold(
+      body: Container(
+        width: SizeConfig.screenWidth,
+        height: SizeConfig.screenHeight,
+        decoration: BoxDecoration(color: Colors.yellow),
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.yellow,
+                  automaticallyImplyLeading: false,
+                  shadowColor: Colors.transparent,
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 16),
                     child: Icon(
-                      Icons.notifications_none,
+                      Icons.filter_list,
                       color: Colors.black,
                       size: 35,
                     ),
-                  )
-                ],
-              ),
-              Container(
-                width: SizeConfig.screenWidth,
-                padding: EdgeInsets.symmetric(horizontal: 14.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.default_color,
-                                    blurRadius: 6.0)
-                              ]),
-                        ),
-                        Positioned(
-                          bottom: -10.0,
-                          left: 0.0,
-                          right: 0.0,
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            child: Image.asset(readingDoodle),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Welcome Student",
-                      style: TextStyle(
-                          fontFamily: 'roboto',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20.0,
-                          decoration: TextDecoration.none,
-                          color: Colors.black),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      "B.Tech CSE",
-                      style: TextStyle(
-                          fontFamily: 'roboto',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.0,
-                          decoration: TextDecoration.none,
-                          color: Colors.black),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigator.pushNamed(context, '/request form');
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RequestForm()))
-                            .then((value) => _getRecordList());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 10.0),
-                        child: Text(
-                          "Request Leave",
-                          style: TextStyle(
-                              fontFamily: 'roboto',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18.0,
-                              color: Colors.white),
-                        ),
+                  ),
+                  actions: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: Icon(
+                        Icons.notifications_none,
+                        color: Colors.black,
+                        size: 35,
                       ),
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0))),
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black)),
                     )
                   ],
                 ),
-              )
-            ],
-          ),
-          Positioned(
-            bottom: 0.0,
-            top: top,
-            child: GestureDetector(
-              onVerticalDragUpdate: (details) {
-                setState(() {
-                  if (details.globalPosition.dy <
-                      SizeConfig.blockSizeVertical! * 40) {
-                    top = details.globalPosition.dy;
-                    print(top);
-                    if (top < 300) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ExpendedRecords(sid: sid),
-                          )).then((value) {
-                        setState(() {
-                          top = null;
-                        });
-                        _getRecordList();
-                      });
-                    }
-                  }
-                });
-              },
-              child: Hero(
-                tag: 'expend',
-                child: Container(
+                Container(
                   width: SizeConfig.screenWidth,
-                  height: SizeConfig.blockSizeVertical! * 60,
-                  decoration: BoxDecoration(
+                  padding: EdgeInsets.symmetric(horizontal: 14.0),
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: -10.0,
+                            left: 0.0,
+                            right: 0.0,
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              child: Image.asset(readingDoodle),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Welcome Student",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20.0,
+                            decoration: TextDecoration.none,
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "B.Tech CSE",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.0,
+                            decoration: TextDecoration.none,
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Navigator.pushNamed(context, '/request form');
+                          Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RequestForm()))
+                              .then((value) => _getRecordList());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 10.0),
+                          child: Text(
+                            "Request Leave",
+                            style: TextStyle(
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18.0,
+                                color: Colors.white),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0))),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.black)),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Positioned(
+              bottom: 0.0,
+              top: top,
+              child: GestureDetector(
+                onVerticalDragUpdate: (details) {
+                  setState(() {
+                    if (details.globalPosition.dy <
+                        SizeConfig.blockSizeVertical! * 40) {
+                      top = details.globalPosition.dy;
+                      print(top);
+                      if (top < 300) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ExpendedRecords(sid: _sid),
+                            )).then((value) {
+                          setState(() {
+                            top = null;
+                          });
+                          _getRecordList();
+                        });
+                      }
+                    }
+                  });
+                },
+                child: Hero(
+                  tag: 'expend',
+                  child: Container(
+                    width: SizeConfig.screenWidth,
+                    height: SizeConfig.blockSizeVertical! * 53,
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(45),
                           topRight: Radius.circular(45)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.shadow,
-                          offset: Offset(0.0, -2.0),
-                          blurRadius: 10.0,
-                        )
-                      ]),
-                  child: draggableSheetInnerContent(),
+                    ),
+                    child: draggableSheetInnerContent(),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -313,12 +309,12 @@ class _Dashboard extends State<Dashboard> {
   }
 
   _getRecordList() async {
-    String _sid = await TempStorage.getUserId();
-    setState(() {
-      sid = _sid;
-    });
+    // String _sid = await TempStorage.getUserId();
+    // setState(() {
+    //   sid = _sid;
+    // });
     try {
-      var response = await ApiClient.getServices().getStudentRecords(_sid);
+      var response = await ApiClient.getServices().getStudentRecords(_sid!);
 
       if (response.isNotEmpty) {
         RecordListModel recordListModel = recordListModelFromJson(response);

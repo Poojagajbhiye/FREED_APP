@@ -42,12 +42,9 @@ class _ExpendedRecords extends State<ExpendedRecords> {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: 'expend',
-      child: Container(
-        width: SizeConfig.safeBlockVertical,
-        height: SizeConfig.safeBlockVertical,
-        decoration: BoxDecoration(color: Colors.white),
+    return Scaffold(
+      body: Hero(
+        tag: 'expend',
         child: Column(
           children: [
             AppBar(
@@ -73,6 +70,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
             ),
             Container(
                 padding: EdgeInsets.only(right: 16.0, left: 16.0, bottom: 16.0),
+                decoration: BoxDecoration(color: Colors.white),
                 child: Column(
                   children: [
                     Text(
@@ -192,9 +190,12 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                   ],
                 )),
             Expanded(
+                child: Container(
+              decoration: BoxDecoration(color: Colors.white),
               child: isLoading
                   ? _loadingEffect()
-                  : filteredRecordList == null || filteredRecordList?.length == 0
+                  : filteredRecordList == null ||
+                          filteredRecordList?.length == 0
                       ? Center(
                           child: Text(
                             "No Records Found",
@@ -262,7 +263,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                             );
                           },
                         ),
-            )
+            ))
           ],
         ),
       ),

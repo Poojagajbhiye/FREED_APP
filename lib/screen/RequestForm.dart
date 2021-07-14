@@ -67,7 +67,6 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                   children: [
                     Expanded(
                         child: Container(
-                     
                       width: double.infinity,
                       child: TextFormField(
                           validator: (String? value) {
@@ -114,7 +113,6 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     ),
                     Expanded(
                         child: Container(
-                      
                       width: double.infinity,
                       child: TextFormField(
                           validator: (String? value) {
@@ -483,17 +481,11 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       width: SizeConfig.screenWidth,
                       height: SizeConfig.safeBlockVertical! * 50,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(45),
-                              topRight: Radius.circular(45)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.shadow,
-                              offset: Offset(0.0, -2.0),
-                              blurRadius: 10.0,
-                            )
-                          ]),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(45),
+                            topRight: Radius.circular(45)),
+                      ),
                     ),
                   ),
                   Align(
@@ -531,17 +523,11 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                               child: leaveRequestForm(),
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(45),
-                                      topRight: Radius.circular(45)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.shadow,
-                                      offset: Offset(0.0, -2.0),
-                                      blurRadius: 10.0,
-                                    )
-                                  ]),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(45),
+                                    topRight: Radius.circular(45)),
+                              ),
                             ),
                           ),
                         ),

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
 import 'package:freed/model/StudentInfo.dart';
+import 'package:freed/screen/BottomNavigation.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -57,17 +58,11 @@ class SignIn extends StatelessWidget {
                               : SizeConfig.safeBlockVertical! * 70,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(45),
-                                  topRight: Radius.circular(45)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.shadow,
-                                  offset: Offset(0.0, -2.0),
-                                  blurRadius: 10.0,
-                                )
-                              ]),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(45),
+                                topRight: Radius.circular(45)),
+                          ),
                         ),
                       ),
                       Align(
@@ -220,8 +215,10 @@ class _SignInForm extends State<SignInForm> {
                         ? SizedBox(
                             height: 25.0,
                             width: 25.0,
-                            child:
-                                CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,))
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.0,
+                            ))
                         : Text(
                             "Sign In",
                             style: TextStyle(
@@ -314,7 +311,11 @@ class _SignInForm extends State<SignInForm> {
           setState(() {
             isprogress = false;
           });
-          Navigator.pushNamed(context, "/dashboard");
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BottomNavigation(sid: userId),
+              ));
         }
       }
     } catch (e) {

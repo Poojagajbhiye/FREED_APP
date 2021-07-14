@@ -79,17 +79,11 @@ class SignUp extends StatelessWidget {
                           child: SignUpForm(),
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(45),
-                                  topRight: Radius.circular(45)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.shadow,
-                                  offset: Offset(0.0, -2.0),
-                                  blurRadius: 10.0,
-                                )
-                              ]),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(45),
+                                topRight: Radius.circular(45)),
+                          ),
                         ),
                       ),
                     )
