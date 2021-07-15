@@ -76,7 +76,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                           decoration: TextDecoration.none,
                           fontSize: 20.0),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 25.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

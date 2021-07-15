@@ -7,6 +7,7 @@ import 'package:freed/model/RecordModel.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
+import 'package:freed/value/Image.dart';
 import 'package:intl/intl.dart';
 
 class ViewRequest extends StatefulWidget {
@@ -29,6 +30,10 @@ class _ViewRequest extends State<ViewRequest> {
   bool isprocess = true;
 
   bool isCancel = false;
+
+  bool isAcceptedStatus = false;
+  bool isDeclinedStatus = false;
+  bool isProcessStatus = false;
 
   _ViewRequest(this.recordId);
 
@@ -63,7 +68,7 @@ class _ViewRequest extends State<ViewRequest> {
             ),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 15),
+              padding: EdgeInsets.only(left: 30, right: 30, top: 0.0),
               color: Colors.white,
               height: double.infinity,
               width: double.infinity,
@@ -73,8 +78,11 @@ class _ViewRequest extends State<ViewRequest> {
                         color: Colors.black,
                       ),
                     )
-                  : Column(
+                  : ListView(
+                      padding: EdgeInsets.only(top: 0.0, bottom: 50.0),
                       children: [
+                        _checkStatus(),
+                        SizedBox(height: 30),
                         _header(),
                         SizedBox(height: 15),
                         _detailedCard(),
@@ -91,6 +99,15 @@ class _ViewRequest extends State<ViewRequest> {
     );
   }
 
+  Widget _checkStatus() {
+    if (isAcceptedStatus)
+      return AcceptedDoodle();
+    else if (isDeclinedStatus)
+      return DeclinedDoodle();
+    else
+      return ProcessDoodle();
+  }
+
   _fatchRecordDetails(String recordId) async {
     try {
       var response =
@@ -101,6 +118,7 @@ class _ViewRequest extends State<ViewRequest> {
         bool? isSuccess = recordModel.success;
         DateTime? _fromdate = recordModel.record!.from;
         DateTime? _todate = recordModel.record!.to;
+        String? _status = recordModel.record!.status;
 
         if (isSuccess!) {
           setState(() {
@@ -111,6 +129,13 @@ class _ViewRequest extends State<ViewRequest> {
               toDate = DateFormat('dd MMM yyyy').format(_todate!);
               destination = recordModel.record!.destination!;
               reason = recordModel.record!.reason!;
+
+              if (_status!.contains("ACCEPTED"))
+                isAcceptedStatus = true;
+              else if (_status.contains("DECLINED"))
+                isDeclinedStatus = true;
+              else
+                isProcessStatus = true;
             }
           });
         }
@@ -376,5 +401,147 @@ class _ViewRequest extends State<ViewRequest> {
   _snackBar(String msg) {
     var snackbar = SnackBar(content: Text(msg));
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+}
+
+class AcceptedDoodle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+              height: 80,
+              width: double.infinity,
+              child: Image.asset(rollerSkate)),
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            decoration: BoxDecoration(
+                color: Colors.light_saffron,
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Column(
+              children: [
+                Text(
+                  "Hurray!",
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.0,
+                      color: Colors.black),
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  "Your Request Has Been Accepted",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.0,
+                      color: Colors.black),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ProcessDoodle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+              height: 80,
+              width: double.infinity,
+              child: Image.asset(layingDoodle)),
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            decoration: BoxDecoration(
+                color: Colors.gray, borderRadius: BorderRadius.circular(10.0)),
+            child: Column(
+              children: [
+                Text(
+                  "In Process!",
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.0,
+                      color: Colors.black),
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  "We'll be back to you soon",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.0,
+                      color: Colors.black),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class DeclinedDoodle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          SizedBox(
+              height: 80,
+              width: double.infinity,
+              child: Image.asset(messyDoodle)),
+          SizedBox(
+            height: 10.0,
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            decoration: BoxDecoration(
+                color: Colors.red, borderRadius: BorderRadius.circular(10.0)),
+            child: Column(
+              children: [
+                Text(
+                  "Oops!",
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16.0,
+                      color: Colors.white),
+                ),
+                SizedBox(height: 5.0),
+                Text(
+                  "Your request was not accepted",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.0,
+                      color: Colors.white),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
