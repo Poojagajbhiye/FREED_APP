@@ -27,9 +27,9 @@ class _ExpendedRecords extends State<ExpendedRecords> {
   bool isLoading = true;
 
   //filter buttons
-  bool clickAccept = true;
+  bool clickProcess = true;
+  bool clickAccept = false;
   bool clickDecline = false;
-  bool clickProcess = false;
 
   _ExpendedRecords(this.sid);
 
@@ -80,6 +80,39 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              clickAccept = false;
+                              clickDecline = false;
+                              clickProcess = true;
+
+                              _filtered("PROCESS");
+                            });
+                          },
+                          child: Container(
+                            width: 90.0,
+                            height: 30.0,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.circular(50.0),
+                                color:
+                                    clickProcess ? Colors.black : Colors.white),
+                            child: Center(
+                              child: Text(
+                                "Process",
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    color: clickProcess
+                                        ? Colors.white
+                                        : Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
                         GestureDetector(
                           onTap: () {
                             setState(() {
@@ -140,39 +173,6 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.0,
                                     color: clickDecline
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              clickAccept = false;
-                              clickDecline = false;
-                              clickProcess = true;
-
-                              _filtered("PROCESS");
-                            });
-                          },
-                          child: Container(
-                            width: 90.0,
-                            height: 30.0,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                borderRadius: BorderRadius.circular(50.0),
-                                color:
-                                    clickProcess ? Colors.black : Colors.white),
-                            child: Center(
-                              child: Text(
-                                "Process",
-                                style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'roboto',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
-                                    color: clickProcess
                                         ? Colors.white
                                         : Colors.black),
                               ),
