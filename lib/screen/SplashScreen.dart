@@ -1,4 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide Colors;
+import 'package:freed/screen/BottomNavigation.dart';
+import 'package:freed/screen/SignIn.dart';
+import 'package:freed/screen/SignUp.dart';
+import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/SizeConfig.dart';
 
@@ -14,12 +20,14 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
   AnimationController? controller;
   Animation<Offset>? offset;
-  bool _visible = true;
+  bool _visible = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _checkTokenAavailablity();
 
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
@@ -27,6 +35,30 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 5.0))
         .animate(controller!);
     controller?.forward(from: 0.0);
+  }
+
+  _checkTokenAavailablity() async {
+    String userid = await TempStorage.getUserId();
+    if (userid.isNotEmpty) {
+      Timer(Duration(seconds: 3), () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BottomNavigation(sid: userid)),
+            (route) => false);
+      });
+    } else {
+      setState(() {
+        _visible = true;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller!.dispose();
   }
 
   @override
@@ -77,12 +109,15 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         duration: Duration(seconds: 1),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (controller!.isCompleted) {
-                              controller?.reverse(from: 1.0);
-                              setState(() {
-                                _visible = !_visible;
-                              });
+                            if (_visible) {
+                              if (controller!.isCompleted) {
+                                controller?.reverse(from: 1.0);
+                              }
                             }
+
+                            setState(() {
+                              _visible = !_visible;
+                            });
                           },
                           child: Text(
                             "Let's Go",
@@ -156,8 +191,11 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                   height: 40.0,
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/sign in');
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => SignIn()),
+                                            (route) => false);
                                       },
                                       style: ButtonStyle(
                                           backgroundColor:
@@ -185,8 +223,11 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                   height: 40.0,
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, '/sign up');
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => SignUp()),
+                                            (route) => false);
                                       },
                                       style: ButtonStyle(
                                           backgroundColor:

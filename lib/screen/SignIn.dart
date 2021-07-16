@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
 import 'package:freed/model/StudentInfo.dart';
 import 'package:freed/screen/BottomNavigation.dart';
+import 'package:freed/screen/SignUp.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -30,7 +31,11 @@ class SignIn extends StatelessWidget {
                       padding: EdgeInsets.only(right: 15.0),
                       child: TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/sign up');
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp()),
+                                (route) => false);
                           },
                           child: Text(
                             "Register",
@@ -249,7 +254,10 @@ class _SignInForm extends State<SignInForm> {
                 ),
                 TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/sign up');
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUp()),
+                          (route) => false);
                     },
                     child: Text(
                       "Don't have an account ?",
@@ -311,11 +319,11 @@ class _SignInForm extends State<SignInForm> {
           setState(() {
             isprogress = false;
           });
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => BottomNavigation(sid: userId),
-              ));
+                  builder: (context) => BottomNavigation(sid: userId)),
+              (route) => false);
         }
       }
     } catch (e) {

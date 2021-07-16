@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart' hide Colors;
+import 'package:freed/screen/SignIn.dart';
+import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/value/Colors.dart';
 
 class StudentProfile extends StatefulWidget {
@@ -23,7 +25,13 @@ class _StudentProfile extends State<StudentProfile> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      TempStorage.removePreferences();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignIn()),
+                          (route) => false);
+                    },
                     child: Text(
                       "Logout",
                       style: TextStyle(
@@ -69,7 +77,13 @@ class _ProfileForm extends State<ProfileForm> {
   //dropdown lists
   var courseList = ["Diploma", "B.tech", "M.tech"];
   var semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
-  var branchList = ["Civil Engineering", "Computer Science and Engineering", "Electrical Engineering", "Machanical Engineering", "Metallurgical and Material Engineering"];
+  var branchList = [
+    "Civil Engineering",
+    "Computer Science and Engineering",
+    "Electrical Engineering",
+    "Machanical Engineering",
+    "Metallurgical and Material Engineering"
+  ];
 
   @override
   void initState() {

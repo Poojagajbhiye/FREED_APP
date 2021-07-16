@@ -16,7 +16,7 @@ void main() {
       '/': (context) => SplashScreen(),
       '/sign in': (context) => SignIn(),
       '/sign up': (context) => SignUp(),
-      '/dashboard': (context) => Dashboard(),
+      // '/dashboard': (context) => Dashboard(),
       '/request form': (context) => RequestForm(),
       // '/view request': (context) => ViewRequest(),
       // '/expend records': (context) => ExpendedRecords(),

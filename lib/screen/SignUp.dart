@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/model/SignUpResponse.dart';
+import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
@@ -20,22 +21,15 @@ class SignUp extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 shadowColor: Colors.transparent,
                 leadingWidth: 70,
-                leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.chevron_left,
-                    color: Colors.black,
-                    size: 30.0,
-                  ),
-                ),
                 actions: [
                   Padding(
                     padding: EdgeInsets.only(right: 15.0),
                     child: TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (route) => false);
                         },
                         child: Text(
                           "Login",
@@ -259,7 +253,10 @@ class _SignUpForm extends State<SignUpForm> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignIn()),
+                        (route) => false);
                   },
                   child: Text(
                     "Already have an account ?",
@@ -293,7 +290,10 @@ class _SignUpForm extends State<SignUpForm> {
           setState(() {
             isProgress = false;
           });
-          Navigator.popAndPushNamed(context, "/sign in");
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (route) => false);
         }
       }
     } catch (e) {

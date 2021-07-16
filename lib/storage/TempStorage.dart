@@ -19,7 +19,7 @@ class TempStorage {
   static Future<String> getUserId() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? userid = preferences.getString(user_id);
-    return userid!;
+    return userid ?? "";
   }
 
   static setUserId(String userid) async {
@@ -38,4 +38,10 @@ class TempStorage {
     preferences.setString(rid, registrationId);
   }
 
+  static removePreferences() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.remove(tokenKey);
+    preferences.remove(user_id);
+    preferences.remove(rid);
+  }
 }
