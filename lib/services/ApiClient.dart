@@ -39,4 +39,8 @@ abstract class ApiClient {
   //cancel request
   @DELETE('api/records/{recordId}')
   Future<String> deleteRecord(@Path("recordId") String recordId);
+
+  //update profile
+  @POST('api/student/update')
+  Future<String> updateProfile(@Body() Map<String, dynamic> progileData);
 }

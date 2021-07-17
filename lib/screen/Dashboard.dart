@@ -30,11 +30,20 @@ class _Dashboard extends State<Dashboard> {
   String? _sid;
   bool _isLoading = true;
 
+  //student info
+  String firstname = "";
+  String lastname = "";
+  String course = "";
+  String branch = "";
+
   _Dashboard(this._sid);
 
   @override
   void initState() {
     super.initState();
+
+    //get student information from temp storage
+    this._getStudentData();
 
     //fatch student records from api
     this._getRecordList();
@@ -94,8 +103,12 @@ class _Dashboard extends State<Dashboard> {
                         ],
                       ),
                       SizedBox(height: 10),
+
+                      //student full name
                       Text(
-                        "Welcome Student",
+                        firstname.isNotEmpty || lastname.isNotEmpty
+                            ? "$firstname $lastname"
+                            : "Welcome Student",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700,
@@ -104,8 +117,12 @@ class _Dashboard extends State<Dashboard> {
                             color: Colors.black),
                       ),
                       SizedBox(height: 5),
+
+                      //course and branch
                       Text(
-                        "B.Tech CSE",
+                        course.isNotEmpty || branch.isNotEmpty
+                            ? "$course $branch"
+                            : " ",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w400,
@@ -301,10 +318,6 @@ class _Dashboard extends State<Dashboard> {
   }
 
   _getRecordList() async {
-    // String _sid = await TempStorage.getUserId();
-    // setState(() {
-    //   sid = _sid;
-    // });
     try {
       var response = await ApiClient.getServices().getStudentRecords(_sid!);
 
@@ -351,5 +364,15 @@ class _Dashboard extends State<Dashboard> {
       highlightColor: Color(0xFFD0D0D0),
       enabled: _isLoading,
     );
+  }
+
+  _getStudentData() async {
+    firstname = await TempStorage.getFirstName();
+
+    lastname = await TempStorage.getLastName();
+
+    course = await TempStorage.getCourse();
+
+    branch = await TempStorage.getBranch();
   }
 }

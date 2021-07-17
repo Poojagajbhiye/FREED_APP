@@ -293,10 +293,10 @@ class _SignInForm extends State<SignInForm> {
         }
       }
     } catch (e) {
-      final err = e as DioError;
       setState(() {
         isprogress = false;
       });
+      final err = e as DioError;
       final errormsg = DioExceptions.fromDioError(err).toString();
       _snackBar(errormsg);
     }
@@ -311,10 +311,22 @@ class _SignInForm extends State<SignInForm> {
         bool? success = studentInfo.success;
         String? userId = studentInfo.decoded?.id;
         String? rid = studentInfo.decoded?.rid;
+        String? _firstname = studentInfo.decoded?.firstName ?? "";
+        String? _lastname = studentInfo.decoded?.lastName ?? "";
+        String? _email = studentInfo.decoded?.email ?? "";
+        String? _branch = studentInfo.decoded?.branch ?? "";
+        String? _course = studentInfo.decoded?.course ?? "";
+        String? _semester = studentInfo.decoded?.semester ?? "";
 
         if (success!) {
           TempStorage.setRid(rid!);
           TempStorage.setUserId(userId!);
+          TempStorage.setFirstName(_firstname);
+          TempStorage.setLastName(_lastname);
+          TempStorage.setEmail(_email);
+          TempStorage.setBranch(_branch);
+          TempStorage.setCourse(_course);
+          TempStorage.setSemester(_semester);
 
           setState(() {
             isprogress = false;
@@ -327,10 +339,11 @@ class _SignInForm extends State<SignInForm> {
         }
       }
     } catch (e) {
-      final err = e as DioError;
       setState(() {
         isprogress = false;
       });
+      final err = e as DioError;
+
       final errormsg = DioExceptions.fromDioError(err).toString();
       _snackBar(errormsg);
     }
