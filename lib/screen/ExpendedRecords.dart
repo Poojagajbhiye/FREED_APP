@@ -203,7 +203,8 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                         )
                       : ListView.builder(
                           itemCount: filteredRecordList?.length,
-                          padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                          padding: EdgeInsets.only(
+                              left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
                           itemBuilder: (context, index) {
                             Record record = filteredRecordList![index];
                             DateTime? date = record.from;

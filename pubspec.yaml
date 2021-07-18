@@ -63,6 +63,9 @@ flutter:
     - assets/images/ReadingDoodle.png
     - assets/images/LayingDoodle.png
     - assets/images/MessyDoodle.png
+    - assets/images/home.png
+    - assets/images/bell.png
+    - assets/images/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -91,10 +94,6 @@ flutter:
           weight: 500
         - asset: assets/fonts/Roboto-Regular.ttf
           weight: 400
-    #icons assets
-    - family: CustomIcons
-      fonts:
-        - asset: assets/icons/CustomIcons.ttf
           
   #
   # For details regarding fonts from package dependencies,

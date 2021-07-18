@@ -212,108 +212,105 @@ class _Dashboard extends State<Dashboard> {
   }
 
   Widget draggableSheetInnerContent() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 35,
-            child: Opacity(
-              opacity: 0.1,
-              child: Icon(
-                Icons.drag_handle,
-                size: 25.0,
-                color: Colors.black,
-              ),
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 35,
+          child: Opacity(
+            opacity: 0.1,
+            child: Icon(
+              Icons.drag_handle,
+              size: 25.0,
+              color: Colors.black,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 20.0, top: 5.0),
-            child: Text(
-              "Escape Records",
-              style: TextStyle(
-                  fontFamily: 'roboto',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20.0,
-                  decoration: TextDecoration.none,
-                  color: Colors.black),
-            ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 15.0, top: 5.0),
+          child: Text(
+            "Escape Records",
+            style: TextStyle(
+                fontFamily: 'roboto',
+                fontWeight: FontWeight.w700,
+                fontSize: 20.0,
+                decoration: TextDecoration.none,
+                color: Colors.black),
           ),
-          Expanded(
-            child: _isLoading
-                ? _loadingEffect()
-                : recordList == null || recordList?.length == 0
-                    ? Center(
-                        child: Text(
-                          "No Records Found",
-                          style: TextStyle(
-                              fontFamily: 'roboto',
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.none,
-                              color: Colors.default_color),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: recordList == null ? 0 : recordList?.length,
-                        padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                        itemBuilder: (context, index) {
-                          Record record = recordList![index];
-                          DateTime? date = record.from;
-                          String formatedDate =
-                              DateFormat("dd MMM yyyy").format(date!);
-                          String? _recordId = record.id;
-                          return Card(
-                            elevation: 0.0,
-                            child: Container(
-                              height: 65.0,
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal: 25.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.gray,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    formatedDate,
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontFamily: 'roboto',
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black),
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        ViewRequest(
-                                                            recordId:
-                                                                _recordId)))
-                                            .then((value) => _getRecordList());
-                                      },
-                                      child: Text(
-                                        "View",
-                                        style: TextStyle(
-                                            fontFamily: 'roboto',
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+        ),
+        Expanded(
+          child: _isLoading
+              ? _loadingEffect()
+              : recordList == null || recordList?.length == 0
+                  ? Center(
+                      child: Text(
+                        "No Records Found",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.none,
+                            color: Colors.default_color),
                       ),
-          ),
-        ],
-      ),
+                    )
+                  : ListView.builder(
+                      itemCount: recordList == null ? 0 : recordList?.length,
+                      padding: EdgeInsets.only(
+                          left: 20.0, right: 20.0, top: 5.0, bottom: 10.0),
+                      itemBuilder: (context, index) {
+                        Record record = recordList![index];
+                        DateTime? date = record.from;
+                        String formatedDate =
+                            DateFormat("dd MMM yyyy").format(date!);
+                        String? _recordId = record.id;
+                        return Card(
+                          elevation: 0.0,
+                          child: Container(
+                            height: 65.0,
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(horizontal: 25.0),
+                            decoration: BoxDecoration(
+                                color: Colors.gray,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  formatedDate,
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontFamily: 'roboto',
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          ViewRequest(
+                                                              recordId:
+                                                                  _recordId)))
+                                          .then((value) => _getRecordList());
+                                    },
+                                    child: Text(
+                                      "View",
+                                      style: TextStyle(
+                                          fontFamily: 'roboto',
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+        ),
+      ],
     );
   }
 
@@ -348,7 +345,8 @@ class _Dashboard extends State<Dashboard> {
   Widget _loadingEffect() {
     return Shimmer.fromColors(
       child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 5.0),
+          padding:
+              EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0, bottom: 10.0),
           itemCount: 6,
           itemBuilder: (context, index) {
             return Card(

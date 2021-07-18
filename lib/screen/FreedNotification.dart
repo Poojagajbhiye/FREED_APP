@@ -11,7 +11,7 @@ class _FreedNotification extends State<FreedNotification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Notification"),
+      body: Center(child: Text("Notification page is under development..")),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:freed/screen/Dashboard.dart';
 import 'package:freed/screen/FreedNotification.dart';
 import 'package:freed/screen/StudentProfile.dart';
 import 'package:freed/value/Colors.dart';
-import 'package:freed/value/custom_icons.dart';
+import 'package:freed/value/Image.dart';
 
 class BottomNavigation extends StatefulWidget {
   final sid;
@@ -15,14 +15,14 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigation extends State<BottomNavigation> {
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   String? _sid;
 
   _BottomNavigation(this._sid);
 
   late final List<Widget> tabs = <Widget>[
-    Dashboard(sid: _sid),
     StudentProfile(),
+    Dashboard(sid: _sid),
     FreedNotification(),
   ];
 
@@ -42,17 +42,15 @@ class _BottomNavigation extends State<BottomNavigation> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.home,
-                ),
-                backgroundColor: Colors.white,
-                label: "Home"),
-            BottomNavigationBarItem(
-                icon: Icon(CustomIcons.user),
+                icon: Image.asset(userIcon),
                 backgroundColor: Colors.white,
                 label: "Profile"),
             BottomNavigationBarItem(
-                icon: Icon(CustomIcons.bell),
+                icon: Image.asset(homeIcon),
+                backgroundColor: Colors.white,
+                label: "Home"),
+            BottomNavigationBarItem(
+                icon: Image.asset(bellIcon),
                 backgroundColor: Colors.white,
                 label: "Notification"),
           ]),

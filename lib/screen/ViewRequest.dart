@@ -68,7 +68,6 @@ class _ViewRequest extends State<ViewRequest> {
             ),
             Expanded(
                 child: Container(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 0.0),
               color: Colors.white,
               height: double.infinity,
               width: double.infinity,
@@ -79,7 +78,8 @@ class _ViewRequest extends State<ViewRequest> {
                       ),
                     )
                   : ListView(
-                      padding: EdgeInsets.only(top: 0.0, bottom: 50.0),
+                      padding: EdgeInsets.only(
+                          top: 0.0, bottom: 50.0, left: 30.0, right: 30.0),
                       children: [
                         _checkStatus(),
                         SizedBox(height: 30),
@@ -263,10 +263,12 @@ class _ViewRequest extends State<ViewRequest> {
         bool success = fromJson["success"];
 
         if (success) {
-          Navigator.pop(context);
           setState(() {
             isCancel = false;
           });
+
+          Navigator.pop(context);
+          _snackBar(msg);
         }
       }
     } catch (e) {

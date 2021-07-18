@@ -447,28 +447,17 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
           child: Column(
             children: [
               AppBar(
-                backgroundColor: Colors.yellow,
-                automaticallyImplyLeading: false,
-                shadowColor: Colors.transparent,
-                leadingWidth: 70,
-                leading: Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child: AnimatedOpacity(
-                    opacity: _visible ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 500),
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Back",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontFamily: 'roboto',
-                              fontWeight: FontWeight.w700),
-                        )),
-                  ),
-                ),
-              ),
+                  backgroundColor: Colors.yellow,
+                  automaticallyImplyLeading: false,
+                  shadowColor: Colors.transparent,
+                  leadingWidth: 70,
+                  leading: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.chevron_left,
+                        color: Colors.black,
+                        size: 30.0,
+                      ))),
               Expanded(
                   child: Container(
                 height: double.infinity,
