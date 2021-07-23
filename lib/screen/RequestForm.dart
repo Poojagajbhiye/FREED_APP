@@ -40,6 +40,103 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 2.5))
         .animate(controller!);
+
+    Future.delayed(Duration(seconds: 1), () => _profileUpdateChecker());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Material(
+        child: Container(
+          color: Colors.yellow,
+          child: Column(
+            children: [
+              AppBar(
+                  backgroundColor: Colors.yellow,
+                  automaticallyImplyLeading: false,
+                  shadowColor: Colors.transparent,
+                  leadingWidth: 70,
+                  leading: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Icon(
+                        Icons.chevron_left,
+                        color: Colors.black,
+                        size: 30.0,
+                      ))),
+              Expanded(
+                  child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                child: Stack(children: [
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      child: _reqStatusContainer(),
+                      width: SizeConfig.screenWidth,
+                      height: SizeConfig.safeBlockVertical! * 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(45),
+                            topRight: Radius.circular(45)),
+                      ),
+                    ),
+                  ),
+                  Align(
+                      alignment: Alignment(1.0, -0.3),
+                      child: Container(
+                        width: SizeConfig.safeBlockHorizontal! * 60,
+                        height: SizeConfig.safeBlockHorizontal! * 50,
+                        child: Image.asset(sitReadingDoodle),
+                      )),
+                  Column(
+                    children: [
+                      AnimatedOpacity(
+                        opacity: _visible ? 1.0 : 0.0,
+                        duration: Duration(milliseconds: 500),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              left: 40, right: 40, top: 20, bottom: 40),
+                          child: Text(
+                            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SlideTransition(
+                            position: offset!,
+                            child: Container(
+                              child: leaveRequestForm(),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(45),
+                                    topRight: Radius.circular(45)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+              ))
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget leaveRequestForm() {
@@ -437,98 +534,77 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Material(
-        child: Container(
-          color: Colors.yellow,
-          child: Column(
-            children: [
-              AppBar(
-                  backgroundColor: Colors.yellow,
-                  automaticallyImplyLeading: false,
-                  shadowColor: Colors.transparent,
-                  leadingWidth: 70,
-                  leading: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(
-                        Icons.chevron_left,
-                        color: Colors.black,
-                        size: 30.0,
-                      ))),
-              Expanded(
-                  child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: Stack(children: [
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      child: _reqStatusContainer(),
-                      width: SizeConfig.screenWidth,
-                      height: SizeConfig.safeBlockVertical! * 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(45),
-                            topRight: Radius.circular(45)),
-                      ),
-                    ),
-                  ),
-                  Align(
-                      alignment: Alignment(1.0, -0.3),
-                      child: Container(
-                        width: SizeConfig.safeBlockHorizontal! * 60,
-                        height: SizeConfig.safeBlockHorizontal! * 50,
-                        child: Image.asset(sitReadingDoodle),
-                      )),
-                  Column(
-                    children: [
-                      AnimatedOpacity(
-                        opacity: _visible ? 1.0 : 0.0,
-                        duration: Duration(milliseconds: 500),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 40, right: 40, top: 20, bottom: 40),
-                          child: Text(
-                            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: SlideTransition(
-                            position: offset!,
-                            child: Container(
-                              child: leaveRequestForm(),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(45),
-                                    topRight: Radius.circular(45)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
-              ))
-            ],
-          ),
+  _profileUpdateChecker() async {
+    String first = await TempStorage.getFirstName();
+    String branch = await TempStorage.getBranch();
+    String semester = await TempStorage.getSemester();
+    String course = await TempStorage.getCourse();
+    String email = await TempStorage.getEmail();
+
+    if (first.isEmpty ||
+        branch.isEmpty ||
+        semester.isEmpty ||
+        course.isEmpty ||
+        email.isEmpty) {
+      _showDialog();
+    }
+  }
+
+  _showDialog() async {
+    Dialog dialog = Dialog(
+      backgroundColor: Colors.white,
+      insetPadding: EdgeInsets.all(20.0),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Attention!",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'roboto',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              "First you have to update your profile",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'roboto',
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w400),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Go Back",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'roboto',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16.0),
+              ),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0)))),
+            )
+          ],
         ),
       ),
     );
+
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return WillPopScope(child: dialog, onWillPop: () async => false);
+        });
+    Navigator.pop(context);
   }
 }
