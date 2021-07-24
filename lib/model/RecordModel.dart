@@ -47,7 +47,7 @@ class Record {
   String? status;
   String? id;
   String? rid;
-  String? studentId;
+  StudentId? studentId;
   DateTime? from;
   DateTime? to;
   String? destination;
@@ -59,7 +59,7 @@ class Record {
         status: json["status"],
         id: json["_id"],
         rid: json["RID"],
-        studentId: json["studentId"],
+        studentId: StudentId.fromJson(json["studentId"]),
         from: DateTime.parse(json["from"]),
         to: DateTime.parse(json["to"]),
         destination: json["destination"],
@@ -68,15 +68,63 @@ class Record {
       );
 
   Map<String, dynamic> toJson() => {
-        "issuedDate": issuedDate!.toIso8601String(),
+        "issuedDate": issuedDate?.toIso8601String(),
         "status": status,
         "_id": id,
         "RID": rid,
-        "studentId": studentId,
-        "from": from!.toIso8601String(),
-        "to": to!.toIso8601String(),
+        "studentId": studentId?.toJson(),
+        "from": from?.toIso8601String(),
+        "to": to?.toIso8601String(),
         "destination": destination,
         "reason": reason,
         "__v": v,
+      };
+}
+
+class StudentId {
+  StudentId({
+    this.id,
+    this.rid,
+    this.v,
+    this.branch,
+    this.course,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.semester,
+  });
+
+  String? id;
+  String? rid;
+  int? v;
+  String? branch;
+  String? course;
+  String? email;
+  String? firstName;
+  String? lastName;
+  int? semester;
+
+  factory StudentId.fromJson(Map<String, dynamic> json) => StudentId(
+        id: json["_id"],
+        rid: json["RID"],
+        v: json["__v"],
+        branch: json["branch"],
+        course: json["course"],
+        email: json["email"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        semester: json["semester"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "RID": rid,
+        "__v": v,
+        "branch": branch,
+        "course": course,
+        "email": email,
+        "firstName": firstName,
+        "lastName": lastName,
+        "semester": semester,
       };
 }

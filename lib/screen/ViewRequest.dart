@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
-import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/model/RecordModel.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -27,6 +26,11 @@ class _ViewRequest extends State<ViewRequest> {
   String toDate = "";
   String destination = "";
   String reason = "";
+  String firstname = "";
+  String lastname = "";
+  String course = "";
+  String branch = "";
+  String semester = "";
   bool isprocess = true;
 
   bool isCancel = false;
@@ -120,6 +124,13 @@ class _ViewRequest extends State<ViewRequest> {
         DateTime? _todate = recordModel.record!.to;
         String? _status = recordModel.record!.status;
 
+        //student detail
+        String? _firstname = recordModel.record!.studentId!.firstName;
+        String? _lastname = recordModel.record!.studentId!.lastName.toString();
+        String? _course = recordModel.record!.studentId!.course;
+        String? _branch = recordModel.record!.studentId!.branch;
+        String? _semester = recordModel.record!.studentId!.semester.toString();
+
         if (isSuccess!) {
           setState(() {
             isprocess = false;
@@ -129,6 +140,11 @@ class _ViewRequest extends State<ViewRequest> {
               toDate = DateFormat('dd MMM yyyy').format(_todate!);
               destination = recordModel.record!.destination!;
               reason = recordModel.record!.reason!;
+              firstname = _firstname!;
+              lastname = _lastname;
+              course = _course!;
+              branch = _branch!;
+              semester = _semester;
 
               if (_status!.contains("ACCEPTED"))
                 isAcceptedStatus = true;
@@ -141,10 +157,11 @@ class _ViewRequest extends State<ViewRequest> {
         }
       }
     } catch (e) {
-      var dioError = e as DioError;
+      print(e);
       setState(() {
         isprocess = false;
       });
+      var dioError = e as DioError;
       var error = DioExceptions.fromDioError(dioError).toString();
       print(error);
     }
@@ -194,7 +211,7 @@ class _ViewRequest extends State<ViewRequest> {
             height: 15,
           ),
           Text(
-            "Aman Vishwakarma",
+            "$firstname $lastname",
             style: TextStyle(
                 fontFamily: 'roboto',
                 fontSize: 16,
@@ -202,7 +219,7 @@ class _ViewRequest extends State<ViewRequest> {
                 color: Colors.black),
           ),
           Text(
-            "B.tech CSE - 6",
+            "$course $branch - $semester",
             style: TextStyle(
                 fontFamily: 'roboto',
                 fontSize: 16,

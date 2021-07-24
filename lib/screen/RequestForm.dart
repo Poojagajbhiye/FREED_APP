@@ -41,7 +41,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 2.5))
         .animate(controller!);
 
-    Future.delayed(Duration(seconds: 1), () => _profileUpdateChecker());
+    Future.delayed(Duration(milliseconds: 300), () => _profileUpdateChecker());
   }
 
   @override
@@ -553,6 +553,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   _showDialog() async {
     Dialog dialog = Dialog(
       backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       insetPadding: EdgeInsets.all(20.0),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
