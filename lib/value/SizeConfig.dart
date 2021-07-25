@@ -31,4 +31,14 @@ class SizeConfig {
     safeBlockHorizontal = (screenWidth! - _safeAreaHorizontal!) / 100;
     safeBlockVertical = (screenHeight! - _safeAreaVertical!) / 100;
   }
+
+  static double dancingDoodleSize() {
+    if (screenHeight! >= 600 && screenHeight! <= 700) {
+      return blockSizeHorizontal! * 65;
+    } else if (screenHeight! >= 701 && screenHeight! <= 800) {
+      return blockSizeHorizontal! * 75;
+    } else {
+      return blockSizeHorizontal! * 80;
+    }
+  }
 }

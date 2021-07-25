@@ -12,9 +12,32 @@ import 'package:freed/value/Image.dart';
 import 'package:freed/value/SizeConfig.dart';
 import 'package:freed/model/LoginResponse.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SignIn();
+  }
+}
+
+class _SignIn extends State<SignIn> {
+  final loginKey = GlobalKey<FormState>();
+
+  TextEditingController _rid = TextEditingController();
+  TextEditingController _pass = TextEditingController();
+  bool isprogress = false;
+
+  bool keyboardVisiblity = false;
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
+    });
+    print(keyboardVisiblity);
+    print(SizeConfig.blockSizeHorizontal);
+    print(SizeConfig.blockSizeVertical);
+    print(SizeConfig.screenWidth);
+    print(SizeConfig.screenHeight);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Material(
@@ -57,9 +80,9 @@ class SignIn extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
-                          child: SignInForm(),
-                          height: SizeConfig.screenWidth! > 400
-                              ? SizeConfig.safeBlockVertical! * 67
+                          child: _SignInForm(),
+                          height: keyboardVisiblity
+                              ? double.infinity
                               : SizeConfig.safeBlockVertical! * 70,
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -81,195 +104,187 @@ class SignIn extends StatelessWidget {
           ),
         ));
   }
-}
 
-Widget _doodleImage() {
-  return Container(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Sign In",
-          style: TextStyle(
-              decoration: TextDecoration.none,
-              color: Colors.black,
-              fontFamily: 'roboto',
-              fontWeight: FontWeight.w700,
-              fontSize: 30.0),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Image.asset(
-          dancingDoodle,
-          width: SizeConfig.screenWidth! > 400
-              ? SizeConfig.safeBlockHorizontal! * 60
-              : SizeConfig.safeBlockHorizontal! * 75,
-        ),
-      ],
-    ),
-  );
-}
-
-class SignInForm extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _SignInForm();
-  }
-}
-
-class _SignInForm extends State<SignInForm> {
-  final loginKey = GlobalKey<FormState>();
-
-  TextEditingController _rid = TextEditingController();
-  TextEditingController _pass = TextEditingController();
-  bool isprogress = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _SignInForm() {
     return Form(
       key: loginKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-                top: SizeConfig.safeBlockVertical! * 16, left: 50, right: 50),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*field required";
-                        } else if (!value.toUpperCase().contains("UG")) {
-                          return "please enter valid id";
-                        }
-                        return null;
-                      },
-                      controller: _rid,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Registration No",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(30.0)))),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  width: double.infinity,
-                  child: TextFormField(
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*required field";
-                        } else if (value.length < 6) {
-                          return "please enter min 6 char.";
-                        }
-                        return null;
-                      },
-                      controller: _pass,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Password",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(30.0)))),
-                ),
-                Container(
-                  height: 45,
-                  margin: EdgeInsets.only(top: 25, bottom: 5),
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      var isvalid = loginKey.currentState?.validate();
-
-                      if (isvalid!) {
-                        String id = _rid.text;
-                        String pass = _pass.text;
-
-                        setState(() {
-                          isprogress = true;
-                        });
-
-                        _loginControler(id.toUpperCase(), pass);
-                      }
-                    },
-                    child: isprogress
-                        ? SizedBox(
-                            height: 25.0,
-                            width: 25.0,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.0,
-                            ))
-                        : Text(
-                            "Sign In",
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.0),
-                          ),
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)))),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black)),
+          SingleChildScrollView(
+            reverse: true,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: SizeConfig.blockSizeHorizontal! * 30,
+                  left: 50,
+                  right: 50,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: TextFormField(
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*field required";
+                          } else if (!value.toUpperCase().contains("UG")) {
+                            return "please enter valid id";
+                          }
+                          return null;
+                        },
+                        controller: _rid,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Registration No",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 15.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(30.0)))),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot Password ?",
-                      style: TextStyle(
-                          fontFamily: 'robot',
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.default_color),
-                    )),
-                SizedBox(
-                  height: SizeConfig.safeBlockVertical! * 1.5,
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignUp()),
-                          (route) => false);
-                    },
-                    child: Text(
-                      "Don't have an account ?",
-                      style: TextStyle(
-                          fontFamily: 'robot',
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.default_color),
-                    ))
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: double.infinity,
+                    child: TextFormField(
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*required field";
+                          } else if (value.length < 6) {
+                            return "please enter min 6 char.";
+                          }
+                          return null;
+                        },
+                        controller: _pass,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Password",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 15.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(30.0)))),
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.only(top: 25, bottom: 5),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        var isvalid = loginKey.currentState?.validate();
+
+                        if (isvalid!) {
+                          String id = _rid.text;
+                          String pass = _pass.text;
+
+                          setState(() {
+                            isprogress = true;
+                          });
+
+                          _loginControler(id.toUpperCase(), pass);
+                        }
+                      },
+                      child: isprogress
+                          ? SizedBox(
+                              height: 25.0,
+                              width: 25.0,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2.0,
+                              ))
+                          : Text(
+                              "Sign In",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0),
+                            ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)))),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black)),
+                    ),
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Forgot Password ?",
+                        style: TextStyle(
+                            fontFamily: 'robot',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.default_color),
+                      )),
+                  SizedBox(
+                    height: SizeConfig.safeBlockVertical! * 1.5,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUp()),
+                            (route) => false);
+                      },
+                      child: Text(
+                        "Don't have an account ?",
+                        style: TextStyle(
+                            fontFamily: 'robot',
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.default_color),
+                      ))
+                ],
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _doodleImage() {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Sign In",
+            style: TextStyle(
+                decoration: TextDecoration.none,
+                color: Colors.black,
+                fontFamily: 'roboto',
+                fontWeight: FontWeight.w700,
+                fontSize: SizeConfig.blockSizeVertical! * 4),
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical! * 1.5,
+          ),
+          keyboardVisiblity
+              ? SizedBox()
+              : Image.asset(
+                  dancingDoodle,
+                  fit: BoxFit.cover,
+                  width: SizeConfig.dancingDoodleSize(),
+                ),
         ],
       ),
     );
