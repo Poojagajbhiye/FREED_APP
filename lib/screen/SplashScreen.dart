@@ -86,7 +86,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         letterSpacing: 1.5,
                         fontFamily: 'poppins',
                         fontWeight: FontWeight.w200,
-                        fontSize: 58.0,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 14,
                         color: Colors.black,
                         decoration: TextDecoration.none),
                   ),
@@ -97,7 +97,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         letterSpacing: 1.2,
                         fontFamily: 'poppins',
                         fontWeight: FontWeight.w200,
-                        fontSize: 20.0,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 5,
                         color: Colors.black,
                         decoration: TextDecoration.none),
                   ),
@@ -155,7 +155,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         topLeft: Radius.circular(45),
                         topRight: Radius.circular(45))),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 35, right: 35, top: 60),
+                  padding: EdgeInsets.only(left: 35, right: 35, top: SizeConfig.blockSizeVertical! * 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -166,7 +166,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             color: Colors.black,
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700,
-                            fontSize: 30.0),
+                            fontSize: SizeConfig.blockSizeHorizontal! * 7),
                       ),
                       SizedBox(
                         height: 30,
@@ -178,7 +178,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             color: Colors.black,
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700,
-                            fontSize: 16.0),
+                            fontSize: SizeConfig.blockSizeHorizontal! * 4.2),
                       ),
                       SizedBox(
                         height: 35,

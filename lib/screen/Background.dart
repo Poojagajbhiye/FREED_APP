@@ -40,7 +40,7 @@ class Background extends StatelessWidget {
           left: SizeConfig.safeBlockHorizontal! -
               SizeConfig.blockSizeHorizontal! * 27,
           child: Image.asset(rollerSkate),
-          width: SizeConfig.safeBlockHorizontal! * 110,
+          width: SizeConfig.rollerSkateDoodleSize(),
         ),
         child!,
       ]),
