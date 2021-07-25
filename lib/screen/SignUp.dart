@@ -5,10 +5,24 @@ import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
+import 'package:freed/value/SizeConfig.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SignUp();
+  }
+}
+
+class _SignUp extends State<SignUp> {
+  bool keyboardVisiblity = false;
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
+    });
+    print(keyboardVisiblity);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Material(
@@ -48,19 +62,24 @@ class SignUp extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: 40, right: 40, top: 20, bottom: 50),
-                      child: Text(
-                        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 14.0,
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
+                    keyboardVisiblity
+                        ? SizedBox()
+                        : Container(
+                            margin: EdgeInsets.only(
+                                left: 40,
+                                right: 40,
+                                top: 20,
+                                bottom: SizeConfig.blockSizeVertical! * 6),
+                            child: Text(
+                              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomCenter,
@@ -109,165 +128,173 @@ class _SignUpForm extends State<SignUpForm> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: 50, right: 50, top: 10),
-            child: Column(
-              children: [
-                Text(
-                  "Sign Up",
-                  style: TextStyle(
-                      fontFamily: 'roboto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 30),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 35),
-                  width: double.infinity,
-                  child: TextFormField(
-                      controller: _rid,
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*required field";
-                        } else if (!value.toUpperCase().contains("UG")) {
-                          return "please enter valid id";
-                        }
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Registration No",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(30.0)))),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  width: double.infinity,
-                  child: TextFormField(
-                      controller: _pass,
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*required field";
-                        } else if (value.length < 6) {
-                          return "please enter min 6 char.";
-                        }
-                        password = value;
-                        return null;
-                      },
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Password",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(30.0)))),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  width: double.infinity,
-                  child: TextFormField(
-                      textAlign: TextAlign.center,
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*required field";
-                        } else if (value != password) {
-                          return "password does't match";
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.number,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Confirm Password",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(30.0)))),
-                ),
-                Container(
-                  height: 45,
-                  margin: EdgeInsets.only(top: 30, bottom: 15),
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      var isvalid = signupKey.currentState?.validate();
-                      if (isvalid!) {
-                        String id = _rid.text;
-                        String pass = _pass.text;
-
-                        setState(() {
-                          isProgress = true;
-                        });
-
-                        _signUpControler(id.toUpperCase(), pass);
-                      }
-                    },
-                    child: isProgress
-                        ? SizedBox(
-                            height: 25.0,
-                            width: 25.0,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.0,
-                            ))
-                        : Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.0),
-                          ),
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)))),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black)),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignIn()),
-                        (route) => false);
-                  },
-                  child: Text(
-                    "Already have an account ?",
+          SingleChildScrollView(
+            reverse: true,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 50,
+                  right: 50,
+                  top: 10,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  Text(
+                    "Sign Up",
                     style: TextStyle(
-                        fontFamily: 'robot',
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.default_color),
+                        fontFamily: 'roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 8),
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 35),
+                    width: double.infinity,
+                    child: TextFormField(
+                        controller: _rid,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*required field";
+                          } else if (!value.toUpperCase().contains("UG")) {
+                            return "please enter valid id";
+                          }
+                          return null;
+                        },
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Registration No",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 15.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(30.0)))),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: double.infinity,
+                    child: TextFormField(
+                        controller: _pass,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*required field";
+                          } else if (value.length < 6) {
+                            return "please enter min 6 char.";
+                          }
+                          password = value;
+                          return null;
+                        },
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Password",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 15.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(30.0)))),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: double.infinity,
+                    child: TextFormField(
+                        textAlign: TextAlign.center,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*required field";
+                          } else if (value != password) {
+                            return "password does't match";
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Confirm Password",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15.0, horizontal: 15.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(30.0)))),
+                  ),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.only(top: 30, bottom: 15),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        var isvalid = signupKey.currentState?.validate();
+                        if (isvalid!) {
+                          String id = _rid.text;
+                          String pass = _pass.text;
+
+                          setState(() {
+                            isProgress = true;
+                          });
+
+                          _signUpControler(id.toUpperCase(), pass);
+                        }
+                      },
+                      child: isProgress
+                          ? SizedBox(
+                              height: 25.0,
+                              width: 25.0,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2.0,
+                              ))
+                          : Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0),
+                            ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)))),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black)),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignIn()),
+                          (route) => false);
+                    },
+                    child: Text(
+                      "Already have an account ?",
+                      style: TextStyle(
+                          fontFamily: 'robot',
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.default_color),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
