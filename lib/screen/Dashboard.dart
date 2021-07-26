@@ -119,17 +119,17 @@ class _Dashboard extends State<Dashboard> {
                       SizedBox(height: 5),
 
                       //course and branch
-                      Text(
-                        course.isNotEmpty || branch.isNotEmpty
-                            ? "$course $branch"
-                            : " ",
-                        style: TextStyle(
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.0,
-                            decoration: TextDecoration.none,
-                            color: Colors.black),
-                      ),
+                      course.isNotEmpty || branch.isNotEmpty
+                          ? Text(
+                              "$course $branch",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.black),
+                            )
+                          : SizedBox(),
                       SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
