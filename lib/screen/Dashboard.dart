@@ -83,8 +83,8 @@ class _Dashboard extends State<Dashboard> {
                       Stack(
                         children: [
                           Container(
-                            width: 80,
-                            height: 80,
+                            width: SizeConfig.blockSizeVertical! * 11,
+                            height: SizeConfig.blockSizeVertical! * 11,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -95,8 +95,8 @@ class _Dashboard extends State<Dashboard> {
                             left: 0.0,
                             right: 0.0,
                             child: Container(
-                              width: 70,
-                              height: 70,
+                              width: SizeConfig.blockSizeVertical! * 10,
+                              height: SizeConfig.blockSizeVertical! * 10,
                               child: Image.asset(readingDoodle),
                             ),
                           )
@@ -193,7 +193,7 @@ class _Dashboard extends State<Dashboard> {
                   tag: 'expend',
                   child: Container(
                     width: SizeConfig.screenWidth,
-                    height: SizeConfig.blockSizeVertical! * 53,
+                    height: SizeConfig.dragViewSize(),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -216,7 +216,7 @@ class _Dashboard extends State<Dashboard> {
       children: [
         Container(
           width: double.infinity,
-          height: 35,
+          height: SizeConfig.blockSizeVertical! * 4.5,
           child: Opacity(
             opacity: 0.1,
             child: Icon(

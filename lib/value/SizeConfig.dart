@@ -51,4 +51,14 @@ class SizeConfig {
       return safeBlockHorizontal! * 110;
     }
   }
+
+  static double dragViewSize() {
+    if (screenHeight! >= 600 && screenHeight! <= 700) {
+      return blockSizeVertical! * 48.5;
+    } else if (screenHeight! >= 701 && screenHeight! <= 800) {
+      return blockSizeVertical! * 53;
+    } else {
+      return blockSizeVertical! * 55;
+    }
+  }
 }
