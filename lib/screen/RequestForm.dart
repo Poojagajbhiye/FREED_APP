@@ -31,6 +31,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
 
   final _leaveFormKey = GlobalKey<FormState>();
 
+  bool keyboardVisiblity = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -46,6 +48,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Material(
@@ -96,19 +101,25 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       AnimatedOpacity(
                         opacity: _visible ? 1.0 : 0.0,
                         duration: Duration(milliseconds: 500),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 40, right: 40, top: 20, bottom: 40),
-                          child: Text(
-                            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
+                        child: keyboardVisiblity
+                            ? SizedBox()
+                            : Container(
+                                margin: EdgeInsets.only(
+                                    left: 40,
+                                    right: 40,
+                                    top: 20,
+                                    bottom:
+                                        SizeConfig.blockSizeVertical! * 4.5),
+                                child: Text(
+                                  "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontFamily: 'roboto',
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
                       ),
                       Expanded(
                         child: Align(
@@ -146,247 +157,254 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
       child: ListView(
         padding: EdgeInsets.all(0.0),
         children: [
-          Padding(
-            padding: EdgeInsets.only(left: 35, right: 35, top: 30),
-            child: Column(
-              children: [
-                Text(
-                  "Escape Request Form",
-                  style: TextStyle(
-                      fontFamily: 'roboto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      width: double.infinity,
-                      child: TextFormField(
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return "*required";
-                            }
-                            return null;
-                          },
-                          onTap: () async {
-                            DateTime? pickedDate = await _fromDatePicker();
-
-                            if (pickedDate != null) {
-                              formatFromDate =
-                                  DateFormat('dd MMM').format(pickedDate);
-                              setState(() {
-                                pickedFromDate = pickedDate;
-                              });
-                            }
-                          },
-                          controller: TextEditingController(
-                              text: formatFromDate != null
-                                  ? formatFromDate
-                                  : null),
-                          textAlign: TextAlign.center,
-                          readOnly: true,
-                          keyboardType: TextInputType.text,
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 16.0),
-                          decoration: InputDecoration(
-                              hintText: "From",
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10.0),
-                              hintMaxLines: 1,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.5),
-                                  borderRadius: BorderRadius.circular(4.0)))),
-                    )),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    Expanded(
-                        child: Container(
-                      width: double.infinity,
-                      child: TextFormField(
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return "*required";
-                            }
-                            return null;
-                          },
-                          onTap: () async {
-                            DateTime? pickedDate = await _toDatePicker();
-
-                            if (pickedDate != null) {
-                              formatToDate =
-                                  DateFormat('dd MMM').format(pickedDate);
-                              setState(() {
-                                pickedToDate = pickedDate;
-                              });
-                            }
-                          },
-                          controller: TextEditingController(
-                              text: formatToDate != null ? formatToDate : null),
-                          textAlign: TextAlign.center,
-                          readOnly: true,
-                          keyboardType: TextInputType.text,
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 16.0),
-                          decoration: InputDecoration(
-                              hintText: "To",
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10.0),
-                              hintMaxLines: 1,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.5),
-                                  borderRadius: BorderRadius.circular(4.0)))),
-                    )),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: double.infinity,
-                  child: TextFormField(
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return "*required";
-                        }
-                        return null;
-                      },
-                      controller: destinationController,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.text,
-                      maxLines: 1,
-                      style: TextStyle(fontSize: 16.0),
-                      decoration: InputDecoration(
-                          hintText: "Destination",
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
-                          hintMaxLines: 1,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 1.5),
-                              borderRadius: BorderRadius.circular(4.0)))),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+          SingleChildScrollView(
+            reverse: true,
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 35,
+                  right: 35,
+                  top: 30,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  Text(
+                    "Escape Request Form",
+                    style: TextStyle(
+                        fontFamily: 'roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 5.3),
+                  ),
+                  SizedBox(height: SizeConfig.blockSizeVertical! * 5),
+                  Row(
                     children: [
-                      Text(
-                        "Reason for escape",
-                        style: TextStyle(
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
+                      Expanded(
+                          child: Container(
+                        width: double.infinity,
                         child: TextFormField(
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return "*required";
-                            }
-                            return null;
-                          },
-                          controller: reasonController,
-                          maxLines: 5,
-                          maxLength: 250,
-                          style: TextStyle(fontSize: 16.0),
-                          decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10.0),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4.0)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                  borderSide: BorderSide(
-                                      color: Colors.black, width: 1.5))),
-                        ),
+                            validator: (String? value) {
+                              if (value!.isEmpty) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime? pickedDate = await _fromDatePicker();
+
+                              if (pickedDate != null) {
+                                formatFromDate =
+                                    DateFormat('dd MMM').format(pickedDate);
+                                setState(() {
+                                  pickedFromDate = pickedDate;
+                                });
+                              }
+                            },
+                            controller: TextEditingController(
+                                text: formatFromDate != null
+                                    ? formatFromDate
+                                    : null),
+                            textAlign: TextAlign.center,
+                            readOnly: true,
+                            keyboardType: TextInputType.text,
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 16.0),
+                            decoration: InputDecoration(
+                                hintText: "From",
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10.0),
+                                hintMaxLines: 1,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.5),
+                                    borderRadius: BorderRadius.circular(4.0)))),
+                      )),
+                      SizedBox(
+                        width: 25,
                       ),
+                      Expanded(
+                          child: Container(
+                        width: double.infinity,
+                        child: TextFormField(
+                            validator: (String? value) {
+                              if (value!.isEmpty) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            onTap: () async {
+                              DateTime? pickedDate = await _toDatePicker();
+
+                              if (pickedDate != null) {
+                                formatToDate =
+                                    DateFormat('dd MMM').format(pickedDate);
+                                setState(() {
+                                  pickedToDate = pickedDate;
+                                });
+                              }
+                            },
+                            controller: TextEditingController(
+                                text:
+                                    formatToDate != null ? formatToDate : null),
+                            textAlign: TextAlign.center,
+                            readOnly: true,
+                            keyboardType: TextInputType.text,
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 16.0),
+                            decoration: InputDecoration(
+                                hintText: "To",
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10.0),
+                                hintMaxLines: 1,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.5),
+                                    borderRadius: BorderRadius.circular(4.0)))),
+                      )),
                     ],
                   ),
-                ),
-                Container(
-                  height: 45,
-                  margin:
-                      EdgeInsets.only(top: 30, bottom: 15, right: 15, left: 15),
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (_leaveFormKey.currentState!.validate()) {
-                        setState(() {
-                          isProgress = true;
-                        });
-                        String? _rid = await TempStorage.getRid();
-                        String? _sid = await TempStorage.getUserId();
-                        String? _fromDate = pickedFromDate.toString();
-                        String? _toDate = pickedToDate.toString();
-                        String? _destination = destinationController.text;
-                        String? _reason = reasonController.text;
-
-                        _leaveRequestCall(_rid, _sid, _fromDate, _toDate,
-                            _destination, _reason);
-                      }
-                    },
-                    child: isProgress
-                        ? SizedBox(
-                            height: 25.0,
-                            width: 25.0,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.0,
-                            ),
-                          )
-                        : Text(
-                            "Process Request",
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.0),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: TextFormField(
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "*required";
+                          }
+                          return null;
+                        },
+                        controller: destinationController,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.text,
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 16.0),
+                        decoration: InputDecoration(
+                            hintText: "Destination",
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            hintMaxLines: 1,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 1.5),
+                                borderRadius: BorderRadius.circular(4.0)))),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Reason for escape",
+                          style: TextStyle(
+                              fontFamily: 'roboto',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          child: TextFormField(
+                            validator: (String? value) {
+                              if (value!.isEmpty) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            controller: reasonController,
+                            maxLines: 5,
+                            maxLength: 250,
+                            style: TextStyle(fontSize: 16.0),
+                            decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 1.5))),
                           ),
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)))),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.black)),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Navigator.pushNamed(context, '/view request');
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                        fontFamily: 'robot',
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.default_color),
+                  Container(
+                    height: 45,
+                    margin: EdgeInsets.only(
+                        top: 30, bottom: 15, right: 15, left: 15),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_leaveFormKey.currentState!.validate()) {
+                          setState(() {
+                            isProgress = true;
+                          });
+                          String? _rid = await TempStorage.getRid();
+                          String? _sid = await TempStorage.getUserId();
+                          String? _fromDate = pickedFromDate.toString();
+                          String? _toDate = pickedToDate.toString();
+                          String? _destination = destinationController.text;
+                          String? _reason = reasonController.text;
+
+                          _leaveRequestCall(_rid, _sid, _fromDate, _toDate,
+                              _destination, _reason);
+                        }
+                      },
+                      child: isProgress
+                          ? SizedBox(
+                              height: 25.0,
+                              width: 25.0,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2.0,
+                              ),
+                            )
+                          : Text(
+                              "Process Request",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.0),
+                            ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)))),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black)),
+                    ),
                   ),
-                ),
-              ],
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                          fontFamily: 'robot',
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.default_color),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -463,74 +481,78 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   }
 
   Widget _reqStatusContainer() {
-    return Padding(
+    return ListView(
       padding: EdgeInsets.only(top: 50, right: 15, bottom: 15, left: 15),
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            width: 50,
-            height: 50,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Colors.black),
-            child: Icon(
-              Icons.done_rounded,
-              color: Colors.white,
-              size: 40,
+      children: [
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: 50,
+              height: 50,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.black),
+              child: Icon(
+                Icons.done_rounded,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            "Get Ready, with the plan!",
-            style: TextStyle(
-                fontFamily: 'roboto',
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-                color: Colors.black),
-          ),
-          SizedBox(height: 10),
-          Text(
-            successMsg,
-            style: TextStyle(
-                fontFamily: 'roboto',
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                color: Colors.default_color),
-          ),
-          SizedBox(height: 30),
-          Container(
-              height: 40.0,
-              width: 110,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0))),
-                      shadowColor: MaterialStateProperty.all(Colors.black)),
-                  child: Text(
-                    "Done",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'roboto',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.0),
-                  ))),
-          SizedBox(height: 7),
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "Track Request Status",
-                style: TextStyle(
-                    fontFamily: 'roboto',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.0,
-                    color: Colors.default_color),
-              ))
-        ],
-      ),
+            SizedBox(height: 10),
+            Text(
+              "Get Ready, with the plan!",
+              style: TextStyle(
+                  fontFamily: 'roboto',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 10),
+            Text(
+              successMsg,
+              style: TextStyle(
+                  fontFamily: 'roboto',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.default_color),
+            ),
+            SizedBox(height: 30),
+            Container(
+                height: 40.0,
+                width: 110,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0))),
+                        shadowColor: MaterialStateProperty.all(Colors.black)),
+                    child: Text(
+                      "Done",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'roboto',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.0),
+                    ))),
+            SizedBox(height: 7),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Track Request Status",
+                  style: TextStyle(
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.0,
+                      color: Colors.default_color),
+                ))
+          ],
+        )
+      ],
     );
   }
 
