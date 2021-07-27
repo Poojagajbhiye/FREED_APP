@@ -296,7 +296,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
         if (isSuccess!) {
           setState(() {
             isLoading = false;
-            recordList = list;
+            recordList = list?.reversed.toList();
 
             if (clickAccept)
               _filtered("ACCEPTED");

@@ -254,6 +254,7 @@ class _Dashboard extends State<Dashboard> {
                       ),
                     )
                   : ListView.builder(
+                      shrinkWrap: true,
                       itemCount: recordList == null ? 0 : recordList?.length,
                       padding: EdgeInsets.only(
                           left: 20.0, right: 20.0, top: 5.0, bottom: 10.0),
@@ -326,7 +327,7 @@ class _Dashboard extends State<Dashboard> {
         if (isSuccess!) {
           setState(() {
             _isLoading = false;
-            recordList = list;
+            recordList = list?.reversed.toList();
           });
         }
       }
