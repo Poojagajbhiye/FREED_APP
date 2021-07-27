@@ -40,7 +40,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
   _checkTokenAavailablity() async {
     String userid = await TempStorage.getUserId();
     if (userid.isNotEmpty) {
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(milliseconds: 1500), () {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
