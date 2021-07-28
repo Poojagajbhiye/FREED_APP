@@ -225,12 +225,15 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(children: [
-                                      Icon(
-                                        _cardIconPicker(),
-                                        size: 20,
-                                        color: Colors.black,
+                                      Opacity(
+                                        opacity: 0.7,
+                                        child: Icon(
+                                          _cardIconPicker(),
+                                          size: 20,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                      SizedBox(width: 5),
+                                      SizedBox(width: 10.0),
                                       Text(
                                         formatedDate,
                                         style: TextStyle(

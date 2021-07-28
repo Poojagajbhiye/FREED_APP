@@ -285,12 +285,15 @@ class _Dashboard extends State<Dashboard> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(children: [
-                                  Icon(
-                                    _cardIconPicker(record.status.toString()),
-                                    size: 20,
-                                    color: Colors.black,
+                                  Opacity(
+                                    opacity: 0.7,
+                                    child: Icon(
+                                      Icons.timer_outlined,
+                                      size: 20,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                  SizedBox(width: 5.0),
+                                  SizedBox(width: 10.0),
                                   Text(
                                     formatedDate,
                                     style: TextStyle(
@@ -331,15 +334,6 @@ class _Dashboard extends State<Dashboard> {
     );
   }
 
-  IconData _cardIconPicker(String status) {
-    if (status == "ACCEPTED")
-      return Icons.check_circle_outline;
-    else if (status == "DECLINED")
-      return Icons.highlight_off_outlined;
-    else
-      return Icons.timer_outlined;
-  }
-
   _getRecordList() async {
     try {
       var response = await ApiClient.getServices().getStudentRecords(_sid!);
@@ -352,7 +346,9 @@ class _Dashboard extends State<Dashboard> {
         if (isSuccess!) {
           setState(() {
             _isLoading = false;
-            recordList = list?.reversed.toList();
+            if (list != null) {
+              recordList = list.reversed.where((record) => (record.status == "PROCESS".toUpperCase())).toList();
+            }
           });
         }
       }

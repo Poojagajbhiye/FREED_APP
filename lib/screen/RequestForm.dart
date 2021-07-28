@@ -592,7 +592,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             ),
             SizedBox(height: 10.0),
             Text(
-              "First you have to update your profile",
+              "Please update your profile to continue",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'roboto',
@@ -605,7 +605,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                 Navigator.pop(context);
               },
               child: Text(
-                "Go Back",
+                "Update Profile",
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'roboto',
