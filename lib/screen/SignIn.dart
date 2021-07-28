@@ -33,11 +33,6 @@ class _SignIn extends State<SignIn> {
     setState(() {
       keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
     });
-    print(keyboardVisiblity);
-    print(SizeConfig.blockSizeHorizontal);
-    print(SizeConfig.blockSizeVertical);
-    print(SizeConfig.screenWidth);
-    print(SizeConfig.screenHeight);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Material(
@@ -154,6 +149,7 @@ class _SignIn extends State<SignIn> {
                     margin: EdgeInsets.only(top: 20),
                     width: double.infinity,
                     child: TextFormField(
+                      obscureText: true,
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return "*required field";

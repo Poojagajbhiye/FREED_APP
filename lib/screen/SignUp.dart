@@ -22,7 +22,6 @@ class _SignUp extends State<SignUp> {
     setState(() {
       keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
     });
-    print(keyboardVisiblity);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Material(
@@ -180,6 +179,7 @@ class _SignUpForm extends State<SignUpForm> {
                     width: double.infinity,
                     child: TextFormField(
                         controller: _pass,
+                        obscureText: true,
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return "*required field";
