@@ -527,9 +527,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.black),
-                        shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
                         shadowColor: MaterialStateProperty.all(Colors.black)),
                     child: Text(
                       "Done",
@@ -573,6 +572,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   }
 
   _showDialog() async {
+    BuildContext? dialogContext;
     Dialog dialog = Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
@@ -592,7 +592,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             ),
             SizedBox(height: 10.0),
             Text(
-              "First you have to update your profile",
+              "Please Update your Profile to continue",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'roboto',
@@ -602,10 +602,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(dialogContext!);
               },
               child: Text(
-                "Go Back",
+                "Update Profile",
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'roboto',
@@ -625,9 +625,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     await showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) {
+        builder: (BuildContext context) {
+          dialogContext = context;
           return WillPopScope(child: dialog, onWillPop: () async => false);
         });
-    Navigator.pop(context);
+    Navigator.popAndPushNamed(context, '/profile');
   }
 }
