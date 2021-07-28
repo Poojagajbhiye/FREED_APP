@@ -15,17 +15,16 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigation extends State<BottomNavigation> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
   int _currentIndex = 1;
   String? _sid;
 
   _BottomNavigation(this._sid);
 
-  // late final List<Widget> tabs = <Widget>[
-  //   StudentProfile(),
-  //   Dashboard(sid: _sid),
-  //   FreedNotification(),
-  // ];
+  late final List<Widget> tabs = <Widget>[
+    StudentProfile(),
+    Dashboard(sid: _sid),
+    FreedNotification(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +38,6 @@ class _BottomNavigation extends State<BottomNavigation> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
-
-              switch (index) {
-                case 0:
-                  _navigatorKey.currentState!.pushNamed('/profile');
-                  break;
-                case 1:
-                  _navigatorKey.currentState!.pushNamed('/');
-                  break;
-                case 2:
-                  _navigatorKey.currentState!.pushNamed('/notification');
-                  break;
-              }
             });
           },
           items: [
@@ -67,29 +54,7 @@ class _BottomNavigation extends State<BottomNavigation> {
                 backgroundColor: Colors.white,
                 label: "Notification"),
           ]),
-      // key: _navigatorKey,
-      body: Navigator(
-        key: _navigatorKey,
-        initialRoute: '/',
-        onGenerateRoute: (RouteSettings settings) {
-          WidgetBuilder? builder;
-          switch (settings.name) {
-            case '/':
-              builder = (BuildContext context) => Dashboard(sid: _sid);
-              break;
-            case '/profile':
-              builder = (BuildContext context) => StudentProfile();
-              setState(() {
-                _currentIndex = 0;
-              });
-              break;
-            case '/notification':
-              builder = (BuildContext context) => FreedNotification();
-              break;
-          }
-          return MaterialPageRoute(builder: builder!, settings: settings);
-        },
-      ),
+      body: tabs[_currentIndex],
     );
   }
 }
