@@ -284,14 +284,22 @@ class _Dashboard extends State<Dashboard> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  formatedDate,
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: 'roboto',
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black),
-                                ),
+                                Row(children: [
+                                  Icon(
+                                    _cardIconPicker(record.status.toString()),
+                                    size: 20,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(width: 5.0),
+                                  Text(
+                                    formatedDate,
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontFamily: 'roboto',
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.black),
+                                  ),
+                                ]),
                                 TextButton(
                                     onPressed: () {
                                       Navigator.push(
@@ -321,6 +329,15 @@ class _Dashboard extends State<Dashboard> {
         ),
       ],
     );
+  }
+
+  IconData _cardIconPicker(String status) {
+    if (status == "ACCEPTED")
+      return Icons.check_circle_outline;
+    else if (status == "DECLINED")
+      return Icons.highlight_off_outlined;
+    else
+      return Icons.timer_outlined;
   }
 
   _getRecordList() async {

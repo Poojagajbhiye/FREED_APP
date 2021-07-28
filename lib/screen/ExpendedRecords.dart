@@ -224,14 +224,22 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      formatedDate,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: 'roboto',
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black),
-                                    ),
+                                    Row(children: [
+                                      Icon(
+                                        _cardIconPicker(),
+                                        size: 20,
+                                        color: Colors.black,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        formatedDate,
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: 'roboto',
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black),
+                                      ),
+                                    ]),
                                     TextButton(
                                         onPressed: () {
                                           Navigator.push(
@@ -272,6 +280,16 @@ class _ExpendedRecords extends State<ExpendedRecords> {
       return Colors.red_50;
     } else {
       return Colors.gray;
+    }
+  }
+
+  IconData _cardIconPicker() {
+    if (clickAccept) {
+      return Icons.check_circle_outline;
+    } else if (clickDecline) {
+      return Icons.highlight_off_outlined;
+    } else {
+      return Icons.timer_outlined;
     }
   }
 
