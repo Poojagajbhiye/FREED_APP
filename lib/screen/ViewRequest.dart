@@ -93,7 +93,7 @@ class _ViewRequest extends State<ViewRequest> {
                         SizedBox(height: 20),
                         _reasonExpendedCard(),
                         SizedBox(height: 50),
-                        _cancelButton(),
+                        isAcceptedStatus || isDeclinedStatus? SizedBox() : _cancelButton(),
                       ],
                     ),
             ))
