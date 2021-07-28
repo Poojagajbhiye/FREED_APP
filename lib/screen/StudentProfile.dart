@@ -28,7 +28,7 @@ class _StudentProfile extends State<StudentProfile> {
             shadowColor: Colors.transparent,
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 15.0),
+                padding: EdgeInsets.only(right: 8.0),
                 child: TextButton(
                     onPressed: () {
                       TempStorage.removePreferences();
@@ -37,14 +37,22 @@ class _StudentProfile extends State<StudentProfile> {
                           MaterialPageRoute(builder: (context) => SignIn()),
                           (route) => false);
                     },
-                    child: Text(
-                      "Logout",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontFamily: 'roboto',
-                          fontWeight: FontWeight.w700),
-                    )),
+                    child: Row(children: [
+                      Text(
+                        "Logout",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(width: 5),
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                        size: 17.0,
+                      )
+                    ])),
               )
             ],
           ),

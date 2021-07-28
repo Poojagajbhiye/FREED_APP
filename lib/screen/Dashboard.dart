@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ExpendedRecords.dart';
 import 'package:freed/screen/RequestForm.dart';
+import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
@@ -66,11 +67,18 @@ class _Dashboard extends State<Dashboard> {
                   shadowColor: Colors.transparent,
                   actions: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: Icon(
-                        Icons.notifications_none,
+                      padding: const EdgeInsets.only(right: 10),
+                      child: IconButton(
+                        onPressed: () {
+                          TempStorage.removePreferences();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignIn()),
+                              (route) => false);
+                        },
+                        icon: Icon(Icons.logout),
                         color: Colors.black,
-                        size: 35,
+                        iconSize: 30,
                       ),
                     )
                   ],
