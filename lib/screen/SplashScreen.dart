@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/screen/BottomNavigation.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/SignUp.dart';
@@ -24,7 +25,6 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _checkTokenAavailablity();
@@ -64,12 +64,18 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+    // print("screen width: ${1.sw}");
+    // print("screen height: ${SizeConfig.screenHeight}");
+    // print("block horizontal: ${SizeConfig.blockSizeHorizontal}");
+    // print("block vertical: ${SizeConfig.blockSizeVertical}");
+    // print("safe horizontal: ${SizeConfig.safeBlockHorizontal}");
+    // print("safe vertical: ${SizeConfig.safeBlockVertical}");
 
     return Background(
         child: Column(
       children: [
         SizedBox(
-          height: SizeConfig.safeBlockVertical! * 15,
+          height: 112.2.h,
         ),
         Expanded(
           child: Align(
@@ -82,14 +88,15 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                     "FREED",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        height: 0.8,
+                        height: 0.8.h,
                         letterSpacing: 1.5,
                         fontFamily: 'poppins',
                         fontWeight: FontWeight.w200,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 14,
+                        fontSize: 50.sp,
                         color: Colors.black,
                         decoration: TextDecoration.none),
                   ),
+                  SizedBox(height: 5.h),
                   Text(
                     "Let's take a legal escape",
                     textAlign: TextAlign.center,
@@ -97,13 +104,13 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         letterSpacing: 1.2,
                         fontFamily: 'poppins',
                         fontWeight: FontWeight.w200,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 5,
+                        fontSize: 18.sp,
                         color: Colors.black,
                         decoration: TextDecoration.none),
                   ),
-                  Padding(padding: EdgeInsets.all(15)),
+                  SizedBox(height: 30.h),
                   Container(
-                      width: SizeConfig.safeBlockHorizontal! * 45,
+                      width: 162.w,
                       child: AnimatedOpacity(
                         opacity: _visible ? 1.0 : 0.0,
                         duration: Duration(seconds: 1),
@@ -124,7 +131,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             style: TextStyle(
                                 fontFamily: 'roboto',
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.0),
+                                fontSize: 16.sp),
                           ),
                           style: ButtonStyle(
                               backgroundColor:
@@ -147,7 +154,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
             child: SlideTransition(
               position: offset!,
               child: Container(
-                height: SizeConfig.safeBlockVertical! * 50,
+                height: 375.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.yellow,
@@ -155,7 +162,10 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         topLeft: Radius.circular(45),
                         topRight: Radius.circular(45))),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 35, right: 35, top: SizeConfig.blockSizeVertical! * 8),
+                  padding: EdgeInsets.only(
+                      left: 35.w,
+                      right: 35.w,
+                      top: 62.4.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -166,10 +176,10 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             color: Colors.black,
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 7),
+                            fontSize: 24.sp),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 30.h
                       ),
                       Text(
                         "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
@@ -178,17 +188,17 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             color: Colors.black,
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 4.2),
+                            fontSize: 15.sp),
                       ),
                       SizedBox(
-                        height: 35,
+                        height: 35.h
                       ),
                       Row(
                         children: [
                           Expanded(
                               child: Container(
-                                  margin: EdgeInsets.only(right: 5.0),
-                                  height: 40.0,
+                                  margin: EdgeInsets.only(right: 5.w),
+                                  height: 40.h,
                                   child: ElevatedButton(
                                       onPressed: () {
                                         Navigator.pushAndRemoveUntil(
@@ -215,12 +225,12 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                             color: Colors.white,
                                             fontFamily: 'roboto',
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 16.0),
+                                            fontSize: 16.sp),
                                       )))),
                           Expanded(
                               child: Container(
-                                  margin: EdgeInsets.only(left: 5.0),
-                                  height: 40.0,
+                                  margin: EdgeInsets.only(left: 5.w),
+                                  height: 40.h,
                                   child: ElevatedButton(
                                       onPressed: () {
                                         Navigator.pushAndRemoveUntil(
@@ -247,7 +257,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                                             color: Colors.black,
                                             fontFamily: 'roboto',
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 16.0),
+                                            fontSize: 16.sp),
                                       ))))
                         ],
                       )

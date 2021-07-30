@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
-import 'package:freed/value/SizeConfig.dart';
 
 class Background extends StatelessWidget {
   final Widget? child;
@@ -10,37 +10,32 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizeConfig.screenWidth,
-      height: SizeConfig.screenHeight,
+      width: 1.sw,
+      height: 1.sh,
       color: Colors.white,
       child: Stack(children: [
         Positioned(
-            top: SizeConfig.safeBlockHorizontal! -
-                SizeConfig.safeBlockHorizontal! * 25,
-            right: SizeConfig.safeBlockHorizontal! -
-                SizeConfig.safeBlockHorizontal! * 25,
+            top: -84.5.h,
+            right: -84.5.h,
             child: Container(
-              width: SizeConfig.safeBlockHorizontal! * 50,
-              height: SizeConfig.safeBlockHorizontal! * 50,
+              width: 180.r,
+              height: 180.r,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, color: Colors.yellow),
             )),
         Positioned(
-            bottom: SizeConfig.safeBlockHorizontal! -
-                SizeConfig.safeBlockHorizontal! * 32,
-            left: SizeConfig.safeBlockHorizontal! -
-                SizeConfig.safeBlockHorizontal! * 30,
+            bottom: -111.6.h,
+            left: -104.4.h,
             child: Container(
-                width: SizeConfig.safeBlockHorizontal! * 80,
-                height: SizeConfig.safeBlockHorizontal! * 80,
+                width: 288.r,
+                height: 288.r,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle, color: Colors.yellow))),
         Positioned(
           bottom: -2,
-          left: SizeConfig.safeBlockHorizontal! -
-              SizeConfig.blockSizeHorizontal! * 27,
+          left: -93.6.h,
           child: Image.asset(rollerSkate),
-          width: SizeConfig.rollerSkateDoodleSize(),
+          width: 396.r,
         ),
         child!,
       ]),
