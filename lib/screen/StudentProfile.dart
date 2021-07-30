@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
@@ -28,7 +29,7 @@ class _StudentProfile extends State<StudentProfile> {
             shadowColor: Colors.transparent,
             actions: [
               Padding(
-                padding: EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.only(right: 8.w),
                 child: TextButton(
                     onPressed: () {
                       TempStorage.removePreferences();
@@ -42,31 +43,29 @@ class _StudentProfile extends State<StudentProfile> {
                         "Logout",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 14.0,
+                            fontSize: 14.sp,
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(width: 5),
+                      SizedBox(width: 5.w),
                       Icon(
                         Icons.logout,
                         color: Colors.black,
-                        size: 17.0,
+                        size: 17.r,
                       )
                     ])),
               )
             ],
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20.h),
           Expanded(
               child: Container(
-            width: double.infinity,
+            width: 1.sw,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(45),
-                    topRight: Radius.circular(45))),
+                    topLeft: Radius.circular(45.r),
+                    topRight: Radius.circular(45.r))),
             child: ProfileForm(),
           ))
         ],
@@ -118,12 +117,12 @@ class _ProfileForm extends State<ProfileForm> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-                left: 16.0, right: 16.0, bottom: 10.0, top: 30.0),
+                left: 16.w, right: 16.w, bottom: 10.h, top: 30.h),
             child: Text(
               "Profile",
               style: TextStyle(
                   fontFamily: 'roboto',
-                  fontSize: 20.0,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.black,
                   decoration: TextDecoration.none),
@@ -132,25 +131,25 @@ class _ProfileForm extends State<ProfileForm> {
           Expanded(
             child: ListView(
               padding: EdgeInsets.only(
-                  top: 10.0, left: 25.0, right: 25.0, bottom: 50.0),
+                  top: 10.h, left: 25.w, right: 25.w, bottom: 50.h),
               children: [
                 //first name field
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                       child: Text(
                         "First Name",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
+                            fontSize: 16.sp,
                             color: Colors.default_color),
                       ),
                     ),
                     TextFormField(
-                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
                       keyboardType: TextInputType.text,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -163,7 +162,7 @@ class _ProfileForm extends State<ProfileForm> {
                         firstname = value;
                       },
                       decoration: InputDecoration(
-                        hintText: "eg- Roshan",
+                        hintText: "eg- Andy",
                         isDense: true,
                         filled: true,
                         fillColor: Colors.gray,
@@ -172,40 +171,38 @@ class _ProfileForm extends State<ProfileForm> {
                             borderSide: BorderSide(
                                 width: 0.0, style: BorderStyle.none)),
                         contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
+                            horizontal: 15.w, vertical: 20.h),
                       ),
                     )
                   ],
                 ),
 
-                SizedBox(
-                  height: 20.0,
-                ),
+                SizedBox(height: 20.h),
 
                 //last name field
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                       child: Text(
                         "Last Name",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
+                            fontSize: 16.sp,
                             color: Colors.default_color),
                       ),
                     ),
                     TextFormField(
-                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
                       keyboardType: TextInputType.text,
                       controller: TextEditingController(text: lastname),
                       onChanged: (value) {
                         lastname = value;
                       },
                       decoration: InputDecoration(
-                        hintText: "eg- Nahak",
+                        hintText: "eg- Rubin",
                         isDense: true,
                         filled: true,
                         fillColor: Colors.gray,
@@ -214,33 +211,31 @@ class _ProfileForm extends State<ProfileForm> {
                             borderSide: BorderSide(
                                 width: 0.0, style: BorderStyle.none)),
                         contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
+                            horizontal: 15.w, vertical: 20.h),
                       ),
                     )
                   ],
                 ),
 
-                SizedBox(
-                  height: 20.0,
-                ),
+                SizedBox(height: 20.h),
 
                 //email field
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                       child: Text(
                         "Email",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
+                            fontSize: 16.sp,
                             color: Colors.default_color),
                       ),
                     ),
                     TextFormField(
-                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
                       keyboardType: TextInputType.emailAddress,
                       controller: TextEditingController(text: email),
                       onChanged: (value) {
@@ -264,15 +259,13 @@ class _ProfileForm extends State<ProfileForm> {
                             borderSide: BorderSide(
                                 width: 0.0, style: BorderStyle.none)),
                         contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
+                            horizontal: 15.w, vertical: 20.h),
                       ),
                     )
                   ],
                 ),
 
-                SizedBox(
-                  height: 20.0,
-                ),
+                SizedBox(height: 20.h),
 
                 //course and semester dropdown
                 Row(
@@ -283,53 +276,59 @@ class _ProfileForm extends State<ProfileForm> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                            padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                             child: Text(
                               "Course",
                               style: TextStyle(
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16.0,
+                                  fontSize: 16.sp,
                                   color: Colors.default_color),
                             ),
                           ),
-                          DropdownButtonFormField<String>(
-                            isExpanded: true,
-                            hint: Text("choose"),
-                            validator: (value) {
-                              if (value == null) {
-                                return "*required";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                isDense: true,
-                                fillColor: Colors.gray,
-                                filled: true,
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(7.0),
-                                    borderSide: BorderSide(
-                                        width: 0.0, style: BorderStyle.none))),
-                            items: courseList.map((String currentValue) {
-                              return DropdownMenuItem(
-                                child: Text(currentValue),
-                                value: currentValue,
-                              );
-                            }).toList(),
-                            value: defCourse,
-                            onChanged: (value) {
-                              setState(() {
-                                defCourse = value;
-                              });
-                            },
+                          SizedBox(
+                            width: 1.sw,
+                            height: 60.h,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              hint: Text(
+                                "choose",
+                                style: TextStyle(fontSize: 16.sp),
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return "*required";
+                                }
+                                return null;
+                              },
+                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                              decoration: InputDecoration(
+                                  isDense: true,
+                                  fillColor: Colors.gray,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(7.0),
+                                      borderSide: BorderSide(
+                                          width: 0.0, style: BorderStyle.none))),
+                              items: courseList.map((String currentValue) {
+                                return DropdownMenuItem(
+                                  child: Text(currentValue),
+                                  value: currentValue,
+                                );
+                              }).toList(),
+                              value: defCourse,
+                              onChanged: (value) {
+                                setState(() {
+                                  defCourse = value;
+                                });
+                              },
+                            ),
                           )
                         ],
                       ),
                     ),
 
-                    SizedBox(
-                      width: 20.0,
-                    ),
+                    SizedBox(width: 20.w),
 
                     //semester
                     Expanded(
@@ -337,45 +336,53 @@ class _ProfileForm extends State<ProfileForm> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                            padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                             child: Text(
                               "Semester",
                               style: TextStyle(
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16.0,
+                                  fontSize: 16.sp,
                                   color: Colors.default_color),
                             ),
                           ),
-                          DropdownButtonFormField<String>(
-                            isExpanded: true,
-                            hint: Text("choose"),
-                            validator: (value) {
-                              if (value == null) {
-                                return "*required";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                isDense: true,
-                                fillColor: Colors.gray,
-                                filled: true,
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(7.0),
-                                    borderSide: BorderSide(
-                                        width: 0.0, style: BorderStyle.none))),
-                            items: semesterList.map((String currentValue) {
-                              return DropdownMenuItem(
-                                child: Text(currentValue),
-                                value: currentValue,
-                              );
-                            }).toList(),
-                            value: defSemester,
-                            onChanged: (value) {
-                              setState(() {
-                                defSemester = value;
-                              });
-                            },
+                          SizedBox(
+                            width: 1.sw,
+                            height: 60.h,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              hint: Text(
+                                "choose",
+                                style: TextStyle(fontSize: 16.sp),
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return "*required";
+                                }
+                                return null;
+                              },
+                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                              decoration: InputDecoration(
+                                  isDense: true,
+                                  fillColor: Colors.gray,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(7.0),
+                                      borderSide: BorderSide(
+                                          width: 0.0, style: BorderStyle.none))),
+                              items: semesterList.map((String currentValue) {
+                                return DropdownMenuItem(
+                                  child: Text(currentValue),
+                                  value: currentValue,
+                                );
+                              }).toList(),
+                              value: defSemester,
+                              onChanged: (value) {
+                                setState(() {
+                                  defSemester = value;
+                                });
+                              },
+                            ),
                           )
                         ],
                       ),
@@ -383,65 +390,71 @@ class _ProfileForm extends State<ProfileForm> {
                   ],
                 ),
 
-                SizedBox(
-                  height: 20.0,
-                ),
+                SizedBox(height: 20.h),
 
                 //Branch dropdown
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 7.0, bottom: 5.0),
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
                       child: Text(
                         "Branch",
                         style: TextStyle(
                             fontFamily: 'roboto',
                             fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
+                            fontSize: 16.sp,
                             color: Colors.default_color),
                       ),
                     ),
-                    DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      hint: Text("choose"),
-                      validator: (value) {
-                        if (value == null) {
-                          return "*required";
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          isDense: true,
-                          fillColor: Colors.gray,
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(7.0),
-                              borderSide: BorderSide(
-                                  width: 0.0, style: BorderStyle.none))),
-                      items: branchList.map((String currentValue) {
-                        return DropdownMenuItem(
-                          child: Text(currentValue),
-                          value: currentValue,
-                        );
-                      }).toList(),
-                      value: defBranch,
-                      onChanged: (value) {
-                        setState(() {
-                          defBranch = value;
-                        });
-                      },
+                    SizedBox(
+                      width: 1.sw,
+                      height: 60.h,
+                      child: DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        hint: Text(
+                          "choose",
+                          style: TextStyle(fontSize: 16.sp),
+                        ),
+                        validator: (value) {
+                          if (value == null) {
+                            return "*required";
+                          }
+                          return null;
+                        },
+                        style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                        decoration: InputDecoration(
+                            isDense: true,
+                            fillColor: Colors.gray,
+                            filled: true,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(7.0),
+                                borderSide: BorderSide(
+                                    width: 0.0, style: BorderStyle.none))),
+                        items: branchList.map((String currentValue) {
+                          return DropdownMenuItem(
+                            child: Text(currentValue),
+                            value: currentValue,
+                          );
+                        }).toList(),
+                        value: defBranch,
+                        onChanged: (value) {
+                          setState(() {
+                            defBranch = value;
+                          });
+                        },
+                      ),
                     )
                   ],
                 ),
 
-                SizedBox(height: 40.0),
+                SizedBox(height: 40.h),
 
                 //save profile button
                 Container(
-                  height: 45,
+                  height: 45.h,
                   width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 40.0),
+                  margin: EdgeInsets.symmetric(horizontal: 40.w),
                   child: ElevatedButton(
                     onPressed: () {
                       if (profileKey.currentState!.validate()) {
@@ -454,8 +467,8 @@ class _ProfileForm extends State<ProfileForm> {
                     },
                     child: isProgress
                         ? SizedBox(
-                            height: 25.0,
-                            width: 25.0,
+                            height: 25.r,
+                            width: 25.r,
                             child: CircularProgressIndicator(
                               color: Colors.white,
                               strokeWidth: 2.0,
@@ -465,7 +478,7 @@ class _ProfileForm extends State<ProfileForm> {
                             style: TextStyle(
                                 fontFamily: 'roboto',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 18.0),
+                                fontSize: 18.sp),
                           ),
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
