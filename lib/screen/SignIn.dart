@@ -82,8 +82,8 @@ class _SignIn extends State<SignIn> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(45),
-                                topRight: Radius.circular(45)),
+                                topLeft: Radius.circular(45.r),
+                                topRight: Radius.circular(45.r)),
                           ),
                         ),
                       ),
@@ -102,12 +102,13 @@ class _SignIn extends State<SignIn> {
       key: loginKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
+        padding: EdgeInsets.only(top: 0.0),
         children: [
           SingleChildScrollView(
             reverse: true,
             child: Padding(
               padding: EdgeInsets.only(
-                  top: 1.sh - 650.h,
+                  top: 135.h,
                   left: 50.w,
                   right: 50.w,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
