@@ -159,8 +159,8 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                     color: Colors.yellow,
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(45),
-                        topRight: Radius.circular(45))),
+                        topLeft: Radius.circular(45.r),
+                        topRight: Radius.circular(45.r))),
                 child: Padding(
                   padding: EdgeInsets.only(
                       left: 35.w,
