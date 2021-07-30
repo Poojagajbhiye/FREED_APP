@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/painting.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
@@ -50,7 +51,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               shadowColor: Colors.transparent,
-              leadingWidth: 70,
+              leadingWidth: 70.w,
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -63,7 +64,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
               ),
             ),
             Container(
-                padding: EdgeInsets.only(right: 16.0, left: 16.0, bottom: 16.0),
+                padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.h),
                 decoration: BoxDecoration(color: Colors.white),
                 child: Column(
                   children: [
@@ -74,9 +75,9 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                           decoration: TextDecoration.none,
-                          fontSize: 20.0),
+                          fontSize: 20.sp),
                     ),
-                    SizedBox(height: 25.0),
+                    SizedBox(height: 25.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -91,8 +92,8 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                             });
                           },
                           child: Container(
-                            width: 90.0,
-                            height: 30.0,
+                            width: 90.w,
+                            height: 30.w,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
                                 borderRadius: BorderRadius.circular(50.0),
@@ -105,7 +106,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                     decoration: TextDecoration.none,
                                     fontFamily: 'roboto',
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
+                                    fontSize: 14.sp,
                                     color: clickProcess
                                         ? Colors.white
                                         : Colors.black),
@@ -124,8 +125,8 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                             });
                           },
                           child: Container(
-                            width: 90.0,
-                            height: 30.0,
+                            width: 90.w,
+                            height: 30.w,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
                                 borderRadius: BorderRadius.circular(50.0),
@@ -138,7 +139,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                     decoration: TextDecoration.none,
                                     fontFamily: 'roboto',
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
+                                    fontSize: 14.sp,
                                     color: clickAccept
                                         ? Colors.white
                                         : Colors.black),
@@ -157,8 +158,8 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                             });
                           },
                           child: Container(
-                            width: 90.0,
-                            height: 30.0,
+                            width: 90.w,
+                            height: 30.w,
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black),
                                 borderRadius: BorderRadius.circular(50.0),
@@ -171,7 +172,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                     decoration: TextDecoration.none,
                                     fontFamily: 'roboto',
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 14.0,
+                                    fontSize: 14.sp,
                                     color: clickDecline
                                         ? Colors.white
                                         : Colors.black),
@@ -197,14 +198,14 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                 decoration: TextDecoration.none,
                                 fontFamily: 'roboto',
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.0,
+                                fontSize: 16.sp,
                                 color: Colors.default_color),
                           ),
                         )
                       : ListView.builder(
                           itemCount: filteredRecordList?.length,
                           padding: EdgeInsets.only(
-                              left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
+                              left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
                           itemBuilder: (context, index) {
                             Record record = filteredRecordList![index];
                             DateTime? date = record.from;
@@ -214,9 +215,9 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                             return Card(
                               elevation: 0.0,
                               child: Container(
-                                height: 65.0,
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                                height: 65.h,
+                                width: 1.sw,
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 decoration: BoxDecoration(
                                     color: _cardColorPicker(),
                                     borderRadius: BorderRadius.circular(10.0)),
@@ -229,15 +230,15 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                         opacity: 0.7,
                                         child: Icon(
                                           _cardIconPicker(),
-                                          size: 20,
+                                          size: 20.r,
                                           color: Colors.black,
                                         ),
                                       ),
-                                      SizedBox(width: 10.0),
+                                      SizedBox(width: 10.w),
                                       Text(
                                         formatedDate,
                                         style: TextStyle(
-                                            fontSize: 14.0,
+                                            fontSize: 14.sp,
                                             fontFamily: 'roboto',
                                             fontWeight: FontWeight.w300,
                                             color: Colors.black),
@@ -259,7 +260,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                           "View",
                                           style: TextStyle(
                                               fontFamily: 'roboto',
-                                              fontSize: 14.0,
+                                              fontSize: 14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.black),
                                         ))
@@ -344,15 +345,15 @@ class _ExpendedRecords extends State<ExpendedRecords> {
   Widget _loadingEffect() {
     return Shimmer.fromColors(
       child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
           itemCount: 8,
           itemBuilder: (context, index) {
             return Card(
               elevation: 0.0,
               child: Container(
-                height: 65.0,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                height: 65.h,
+                width: 1.sw,
+                padding: EdgeInsets.symmetric(horizontal: 25.w),
               ),
             );
           }),
