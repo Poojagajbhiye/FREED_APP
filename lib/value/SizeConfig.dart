@@ -42,16 +42,6 @@ class SizeConfig {
     }
   }
 
-  static double rollerSkateDoodleSize() {
-    if (screenHeight! >= 600 && screenHeight! <= 700) {
-      return safeBlockHorizontal! * 100;
-    } else if (screenHeight! >= 701 && screenHeight! <= 800) {
-      return safeBlockHorizontal! * 110;
-    } else {
-      return safeBlockHorizontal! * 110;
-    }
-  }
-
   static double dragViewSize() {
     if (screenHeight! >= 600 && screenHeight! <= 700) {
       return blockSizeVertical! * 48.5;

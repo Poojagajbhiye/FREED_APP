@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/StudentInfo.dart';
 import 'package:freed/screen/BottomNavigation.dart';
 import 'package:freed/screen/SignUp.dart';
@@ -46,7 +47,7 @@ class _SignIn extends State<SignIn> {
                   shadowColor: Colors.transparent,
                   actions: [
                     Padding(
-                      padding: EdgeInsets.only(right: 15.0),
+                      padding: EdgeInsets.only(right: 15.w),
                       child: TextButton(
                           onPressed: () {
                             Navigator.pushAndRemoveUntil(
@@ -59,7 +60,7 @@ class _SignIn extends State<SignIn> {
                             "Register",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 14.0,
+                                fontSize: 14.sp,
                                 fontFamily: 'roboto',
                                 fontWeight: FontWeight.w700),
                           )),
@@ -76,9 +77,7 @@ class _SignIn extends State<SignIn> {
                         alignment: Alignment.bottomCenter,
                         child: Container(
                           child: _SignInForm(),
-                          height: keyboardVisiblity
-                              ? double.infinity
-                              : SizeConfig.safeBlockVertical! * 70,
+                          height: keyboardVisiblity ? double.infinity : 523.6.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -88,9 +87,7 @@ class _SignIn extends State<SignIn> {
                           ),
                         ),
                       ),
-                      Align(
-                          alignment: Alignment(0.0, -0.9),
-                          child: _doodleImage())
+                      Positioned(bottom: 395.h, child: _doodleImage())
                     ],
                   ),
                 ))
@@ -110,9 +107,9 @@ class _SignIn extends State<SignIn> {
             reverse: true,
             child: Padding(
               padding: EdgeInsets.only(
-                  top: SizeConfig.blockSizeHorizontal! * 30,
-                  left: 50,
-                  right: 50,
+                  top: 1.sh - 650.h,
+                  left: 50.w,
+                  right: 50.w,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
                 children: [
@@ -131,12 +128,12 @@ class _SignIn extends State<SignIn> {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Registration No",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
+                                vertical: 15.r, horizontal: 15.r),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
@@ -146,10 +143,10 @@ class _SignIn extends State<SignIn> {
                                 borderRadius: BorderRadius.circular(30.0)))),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 20.h),
                     width: double.infinity,
                     child: TextFormField(
-                      obscureText: true,
+                        obscureText: true,
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return "*required field";
@@ -162,12 +159,12 @@ class _SignIn extends State<SignIn> {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Password",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
+                                vertical: 15.r, horizontal: 15.r),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
@@ -177,8 +174,8 @@ class _SignIn extends State<SignIn> {
                                 borderRadius: BorderRadius.circular(30.0)))),
                   ),
                   Container(
-                    height: 45,
-                    margin: EdgeInsets.only(top: 25, bottom: 5),
+                    height: 45.h,
+                    margin: EdgeInsets.only(top: 25.h, bottom: 5.h),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
@@ -197,8 +194,8 @@ class _SignIn extends State<SignIn> {
                       },
                       child: isprogress
                           ? SizedBox(
-                              height: 25.0,
-                              width: 25.0,
+                              height: 25.r,
+                              width: 25.r,
                               child: CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.0,
@@ -208,7 +205,7 @@ class _SignIn extends State<SignIn> {
                               style: TextStyle(
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18.0),
+                                  fontSize: 18.sp),
                             ),
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -225,13 +222,11 @@ class _SignIn extends State<SignIn> {
                         "Forgot Password ?",
                         style: TextStyle(
                             fontFamily: 'robot',
-                            fontSize: 14.0,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.default_color),
                       )),
-                  SizedBox(
-                    height: SizeConfig.safeBlockVertical! * 1.5,
-                  ),
+                  SizedBox(height: 11.22.h),
                   TextButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil(
@@ -243,7 +238,7 @@ class _SignIn extends State<SignIn> {
                         "Don't have an account ?",
                         style: TextStyle(
                             fontFamily: 'robot',
-                            fontSize: 14.0,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
                             color: Colors.default_color),
                       ))
@@ -257,33 +252,34 @@ class _SignIn extends State<SignIn> {
   }
 
   Widget _doodleImage() {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Sign In",
-            style: TextStyle(
-                decoration: TextDecoration.none,
-                color: Colors.black,
-                fontFamily: 'roboto',
-                fontWeight: FontWeight.w700,
-                fontSize: SizeConfig.blockSizeVertical! * 4),
-          ),
-          SizedBox(
-            height: SizeConfig.blockSizeVertical! * 1.5,
-          ),
-          keyboardVisiblity
-              ? SizedBox()
-              : Image.asset(
-                  dancingDoodle,
-                  fit: BoxFit.cover,
-                  width: SizeConfig.dancingDoodleSize(),
+    return keyboardVisiblity
+        ? SizedBox()
+        : Container(
+            width: 1.sw,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Sign In",
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontFamily: 'roboto',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30.sp),
                 ),
-        ],
-      ),
-    );
+                SizedBox(
+                  height: 10.h,
+                ),
+                Image.asset(
+                  dancingDoodle,
+                  width: 270.r,
+                  // height: 270.h,
+                ),
+              ],
+            ),
+          );
   }
 
   void _loginControler(String id, String pass) async {
