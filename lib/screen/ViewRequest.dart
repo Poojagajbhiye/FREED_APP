@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordModel.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -14,7 +15,6 @@ class ViewRequest extends StatefulWidget {
   ViewRequest({Key? key, @required this.recordId}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ViewRequest(recordId);
   }
 }
@@ -58,7 +58,7 @@ class _ViewRequest extends State<ViewRequest> {
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               shadowColor: Colors.transparent,
-              leadingWidth: 70,
+              leadingWidth: 70.w,
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -73,8 +73,8 @@ class _ViewRequest extends State<ViewRequest> {
             Expanded(
                 child: Container(
               color: Colors.white,
-              height: double.infinity,
-              width: double.infinity,
+              height: 1.sh,
+              width: 1.sw,
               child: isprocess
                   ? Center(
                       child: CircularProgressIndicator(
@@ -83,17 +83,19 @@ class _ViewRequest extends State<ViewRequest> {
                     )
                   : ListView(
                       padding: EdgeInsets.only(
-                          top: 0.0, bottom: 50.0, left: 30.0, right: 30.0),
+                          top: 0.0, bottom: 50.h, left: 30.w, right: 30.w),
                       children: [
                         _checkStatus(),
-                        SizedBox(height: 30),
+                        SizedBox(height: 30.h),
                         _header(),
-                        SizedBox(height: 15),
+                        SizedBox(height: 15.h),
                         _detailedCard(),
-                        SizedBox(height: 20),
+                        SizedBox(height: 20.h),
                         _reasonExpendedCard(),
-                        SizedBox(height: 50),
-                        isAcceptedStatus || isDeclinedStatus? SizedBox() : _cancelButton(),
+                        SizedBox(height: 50.h),
+                        isAcceptedStatus || isDeclinedStatus
+                            ? SizedBox()
+                            : _cancelButton(),
                       ],
                     ),
             ))
@@ -176,30 +178,26 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black)),
-          SizedBox(
-            height: 5,
-          ),
+          SizedBox(height: 5.h),
           //registration id value from api
           Text(rid,
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 22.0,
+                  fontSize: 22.sp,
                   color: Colors.default_color)),
-          SizedBox(
-            height: 15,
-          ),
+          SizedBox(height: 15.h),
           Container(
-            width: 85,
-            padding: EdgeInsets.symmetric(vertical: 6),
+            width: 85.w,
+            padding: EdgeInsets.symmetric(vertical: 6.w),
             child: Align(
               child: Text(
                 "Regular",
                 style: TextStyle(
                     fontFamily: 'roboto',
-                    fontSize: 14.0,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: Colors.white),
               ),
@@ -207,14 +205,12 @@ class _ViewRequest extends State<ViewRequest> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.0), color: Colors.black),
           ),
-          SizedBox(
-            height: 15,
-          ),
+          SizedBox(height: 15.h),
           Text(
             "$firstname $lastname",
             style: TextStyle(
                 fontFamily: 'roboto',
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black),
           ),
@@ -222,7 +218,7 @@ class _ViewRequest extends State<ViewRequest> {
             "$course $branch - $semester",
             style: TextStyle(
                 fontFamily: 'roboto',
-                fontSize: 16,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black),
           )
@@ -233,9 +229,9 @@ class _ViewRequest extends State<ViewRequest> {
 
   Widget _cancelButton() {
     return Container(
-      width: double.infinity,
-      height: 45.0,
-      margin: EdgeInsets.symmetric(horizontal: 35),
+      width: 1.sw,
+      height: 45.h,
+      margin: EdgeInsets.symmetric(horizontal: 35.w),
       child: ElevatedButton(
         onPressed: () {
           _deleteRecord(recordId);
@@ -245,8 +241,8 @@ class _ViewRequest extends State<ViewRequest> {
         },
         child: isCancel
             ? SizedBox(
-                height: 25.0,
-                width: 25.0,
+                height: 25.r,
+                width: 25.r,
                 child: CircularProgressIndicator(
                   color: Colors.default_color,
                   strokeWidth: 2.0,
@@ -257,7 +253,7 @@ class _ViewRequest extends State<ViewRequest> {
                 style: TextStyle(
                     fontFamily: 'roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: 18.0,
+                    fontSize: 18.sp,
                     color: Colors.default_color),
               ),
         style: ButtonStyle(
@@ -311,10 +307,11 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             ),
-            childrenPadding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            childrenPadding:
+                EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
             children: [
               //reason value from api
               Align(
@@ -325,7 +322,7 @@ class _ViewRequest extends State<ViewRequest> {
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.default_color),
                 ),
               )
@@ -336,8 +333,8 @@ class _ViewRequest extends State<ViewRequest> {
 
   Widget _detailedCard() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
+      width: 1.sw,
       decoration: BoxDecoration(
           color: Colors.yellow, borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -348,7 +345,7 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             ),
             Text(
@@ -356,13 +353,11 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             )
           ]),
-          SizedBox(
-            height: 5,
-          ),
+          SizedBox(height: 5.h),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             //from date value from api
             Text(
@@ -370,7 +365,7 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w400,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             ),
             //to date value from api
@@ -379,13 +374,11 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w400,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             )
           ]),
-          SizedBox(
-            height: 12,
-          ),
+          SizedBox(height: 12.h),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -393,13 +386,11 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10.h),
           //destination value from api
           Align(
             alignment: Alignment.centerLeft,
@@ -408,7 +399,7 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w300,
-                  fontSize: 16.0,
+                  fontSize: 16.sp,
                   color: Colors.black),
             ),
           )
@@ -429,16 +420,11 @@ class AcceptedDoodle extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(
-              height: 80,
-              width: double.infinity,
-              child: Image.asset(rollerSkate)),
-          SizedBox(
-            height: 10.0,
-          ),
+          SizedBox(height: 80.r, width: 1.sw, child: Image.asset(rollerSkate)),
+          SizedBox(height: 10.h),
           Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            width: 1.sw,
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 5.w),
             decoration: BoxDecoration(
                 color: Colors.light_saffron,
                 borderRadius: BorderRadius.circular(10.0)),
@@ -449,17 +435,17 @@ class AcceptedDoodle extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.black),
                 ),
-                SizedBox(height: 5.0),
+                SizedBox(height: 5.h),
                 Text(
                   "Your Request Has Been Accepted",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.black),
                 )
               ],
@@ -477,16 +463,11 @@ class ProcessDoodle extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(
-              height: 80,
-              width: double.infinity,
-              child: Image.asset(layingDoodle)),
-          SizedBox(
-            height: 10.0,
-          ),
+          SizedBox(height: 80.r, width: 1.sw, child: Image.asset(layingDoodle)),
+          SizedBox(height: 10.h),
           Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            width: 1.sw,
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 5.w),
             decoration: BoxDecoration(
                 color: Colors.gray, borderRadius: BorderRadius.circular(10.0)),
             child: Column(
@@ -496,17 +477,17 @@ class ProcessDoodle extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.black),
                 ),
-                SizedBox(height: 5.0),
+                SizedBox(height: 5.h),
                 Text(
                   "We'll be back to you soon",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.black),
                 )
               ],
@@ -525,15 +506,15 @@ class DeclinedDoodle extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-              height: 80,
-              width: double.infinity,
+              height: 80.r,
+              width: 1.sw,
               child: Image.asset(messyDoodle)),
           SizedBox(
-            height: 10.0,
+            height: 10.h
           ),
           Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 5.0),
+            width: 1.sw,
+            padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 5.w),
             decoration: BoxDecoration(
                 color: Colors.red, borderRadius: BorderRadius.circular(10.0)),
             child: Column(
@@ -543,17 +524,17 @@ class DeclinedDoodle extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w700,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.white),
                 ),
-                SizedBox(height: 5.0),
+                SizedBox(height: 5.h),
                 Text(
                   "Your request was not accepted",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       color: Colors.white),
                 )
               ],
