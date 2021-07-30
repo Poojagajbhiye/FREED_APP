@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/SignUpResponse.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
@@ -33,10 +34,10 @@ class _SignUp extends State<SignUp> {
                 backgroundColor: Colors.yellow,
                 automaticallyImplyLeading: false,
                 shadowColor: Colors.transparent,
-                leadingWidth: 70,
+                leadingWidth: 70.w,
                 actions: [
                   Padding(
-                    padding: EdgeInsets.only(right: 15.0),
+                    padding: EdgeInsets.only(right: 15.w),
                     child: TextButton(
                         onPressed: () {
                           Navigator.pushAndRemoveUntil(
@@ -48,7 +49,7 @@ class _SignUp extends State<SignUp> {
                           "Login",
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 14.0,
+                              fontSize: 14.sp,
                               fontFamily: 'roboto',
                               fontWeight: FontWeight.w700),
                         )),
@@ -65,16 +66,16 @@ class _SignUp extends State<SignUp> {
                         ? SizedBox()
                         : Container(
                             margin: EdgeInsets.only(
-                                left: 40,
-                                right: 40,
-                                top: 20,
-                                bottom: SizeConfig.blockSizeVertical! * 6),
+                                left: 40.w,
+                                right: 40.w,
+                                top: 20.h,
+                                bottom: 49.8.h),
                             child: Text(
                               "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               style: TextStyle(
-                                  fontSize: 14.0,
+                                  fontSize: 14.sp,
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w700),
                             ),
@@ -88,8 +89,8 @@ class _SignUp extends State<SignUp> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(45),
-                                topRight: Radius.circular(45)),
+                                topLeft: Radius.circular(45.r),
+                                topRight: Radius.circular(45.r)),
                           ),
                         ),
                       ),
@@ -126,14 +127,15 @@ class _SignUpForm extends State<SignUpForm> {
       key: signupKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: ListView(
+        padding: EdgeInsets.only(top: 0.0),
         children: [
           SingleChildScrollView(
             reverse: true,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 50,
-                  right: 50,
-                  top: 10,
+                  left: 50.w,
+                  right: 50.w,
+                  top: 40.h,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
                 children: [
@@ -142,10 +144,10 @@ class _SignUpForm extends State<SignUpForm> {
                     style: TextStyle(
                         fontFamily: 'roboto',
                         fontWeight: FontWeight.w700,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 8),
+                        fontSize: 30.sp),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 35),
+                    margin: EdgeInsets.only(top: 35.h),
                     width: double.infinity,
                     child: TextFormField(
                         controller: _rid,
@@ -160,12 +162,12 @@ class _SignUpForm extends State<SignUpForm> {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Registration No",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
+                                vertical: 15.r, horizontal: 15.r),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
@@ -175,7 +177,7 @@ class _SignUpForm extends State<SignUpForm> {
                                 borderRadius: BorderRadius.circular(30.0)))),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 20.h),
                     width: double.infinity,
                     child: TextFormField(
                         controller: _pass,
@@ -192,12 +194,12 @@ class _SignUpForm extends State<SignUpForm> {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Password",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
+                                vertical: 15.r, horizontal: 15.r),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
@@ -207,7 +209,7 @@ class _SignUpForm extends State<SignUpForm> {
                                 borderRadius: BorderRadius.circular(30.0)))),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 20.h),
                     width: double.infinity,
                     child: TextFormField(
                         textAlign: TextAlign.center,
@@ -221,12 +223,12 @@ class _SignUpForm extends State<SignUpForm> {
                         },
                         keyboardType: TextInputType.number,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Confirm Password",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
+                                vertical: 15.r, horizontal: 15.r),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30.0)),
@@ -236,8 +238,8 @@ class _SignUpForm extends State<SignUpForm> {
                                 borderRadius: BorderRadius.circular(30.0)))),
                   ),
                   Container(
-                    height: 45,
-                    margin: EdgeInsets.only(top: 30, bottom: 15),
+                    height: 45.h,
+                    margin: EdgeInsets.only(top: 30.h, bottom: 15.h),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
@@ -255,8 +257,8 @@ class _SignUpForm extends State<SignUpForm> {
                       },
                       child: isProgress
                           ? SizedBox(
-                              height: 25.0,
-                              width: 25.0,
+                              height: 25.r,
+                              width: 25.r,
                               child: CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.0,
@@ -266,7 +268,7 @@ class _SignUpForm extends State<SignUpForm> {
                               style: TextStyle(
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18.0),
+                                  fontSize: 18.sp),
                             ),
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -288,7 +290,7 @@ class _SignUpForm extends State<SignUpForm> {
                       "Already have an account ?",
                       style: TextStyle(
                           fontFamily: 'robot',
-                          fontSize: 14.0,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.default_color),
                     ),
