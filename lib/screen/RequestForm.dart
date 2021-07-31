@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/NewleaveResponse.dart';
+import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -32,6 +33,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   final _leaveFormKey = GlobalKey<FormState>();
 
   bool keyboardVisiblity = false;
+
+  String? recordId;
 
   @override
   void initState() {
@@ -420,6 +423,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
         NewleaveResponse newleaveResponse = newleaveResponseFromJson(response);
         bool? isSuccess = newleaveResponse.success;
         String? msg = newleaveResponse.msg;
+        String? _recordId = newleaveResponse.result!.id;
 
         if (isSuccess!) {
           //request status animation
@@ -429,6 +433,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
           setState(() {
             isProgress = false;
             successMsg = msg!;
+            recordId = _recordId;
             _visible = !_visible;
           });
         }
@@ -531,7 +536,13 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     ))),
             SizedBox(height: 7.h),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ViewRequest(recordId: recordId)));
+                },
                 child: Text(
                   "Track Request Status",
                   style: TextStyle(
