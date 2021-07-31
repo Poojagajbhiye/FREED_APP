@@ -202,74 +202,77 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                 color: Colors.default_color),
                           ),
                         )
-                      : ListView.builder(
-                          itemCount: filteredRecordList?.length,
-                          padding: EdgeInsets.only(
-                              left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
-                          itemBuilder: (context, index) {
-                            Record record = filteredRecordList![index];
-                            DateTime? date = record.from;
-                            String formatedDate =
-                                DateFormat("dd MMM yyyy").format(date!);
-                            String? _recordId = record.id;
-                            return Card(
-                              elevation: 0.0,
-                              child: Container(
-                                height: 65.h,
-                                width: 1.sw,
-                                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                                decoration: BoxDecoration(
-                                    color: _cardColorPicker(),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(children: [
-                                      Opacity(
-                                        opacity: 0.7,
-                                        child: Icon(
-                                          _cardIconPicker(),
-                                          size: 20.r,
-                                          color: Colors.black,
+                      : RefreshIndicator(
+                        onRefresh: _getRecordList,
+                        child: ListView.builder(
+                            itemCount: filteredRecordList?.length,
+                            padding: EdgeInsets.only(
+                                left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
+                            itemBuilder: (context, index) {
+                              Record record = filteredRecordList![index];
+                              DateTime? date = record.from;
+                              String formatedDate =
+                                  DateFormat("dd MMM yyyy").format(date!);
+                              String? _recordId = record.id;
+                              return Card(
+                                elevation: 0.0,
+                                child: Container(
+                                  height: 65.h,
+                                  width: 1.sw,
+                                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                  decoration: BoxDecoration(
+                                      color: _cardColorPicker(),
+                                      borderRadius: BorderRadius.circular(10.0)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(children: [
+                                        Opacity(
+                                          opacity: 0.7,
+                                          child: Icon(
+                                            _cardIconPicker(),
+                                            size: 20.r,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(width: 10.w),
-                                      Text(
-                                        formatedDate,
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontFamily: 'roboto',
-                                            fontWeight: FontWeight.w300,
-                                            color: Colors.black),
-                                      ),
-                                    ]),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      ViewRequest(
-                                                          recordId:
-                                                              _recordId))).then(
-                                              (value) => _getRecordList());
-                                        },
-                                        child: Text(
-                                          "View",
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          formatedDate,
                                           style: TextStyle(
-                                              fontFamily: 'roboto',
                                               fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'roboto',
+                                              fontWeight: FontWeight.w300,
                                               color: Colors.black),
-                                        ))
-                                  ],
+                                        ),
+                                      ]),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        ViewRequest(
+                                                            recordId:
+                                                                _recordId))).then(
+                                                (value) => _getRecordList());
+                                          },
+                                          child: Text(
+                                            "View",
+                                            style: TextStyle(
+                                                fontFamily: 'roboto',
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black),
+                                          ))
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
+                              );
+                            },
+                          ),
+                      ),
             ))
           ],
         ),
@@ -306,7 +309,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
     }
   }
 
-  _getRecordList() async {
+  Future<dynamic> _getRecordList() async {
     try {
       var response = await ApiClient.getServices().getStudentRecords(sid!);
 
