@@ -7,7 +7,6 @@ import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/SignUp.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/value/Colors.dart';
-import 'package:freed/value/SizeConfig.dart';
 
 import 'Background.dart';
 
@@ -63,14 +62,6 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
-    // print("screen width: ${1.sw}");
-    // print("screen height: ${SizeConfig.screenHeight}");
-    // print("block horizontal: ${SizeConfig.blockSizeHorizontal}");
-    // print("block vertical: ${SizeConfig.blockSizeVertical}");
-    // print("safe horizontal: ${SizeConfig.safeBlockHorizontal}");
-    // print("safe vertical: ${SizeConfig.safeBlockVertical}");
-
     return Background(
         child: Column(
       children: [
@@ -162,10 +153,8 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                         topLeft: Radius.circular(45.r),
                         topRight: Radius.circular(45.r))),
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 35.w,
-                      right: 35.w,
-                      top: 62.4.h),
+                  padding:
+                      EdgeInsets.only(left: 35.w, right: 35.w, top: 62.4.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -178,9 +167,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             fontWeight: FontWeight.w700,
                             fontSize: 24.sp),
                       ),
-                      SizedBox(
-                        height: 30.h
-                      ),
+                      SizedBox(height: 30.h),
                       Text(
                         "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
                         style: TextStyle(
@@ -190,9 +177,7 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                             fontWeight: FontWeight.w700,
                             fontSize: 15.sp),
                       ),
-                      SizedBox(
-                        height: 35.h
-                      ),
+                      SizedBox(height: 35.h),
                       Row(
                         children: [
                           Expanded(

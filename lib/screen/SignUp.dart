@@ -6,7 +6,6 @@ import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
-import 'package:freed/value/SizeConfig.dart';
 
 class SignUp extends StatefulWidget {
   @override

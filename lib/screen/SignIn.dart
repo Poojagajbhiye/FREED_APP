@@ -10,7 +10,6 @@ import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
-import 'package:freed/value/SizeConfig.dart';
 import 'package:freed/model/LoginResponse.dart';
 
 class SignIn extends StatefulWidget {
