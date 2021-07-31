@@ -8,7 +8,7 @@ void main() {
     ScreenUtilInit(
       designSize: Size(360, 780),
       builder: () => MaterialApp(
-        theme: ThemeData(colorScheme: ColorScheme.light(primary: Colors.black)),
+        theme: ThemeData(colorScheme: ColorScheme.light(primary: Colors.black, secondary: Colors.default_color)),
         debugShowCheckedModeBanner: false,
         title: "Freed",
         home: SplashScreen(),
