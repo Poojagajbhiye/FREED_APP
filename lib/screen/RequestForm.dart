@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/NewleaveResponse.dart';
+import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -35,7 +37,6 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     controller =
@@ -72,28 +73,28 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       ))),
               Expanded(
                   child: Container(
-                height: double.infinity,
-                width: double.infinity,
+                height: 1.sh,
+                width: 1.sw,
                 child: Stack(children: [
                   Positioned(
                     bottom: 0,
                     child: Container(
                       child: _reqStatusContainer(),
-                      width: SizeConfig.screenWidth,
-                      height: SizeConfig.safeBlockVertical! * 50,
+                      width: 1.sw,
+                      height: 374.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(45),
-                            topRight: Radius.circular(45)),
+                            topLeft: Radius.circular(45.r),
+                            topRight: Radius.circular(45.r)),
                       ),
                     ),
                   ),
                   Align(
                       alignment: Alignment(1.0, -0.3),
                       child: Container(
-                        width: SizeConfig.safeBlockHorizontal! * 60,
-                        height: SizeConfig.safeBlockHorizontal! * 50,
+                        width: 216.r,
+                        height: 180.r,
                         child: Image.asset(sitReadingDoodle),
                       )),
                   Column(
@@ -105,17 +106,16 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                             ? SizedBox()
                             : Container(
                                 margin: EdgeInsets.only(
-                                    left: 40,
-                                    right: 40,
-                                    top: 20,
-                                    bottom:
-                                        SizeConfig.blockSizeVertical! * 4.5),
+                                    left: 40.w,
+                                    right: 40.w,
+                                    top: 20.h,
+                                    bottom: 35.h),
                                 child: Text(
                                   "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium",
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
                                   style: TextStyle(
-                                      fontSize: 14.0,
+                                      fontSize: 14.sp,
                                       fontFamily: 'roboto',
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -128,12 +128,12 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                             position: offset!,
                             child: Container(
                               child: leaveRequestForm(),
-                              width: double.infinity,
+                              width: 1.sw,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(45),
-                                    topRight: Radius.circular(45)),
+                                    topLeft: Radius.circular(45.r),
+                                    topRight: Radius.circular(45.r)),
                               ),
                             ),
                           ),
@@ -161,9 +161,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             reverse: true,
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 35,
-                  right: 35,
-                  top: 30,
+                  left: 35.w,
+                  right: 35.w,
+                  top: 30.h,
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
                 children: [
@@ -172,14 +172,14 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     style: TextStyle(
                         fontFamily: 'roboto',
                         fontWeight: FontWeight.w700,
-                        fontSize: SizeConfig.blockSizeHorizontal! * 5.3),
+                        fontSize: 20.sp),
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical! * 5),
+                  SizedBox(height: 40.h),
                   Row(
                     children: [
                       Expanded(
                           child: Container(
-                        width: double.infinity,
+                        width: 1.sw,
                         child: TextFormField(
                             validator: (String? value) {
                               if (value!.isEmpty) {
@@ -206,12 +206,12 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                             readOnly: true,
                             keyboardType: TextInputType.text,
                             maxLines: 1,
-                            style: TextStyle(fontSize: 16.0),
+                            style: TextStyle(fontSize: 16.sp),
                             decoration: InputDecoration(
                                 hintText: "From",
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
+                                    vertical: 10.h, horizontal: 10.w),
                                 hintMaxLines: 1,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0)),
@@ -220,12 +220,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                                         color: Colors.black, width: 1.5),
                                     borderRadius: BorderRadius.circular(4.0)))),
                       )),
-                      SizedBox(
-                        width: 25,
-                      ),
+                      SizedBox(width: 25.w),
                       Expanded(
                           child: Container(
-                        width: double.infinity,
+                        width: 1.sw,
                         child: TextFormField(
                             validator: (String? value) {
                               if (value!.isEmpty) {
@@ -251,12 +249,12 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                             readOnly: true,
                             keyboardType: TextInputType.text,
                             maxLines: 1,
-                            style: TextStyle(fontSize: 16.0),
+                            style: TextStyle(fontSize: 16.sp),
                             decoration: InputDecoration(
                                 hintText: "To",
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
+                                    vertical: 10.h, horizontal: 10.w),
                                 hintMaxLines: 1,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0)),
@@ -267,11 +265,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       )),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10.h),
                   Container(
-                    width: double.infinity,
+                    width: 1.sw,
                     child: TextFormField(
                         validator: (String? value) {
                           if (value!.isEmpty) {
@@ -283,12 +279,12 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.text,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
                             hintText: "Destination",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 10.0),
+                                vertical: 10.h, horizontal: 10.w),
                             hintMaxLines: 1,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(4.0)),
@@ -297,11 +293,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                                     BorderSide(color: Colors.black, width: 1.5),
                                 borderRadius: BorderRadius.circular(4.0)))),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30.h),
                   Container(
-                    width: double.infinity,
+                    width: 1.sw,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -310,12 +304,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                           style: TextStyle(
                               fontFamily: 'roboto',
                               fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
+                              fontSize: 16.sp,
                               color: Colors.black),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                        SizedBox(height: 15.h),
                         Container(
                           child: TextFormField(
                             validator: (String? value) {
@@ -327,11 +319,11 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                             controller: reasonController,
                             maxLines: 5,
                             maxLength: 250,
-                            style: TextStyle(fontSize: 16.0),
+                            style: TextStyle(fontSize: 16.sp),
                             decoration: InputDecoration(
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 10.0),
+                                    vertical: 10.h, horizontal: 10.w),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(4.0)),
                                 focusedBorder: OutlineInputBorder(
@@ -344,10 +336,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     ),
                   ),
                   Container(
-                    height: 45,
+                    height: 45.h,
                     margin: EdgeInsets.only(
-                        top: 30, bottom: 15, right: 15, left: 15),
-                    width: double.infinity,
+                        top: 30.h, bottom: 15.h, right: 15.w, left: 15.w),
+                    width: 1.sw,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_leaveFormKey.currentState!.validate()) {
@@ -367,8 +359,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       },
                       child: isProgress
                           ? SizedBox(
-                              height: 25.0,
-                              width: 25.0,
+                              height: 25.r,
+                              width: 25.r,
                               child: CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 2.0,
@@ -379,7 +371,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                               style: TextStyle(
                                   fontFamily: 'roboto',
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18.0),
+                                  fontSize: 18.sp),
                             ),
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -398,7 +390,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                       "Cancel",
                       style: TextStyle(
                           fontFamily: 'robot',
-                          fontSize: 16.0,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                           color: Colors.default_color),
                     ),
@@ -482,44 +474,45 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
 
   Widget _reqStatusContainer() {
     return ListView(
-      padding: EdgeInsets.only(top: 50, right: 15, bottom: 15, left: 15),
+      padding:
+          EdgeInsets.only(top: 50.h, right: 15.w, bottom: 15.h, left: 15.w),
       children: [
         Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 10),
-              width: 50,
-              height: 50,
+              margin: EdgeInsets.only(top: 10.h),
+              width: 50.r,
+              height: 50.r,
               decoration:
                   BoxDecoration(shape: BoxShape.circle, color: Colors.black),
               child: Icon(
                 Icons.done_rounded,
                 color: Colors.white,
-                size: 40,
+                size: 40.r,
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             Text(
               "Get Ready, with the plan!",
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w700,
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   color: Colors.black),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 10.h),
             Text(
               successMsg,
               style: TextStyle(
                   fontFamily: 'roboto',
                   fontWeight: FontWeight.w400,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   color: Colors.default_color),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 30.h),
             Container(
-                height: 40.0,
-                width: 110,
+                height: 40.h,
+                width: 110.w,
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -527,9 +520,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.black),
-                        shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0))),
                         shadowColor: MaterialStateProperty.all(Colors.black)),
                     child: Text(
                       "Done",
@@ -537,9 +529,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                           color: Colors.white,
                           fontFamily: 'roboto',
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.0),
+                          fontSize: 16.sp),
                     ))),
-            SizedBox(height: 7),
+            SizedBox(height: 7.h),
             TextButton(
                 onPressed: () {},
                 child: Text(
@@ -547,7 +539,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                   style: TextStyle(
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.0,
+                      fontSize: 14.sp,
                       color: Colors.default_color),
                 ))
           ],
@@ -578,7 +570,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
       insetPadding: EdgeInsets.all(20.0),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 10.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -587,19 +579,19 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'roboto',
-                  fontSize: 20.0,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w700),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 10.h),
             Text(
               "Please update your profile to continue",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'roboto',
-                  fontSize: 14.0,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w400),
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 20.h),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -610,7 +602,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     color: Colors.white,
                     fontFamily: 'roboto',
                     fontWeight: FontWeight.w700,
-                    fontSize: 16.0),
+                    fontSize: 16.sp),
               ),
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black),
