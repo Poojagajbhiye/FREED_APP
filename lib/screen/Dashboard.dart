@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ExpendedRecords.dart';
+import 'package:freed/screen/QrCode.dart';
 import 'package:freed/screen/RequestForm.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/ViewRequest.dart';
@@ -32,6 +33,7 @@ class _Dashboard extends State<Dashboard> {
   bool _isLoading = true;
 
   //student info
+  String registerId = "";
   String firstname = "";
   String lastname = "";
   String course = "";
@@ -67,13 +69,19 @@ class _Dashboard extends State<Dashboard> {
                     padding: EdgeInsets.only(right: 10.w),
                     child: IconButton(
                       onPressed: () {
-                        TempStorage.removePreferences();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignIn()),
-                            (route) => false);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => QrCode(
+                              _sid,
+                              rid: registerId,
+                              firstname: firstname,
+                              lastname: lastname,
+                            ),
+                          ),
+                        );
                       },
-                      icon: Icon(Icons.logout),
+                      icon: Icon(Icons.qr_code_2_outlined),
                       color: Colors.black,
                       iconSize: 30.r,
                     ),
@@ -171,7 +179,7 @@ class _Dashboard extends State<Dashboard> {
           ),
           Positioned(
             bottom: 0.0,
-            top:  top == null ? 1.sh - 470.h : top,
+            top: top == null ? 1.sh - 470.h : top,
             child: GestureDetector(
               onVerticalDragUpdate: (details) {
                 setState(() {
@@ -391,5 +399,7 @@ class _Dashboard extends State<Dashboard> {
     course = await TempStorage.getCourse();
 
     branch = await TempStorage.getBranch();
+
+    registerId = await TempStorage.getRid();
   }
 }
