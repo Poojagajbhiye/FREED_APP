@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/value/Colors.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatefulWidget {
   final sid;
@@ -8,7 +9,8 @@ class QrCode extends StatefulWidget {
   final firstname;
   final lastname;
 
-  QrCode(this.sid, {Key? key, this.rid, this.firstname, this.lastname}) : super(key: key);
+  QrCode(this.sid, {Key? key, this.rid, this.firstname, this.lastname})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,6 +44,54 @@ class _QrCode extends State<QrCode> {
             Icons.chevron_left,
             color: Colors.black,
             size: 30.0,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Center(
+          child: Container(
+            width: 1.sw,
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "$_firstname $_lastname",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20.0,
+                      color: Colors.black),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "$_rid",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20.0,
+                      color: Colors.default_color),
+                ),
+                SizedBox(height: 10),
+                QrImage(
+                  data: _sid,
+                  size: 250,
+                ),
+                Text(
+                  "QR Code",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12.0,
+                      color: Colors.black),
+                )
+              ],
+            ),
           ),
         ),
       ),
