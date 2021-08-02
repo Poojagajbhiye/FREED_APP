@@ -101,42 +101,41 @@ class _SplashScreen extends State<SplashScreen> with TickerProviderStateMixin {
                   ),
                   SizedBox(height: 30.h),
                   Container(
-                      width: 162.w,
-                      child: AnimatedOpacity(
-                        opacity: _visible ? 1.0 : 0.0,
-                        duration: Duration(seconds: 1),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_visible) {
-                              if (controller!.isCompleted) {
-                                controller?.reverse(from: 1.0);
+                    width: 162.w,
+                    child: _visible
+                        ? ElevatedButton(
+                            onPressed: () {
+                              if (_visible) {
+                                if (controller!.isCompleted) {
+                                  controller?.reverse(from: 1.0);
+                                }
                               }
-                            }
 
-                            setState(() {
-                              _visible = !_visible;
-                            });
-                          },
-                          child: Text(
-                            "Let's Go",
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp),
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.black),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(30.0))),
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              shadowColor:
-                                  MaterialStateProperty.all(Colors.black)),
-                        ),
-                      ))
+                              setState(() {
+                                _visible = !_visible;
+                              });
+                            },
+                            child: Text(
+                              "Let's Go",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp),
+                            ),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.black),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0))),
+                                foregroundColor:
+                                    MaterialStateProperty.all(Colors.white),
+                                shadowColor:
+                                    MaterialStateProperty.all(Colors.black)),
+                          )
+                        : SizedBox(),
+                  )
                 ],
               )),
         ),
