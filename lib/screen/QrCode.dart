@@ -48,14 +48,14 @@ class _QrCode extends State<QrCode> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Center(
           child: Container(
             width: 1.sw,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -65,29 +65,29 @@ class _QrCode extends State<QrCode> {
                   style: TextStyle(
                       fontFamily: "roboto",
                       fontWeight: FontWeight.w700,
-                      fontSize: 20.0,
+                      fontSize: 20.sp,
                       color: Colors.black),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   "$_rid",
                   style: TextStyle(
                       fontFamily: "roboto",
                       fontWeight: FontWeight.w700,
-                      fontSize: 20.0,
+                      fontSize: 20.sp,
                       color: Colors.default_color),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 QrImage(
                   data: _sid,
-                  size: 250,
+                  size: 250.r,
                 ),
                 Text(
                   "QR Code",
                   style: TextStyle(
                       fontFamily: "roboto",
                       fontWeight: FontWeight.w300,
-                      fontSize: 12.0,
+                      fontSize: 12.sp,
                       color: Colors.black),
                 )
               ],
