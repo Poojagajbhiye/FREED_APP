@@ -7,7 +7,6 @@ import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/ExpendedRecords.dart';
 import 'package:freed/screen/QrCode.dart';
 import 'package:freed/screen/RequestForm.dart';
-import 'package:freed/screen/SignIn.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
