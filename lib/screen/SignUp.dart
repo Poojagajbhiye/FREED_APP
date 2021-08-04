@@ -121,6 +121,13 @@ class _SignUpForm extends State<SignUpForm> {
   TextEditingController _pass = TextEditingController();
 
   @override
+  void dispose() {
+    _rid.dispose();
+    _pass.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: signupKey,

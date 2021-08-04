@@ -49,6 +49,14 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    controller?.dispose();
+    destinationController.dispose();
+    reasonController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     setState(() {
       keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;

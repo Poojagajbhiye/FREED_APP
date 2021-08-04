@@ -29,6 +29,13 @@ class _SignIn extends State<SignIn> {
   bool keyboardVisiblity = false;
 
   @override
+  void dispose() {
+    _rid.dispose();
+    _pass.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     setState(() {
       keyboardVisiblity = MediaQuery.of(context).viewInsets.bottom != 0;
