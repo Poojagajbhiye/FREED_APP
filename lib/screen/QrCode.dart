@@ -4,31 +4,31 @@ import 'package:freed/value/Colors.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatefulWidget {
-  final sid;
+  final qrData;
   final rid;
   final firstname;
   final lastname;
 
-  QrCode(this.sid, {Key? key, this.rid, this.firstname, this.lastname})
+  QrCode(this.qrData, {Key? key, this.rid, this.firstname, this.lastname})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _QrCode(sid, rid, firstname, lastname);
+    return _QrCode(qrData, rid, firstname, lastname);
   }
 }
 
 class _QrCode extends State<QrCode> {
-  String _sid;
+  String _qrData;
   String _rid;
   String _firstname;
   String _lastname;
 
-  _QrCode(this._sid, this._rid, this._firstname, this._lastname);
+  _QrCode(this._qrData, this._rid, this._firstname, this._lastname);
 
   @override
   Widget build(BuildContext context) {
-    print("$_sid $_rid $_firstname $_lastname");
+    print("$_qrData $_rid $_firstname $_lastname");
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: AppBar(
@@ -41,9 +41,9 @@ class _QrCode extends State<QrCode> {
             Navigator.pop(context);
           },
           icon: Icon(
-            Icons.chevron_left,
+            Icons.close,
             color: Colors.black,
-            size: 30.0,
+            size: 30.r,
           ),
         ),
       ),
@@ -79,7 +79,7 @@ class _QrCode extends State<QrCode> {
                 ),
                 SizedBox(height: 10.h),
                 QrImage(
-                  data: _sid,
+                  data: _qrData,
                   size: 250.r,
                 ),
                 Text(

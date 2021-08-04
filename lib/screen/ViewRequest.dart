@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordModel.dart';
+import 'package:freed/screen/QrCode.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
@@ -94,12 +95,54 @@ class _ViewRequest extends State<ViewRequest> {
                         _reasonExpendedCard(),
                         SizedBox(height: 50.h),
                         isAcceptedStatus || isDeclinedStatus
-                            ? SizedBox()
+                            ? SizedBox(height: 0.0)
                             : _cancelButton(),
+                        isAcceptedStatus
+                            ? _qrCodeButton()
+                            : SizedBox(height: 0.0),
                       ],
                     ),
             ))
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _qrCodeButton() {
+    return Center(
+      child: Container(
+        width: 170.w,
+        height: 45.h,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QrCode(
+                  recordId,
+                  firstname: firstname,
+                  lastname: lastname,
+                  rid: rid,
+                ),
+              ),
+            );
+          },
+          child: Text(
+            "Show QR Code",
+            style: TextStyle(
+                fontFamily: 'roboto',
+                fontWeight: FontWeight.w400,
+                fontSize: 18.sp,
+                color: Colors.white),
+          ),
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0))),
+            backgroundColor: MaterialStateProperty.all(
+              Colors.black,
+            ),
+          ),
         ),
       ),
     );
@@ -505,13 +548,8 @@ class DeclinedDoodle extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(
-              height: 80.r,
-              width: 1.sw,
-              child: Image.asset(messyDoodle)),
-          SizedBox(
-            height: 10.h
-          ),
+          SizedBox(height: 80.r, width: 1.sw, child: Image.asset(messyDoodle)),
+          SizedBox(height: 10.h),
           Container(
             width: 1.sw,
             padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 5.w),
