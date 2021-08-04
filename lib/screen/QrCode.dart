@@ -28,7 +28,6 @@ class _QrCode extends State<QrCode> {
 
   @override
   Widget build(BuildContext context) {
-    print("$_qrData $_rid $_firstname $_lastname");
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: AppBar(
@@ -60,7 +59,7 @@ class _QrCode extends State<QrCode> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                _firstname.isEmpty && _lastname.isEmpty? SizedBox() : Text(
                   "$_firstname $_lastname",
                   style: TextStyle(
                       fontFamily: "roboto",
@@ -83,7 +82,7 @@ class _QrCode extends State<QrCode> {
                   size: 250.r,
                 ),
                 Text(
-                  "QR Code",
+                  "Freed QR Scan",
                   style: TextStyle(
                       fontFamily: "roboto",
                       fontWeight: FontWeight.w300,

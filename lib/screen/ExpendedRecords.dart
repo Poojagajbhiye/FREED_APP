@@ -83,13 +83,14 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              clickAccept = false;
-                              clickDecline = false;
-                              clickProcess = true;
+                            if (mounted)
+                              setState(() {
+                                clickAccept = false;
+                                clickDecline = false;
+                                clickProcess = true;
 
-                              _filtered("PROCESS");
-                            });
+                                _filtered("PROCESS");
+                              });
                           },
                           child: Container(
                             width: 90.w,
@@ -116,13 +117,14 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              clickAccept = true;
-                              clickDecline = false;
-                              clickProcess = false;
+                            if (mounted)
+                              setState(() {
+                                clickAccept = true;
+                                clickDecline = false;
+                                clickProcess = false;
 
-                              _filtered("ACCEPTED");
-                            });
+                                _filtered("ACCEPTED");
+                              });
                           },
                           child: Container(
                             width: 90.w,
@@ -149,13 +151,14 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              clickAccept = false;
-                              clickDecline = true;
-                              clickProcess = false;
+                            if (mounted)
+                              setState(() {
+                                clickAccept = false;
+                                clickDecline = true;
+                                clickProcess = false;
 
-                              _filtered("DECLINED");
-                            });
+                                _filtered("DECLINED");
+                              });
                           },
                           child: Container(
                             width: 90.w,
@@ -194,7 +197,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                     : filteredRecordList == null ||
                             filteredRecordList?.length == 0
                         ? ListView(
-                          padding: EdgeInsets.only(top: 250.h),
+                            padding: EdgeInsets.only(top: 250.h),
                             children: [
                               Text(
                                 "No Records Found",
@@ -329,23 +332,25 @@ class _ExpendedRecords extends State<ExpendedRecords> {
         List<Record>? list = recordListModel.records;
 
         if (isSuccess!) {
-          setState(() {
-            isLoading = false;
-            recordList = list?.reversed.toList();
+          if (mounted)
+            setState(() {
+              isLoading = false;
+              recordList = list?.reversed.toList();
 
-            if (clickAccept)
-              _filtered("ACCEPTED");
-            else if (clickDecline)
-              _filtered("DECLINED");
-            else
-              _filtered("PROCESS");
-          });
+              if (clickAccept)
+                _filtered("ACCEPTED");
+              else if (clickDecline)
+                _filtered("DECLINED");
+              else
+                _filtered("PROCESS");
+            });
         }
       }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          isLoading = false;
+        });
       var err = e as DioError;
       recordList?.clear();
       filteredRecordList?.clear();

@@ -191,9 +191,10 @@ class _Dashboard extends State<Dashboard> {
                           MaterialPageRoute(
                             builder: (context) => ExpendedRecords(sid: _sid),
                           )).then((value) {
-                        setState(() {
-                          top = null;
-                        });
+                        if (mounted)
+                          setState(() {
+                            top = null;
+                          });
                         _getRecordList();
                       });
                     }
@@ -346,20 +347,23 @@ class _Dashboard extends State<Dashboard> {
         List<Record>? list = recordListModel.records;
 
         if (isSuccess!) {
-          setState(() {
-            _isLoading = false;
-            if (list != null) {
-              recordList = list.reversed
-                  .where((record) => (record.status == "PROCESS".toUpperCase()))
-                  .toList();
-            }
-          });
+          if (mounted)
+            setState(() {
+              _isLoading = false;
+              if (list != null) {
+                recordList = list.reversed
+                    .where(
+                        (record) => (record.status == "PROCESS".toUpperCase()))
+                    .toList();
+              }
+            });
         }
       }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          _isLoading = false;
+        });
       recordList?.clear();
 
       var err = e as DioError;
