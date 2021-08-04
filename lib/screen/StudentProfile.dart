@@ -286,43 +286,41 @@ class _ProfileForm extends State<ProfileForm> {
                                   color: Colors.default_color),
                             ),
                           ),
-                          SizedBox(
-                            width: 1.sw,
-                            height: 60.h,
-                            child: DropdownButtonFormField<String>(
-                              isExpanded: true,
-                              hint: Text(
-                                "choose",
-                                style: TextStyle(fontSize: 16.sp),
-                              ),
-                              validator: (value) {
-                                if (value == null) {
-                                  return "*required";
-                                }
-                                return null;
-                              },
-                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
-                              decoration: InputDecoration(
-                                  isDense: true,
-                                  fillColor: Colors.gray,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(7.0),
-                                      borderSide: BorderSide(
-                                          width: 0.0, style: BorderStyle.none))),
-                              items: courseList.map((String currentValue) {
-                                return DropdownMenuItem(
-                                  child: Text(currentValue),
-                                  value: currentValue,
-                                );
-                              }).toList(),
-                              value: defCourse,
-                              onChanged: (value) {
-                                setState(() {
-                                  defCourse = value;
-                                });
-                              },
+                          DropdownButtonFormField<String>(
+                            isExpanded: true,
+                            hint: Text(
+                              "choose",
+                              style: TextStyle(fontSize: 16.sp),
                             ),
+                            validator: (value) {
+                              if (value == null) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            style: TextStyle(
+                                fontSize: 16.sp, color: Colors.black),
+                            decoration: InputDecoration(
+                                isDense: true,
+                                fillColor: Colors.gray,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                    borderSide: BorderSide(
+                                        width: 0.0,
+                                        style: BorderStyle.none))),
+                            items: courseList.map((String currentValue) {
+                              return DropdownMenuItem(
+                                child: Text(currentValue),
+                                value: currentValue,
+                              );
+                            }).toList(),
+                            value: defCourse,
+                            onChanged: (value) {
+                              setState(() {
+                                defCourse = value;
+                              });
+                            },
                           )
                         ],
                       ),
@@ -346,43 +344,41 @@ class _ProfileForm extends State<ProfileForm> {
                                   color: Colors.default_color),
                             ),
                           ),
-                          SizedBox(
-                            width: 1.sw,
-                            height: 60.h,
-                            child: DropdownButtonFormField<String>(
-                              isExpanded: true,
-                              hint: Text(
-                                "choose",
-                                style: TextStyle(fontSize: 16.sp),
-                              ),
-                              validator: (value) {
-                                if (value == null) {
-                                  return "*required";
-                                }
-                                return null;
-                              },
-                              style: TextStyle(fontSize: 16.sp, color: Colors.black),
-                              decoration: InputDecoration(
-                                  isDense: true,
-                                  fillColor: Colors.gray,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(7.0),
-                                      borderSide: BorderSide(
-                                          width: 0.0, style: BorderStyle.none))),
-                              items: semesterList.map((String currentValue) {
-                                return DropdownMenuItem(
-                                  child: Text(currentValue),
-                                  value: currentValue,
-                                );
-                              }).toList(),
-                              value: defSemester,
-                              onChanged: (value) {
-                                setState(() {
-                                  defSemester = value;
-                                });
-                              },
+                          DropdownButtonFormField<String>(
+                            isExpanded: true,
+                            hint: Text(
+                              "choose",
+                              style: TextStyle(fontSize: 16.sp),
                             ),
+                            validator: (value) {
+                              if (value == null) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            style: TextStyle(
+                                fontSize: 16.sp, color: Colors.black),
+                            decoration: InputDecoration(
+                                isDense: true,
+                                fillColor: Colors.gray,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                    borderSide: BorderSide(
+                                        width: 0.0,
+                                        style: BorderStyle.none))),
+                            items: semesterList.map((String currentValue) {
+                              return DropdownMenuItem(
+                                child: Text(currentValue),
+                                value: currentValue,
+                              );
+                            }).toList(),
+                            value: defSemester,
+                            onChanged: (value) {
+                              setState(() {
+                                defSemester = value;
+                              });
+                            },
                           )
                         ],
                       ),
@@ -407,43 +403,39 @@ class _ProfileForm extends State<ProfileForm> {
                             color: Colors.default_color),
                       ),
                     ),
-                    SizedBox(
-                      width: 1.sw,
-                      height: 60.h,
-                      child: DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        hint: Text(
-                          "choose",
-                          style: TextStyle(fontSize: 16.sp),
-                        ),
-                        validator: (value) {
-                          if (value == null) {
-                            return "*required";
-                          }
-                          return null;
-                        },
-                        style: TextStyle(fontSize: 16.sp, color: Colors.black),
-                        decoration: InputDecoration(
-                            isDense: true,
-                            fillColor: Colors.gray,
-                            filled: true,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(7.0),
-                                borderSide: BorderSide(
-                                    width: 0.0, style: BorderStyle.none))),
-                        items: branchList.map((String currentValue) {
-                          return DropdownMenuItem(
-                            child: Text(currentValue),
-                            value: currentValue,
-                          );
-                        }).toList(),
-                        value: defBranch,
-                        onChanged: (value) {
-                          setState(() {
-                            defBranch = value;
-                          });
-                        },
+                    DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      hint: Text(
+                        "choose",
+                        style: TextStyle(fontSize: 16.sp),
                       ),
+                      validator: (value) {
+                        if (value == null) {
+                          return "*required";
+                        }
+                        return null;
+                      },
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      decoration: InputDecoration(
+                          isDense: true,
+                          fillColor: Colors.gray,
+                          filled: true,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(7.0),
+                              borderSide: BorderSide(
+                                  width: 0.0, style: BorderStyle.none))),
+                      items: branchList.map((String currentValue) {
+                        return DropdownMenuItem(
+                          child: Text(currentValue),
+                          value: currentValue,
+                        );
+                      }).toList(),
+                      value: defBranch,
+                      onChanged: (value) {
+                        setState(() {
+                          defBranch = value;
+                        });
+                      },
                     )
                   ],
                 ),
