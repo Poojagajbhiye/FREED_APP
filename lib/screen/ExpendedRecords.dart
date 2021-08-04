@@ -187,27 +187,34 @@ class _ExpendedRecords extends State<ExpendedRecords> {
             Expanded(
                 child: Container(
               decoration: BoxDecoration(color: Colors.white),
-              child: isLoading
-                  ? _loadingEffect()
-                  : filteredRecordList == null ||
-                          filteredRecordList?.length == 0
-                      ? Center(
-                          child: Text(
-                            "No Records Found",
-                            style: TextStyle(
-                                decoration: TextDecoration.none,
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
-                                color: Colors.default_color),
-                          ),
-                        )
-                      : RefreshIndicator(
-                        onRefresh: _getRecordList,
-                        child: ListView.builder(
+              child: RefreshIndicator(
+                onRefresh: _getRecordList,
+                child: isLoading
+                    ? _loadingEffect()
+                    : filteredRecordList == null ||
+                            filteredRecordList?.length == 0
+                        ? ListView(
+                          padding: EdgeInsets.only(top: 250.h),
+                            children: [
+                              Text(
+                                "No Records Found",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    decoration: TextDecoration.none,
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16.sp,
+                                    color: Colors.default_color),
+                              ),
+                            ],
+                          )
+                        : ListView.builder(
                             itemCount: filteredRecordList?.length,
                             padding: EdgeInsets.only(
-                                left: 20.w, right: 20.w, top: 10.h, bottom: 10.h),
+                                left: 20.w,
+                                right: 20.w,
+                                top: 10.h,
+                                bottom: 10.h),
                             itemBuilder: (context, index) {
                               Record record = filteredRecordList![index];
                               DateTime? date = record.from;
@@ -219,10 +226,12 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                 child: Container(
                                   height: 65.h,
                                   width: 1.sw,
-                                  padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 25.w),
                                   decoration: BoxDecoration(
                                       color: _cardColorPicker(),
-                                      borderRadius: BorderRadius.circular(10.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -249,14 +258,15 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                       TextButton(
                                           onPressed: () {
                                             Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        ViewRequest(
-                                                            recordId:
-                                                                _recordId))).then(
-                                                (value) => _getRecordList());
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            ViewRequest(
+                                                                recordId:
+                                                                    _recordId)))
+                                                .then((value) =>
+                                                    _getRecordList());
                                           },
                                           child: Text(
                                             "View",
@@ -272,7 +282,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                               );
                             },
                           ),
-                      ),
+              ),
             ))
           ],
         ),
