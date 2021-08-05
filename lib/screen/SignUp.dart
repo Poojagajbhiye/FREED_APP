@@ -198,7 +198,7 @@ class _SignUpForm extends State<SignUpForm> {
                           return null;
                         },
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         maxLines: 1,
                         style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
@@ -227,7 +227,7 @@ class _SignUpForm extends State<SignUpForm> {
                           }
                           return null;
                         },
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         maxLines: 1,
                         style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(

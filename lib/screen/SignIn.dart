@@ -164,7 +164,7 @@ class _SignIn extends State<SignIn> {
                         },
                         controller: _pass,
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         maxLines: 1,
                         style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
