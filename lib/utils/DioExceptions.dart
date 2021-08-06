@@ -10,17 +10,17 @@ class DioExceptions implements Exception {
         message = "Request to API server was cancelled";
         break;
       case DioErrorType.connectTimeout:
-        message = "Connection timeout with API server";
+        message = "Connection timeout";
         break;
       case DioErrorType.receiveTimeout:
-        message = "Receive timeout in connection with API server";
+        message = "Receive timeout";
         break;
       case DioErrorType.response:
         message = _handleError(
             dioError.response!.statusCode, dioError.response!.data);
         break;
       case DioErrorType.sendTimeout:
-        message = "Send timeout in connection with API server";
+        message = "Send timeout in connection";
         break;
       default:
         message = "Something went wrong";
