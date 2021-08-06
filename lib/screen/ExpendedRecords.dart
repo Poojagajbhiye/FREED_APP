@@ -8,6 +8,7 @@ import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
+import 'package:freed/value/Image.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -27,6 +28,9 @@ class _ExpendedRecords extends State<ExpendedRecords> {
   String? sid;
   bool isLoading = true;
 
+  String errorMsg = "";
+  bool networkerror = false;
+
   //filter buttons
   bool clickProcess = true;
   bool clickAccept = false;
@@ -43,6 +47,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Hero(
         tag: 'expend',
         child: Column(
@@ -188,105 +193,108 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                   ],
                 )),
             Expanded(
-                child: Container(
-              decoration: BoxDecoration(color: Colors.white),
-              child: RefreshIndicator(
-                onRefresh: _getRecordList,
-                child: isLoading
-                    ? _loadingEffect()
-                    : filteredRecordList == null ||
-                            filteredRecordList?.length == 0
-                        ? ListView(
-                            padding: EdgeInsets.only(top: 250.h),
-                            children: [
-                              Text(
-                                "No Records Found",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontFamily: 'roboto',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.sp,
-                                    color: Colors.default_color),
-                              ),
-                            ],
-                          )
-                        : ListView.builder(
-                            itemCount: filteredRecordList?.length,
-                            padding: EdgeInsets.only(
-                                left: 20.w,
-                                right: 20.w,
-                                top: 10.h,
-                                bottom: 10.h),
-                            itemBuilder: (context, index) {
-                              Record record = filteredRecordList![index];
-                              DateTime? date = record.from;
-                              String formatedDate =
-                                  DateFormat("dd MMM yyyy").format(date!);
-                              String? _recordId = record.id;
-                              return Card(
-                                elevation: 0.0,
-                                child: Container(
-                                  height: 65.h,
-                                  width: 1.sw,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 25.w),
-                                  decoration: BoxDecoration(
-                                      color: _cardColorPicker(),
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                child: networkerror
+                    ? _networkErrorui(errorMsg)
+                    : RefreshIndicator(
+                        onRefresh: _getRecordList,
+                        child: isLoading
+                            ? _loadingEffect()
+                            : filteredRecordList == null ||
+                                    filteredRecordList?.length == 0
+                                ? ListView(
+                                    padding: EdgeInsets.only(top: 250.h),
                                     children: [
-                                      Row(children: [
-                                        Opacity(
-                                          opacity: 0.7,
-                                          child: Icon(
-                                            _cardIconPicker(),
-                                            size: 20.r,
-                                            color: Colors.black,
+                                      Text(
+                                        "No Records Found",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            decoration: TextDecoration.none,
+                                            fontFamily: 'roboto',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.sp,
+                                            color: Colors.default_color),
+                                      ),
+                                    ],
+                                  )
+                                : ListView.builder(
+                                    itemCount: filteredRecordList?.length,
+                                    padding: EdgeInsets.only(
+                                        left: 20.w,
+                                        right: 20.w,
+                                        top: 10.h,
+                                        bottom: 10.h),
+                                    itemBuilder: (context, index) {
+                                      Record record =
+                                          filteredRecordList![index];
+                                      DateTime? date = record.from;
+                                      String formatedDate =
+                                          DateFormat("dd MMM yyyy")
+                                              .format(date!);
+                                      String? _recordId = record.id;
+                                      return Card(
+                                        elevation: 0.0,
+                                        child: Container(
+                                          height: 65.h,
+                                          width: 1.sw,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 25.w),
+                                          decoration: BoxDecoration(
+                                              color: _cardColorPicker(),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(children: [
+                                                Opacity(
+                                                  opacity: 0.7,
+                                                  child: Icon(
+                                                    _cardIconPicker(),
+                                                    size: 20.r,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 10.w),
+                                                Text(
+                                                  formatedDate,
+                                                  style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontFamily: 'roboto',
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      color: Colors.black),
+                                                ),
+                                              ]),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                ViewRequest(
+                                                                    recordId:
+                                                                        _recordId))).then(
+                                                        (value) =>
+                                                            _getRecordList());
+                                                  },
+                                                  child: Text(
+                                                    "View",
+                                                    style: TextStyle(
+                                                        fontFamily: 'roboto',
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.black),
+                                                  ))
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(width: 10.w),
-                                        Text(
-                                          formatedDate,
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontFamily: 'roboto',
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black),
-                                        ),
-                                      ]),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            ViewRequest(
-                                                                recordId:
-                                                                    _recordId)))
-                                                .then((value) =>
-                                                    _getRecordList());
-                                          },
-                                          child: Text(
-                                            "View",
-                                            style: TextStyle(
-                                                fontFamily: 'roboto',
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black),
-                                          ))
-                                    ],
+                                      );
+                                    },
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-              ),
-            ))
+                      ))
           ],
         ),
       ),
@@ -335,6 +343,7 @@ class _ExpendedRecords extends State<ExpendedRecords> {
           if (mounted)
             setState(() {
               isLoading = false;
+              networkerror = false;
               recordList = list?.reversed.toList();
 
               if (clickAccept)
@@ -347,16 +356,17 @@ class _ExpendedRecords extends State<ExpendedRecords> {
         }
       }
     } catch (e) {
+      var err = e as DioError;
       if (mounted)
         setState(() {
           isLoading = false;
+          networkerror = true;
+          errorMsg = DioExceptions.fromDioError(err).toString();
         });
-      var err = e as DioError;
+
       recordList?.clear();
       filteredRecordList?.clear();
-
-      var error = DioExceptions.fromDioError(err).toString();
-      print(error);
+      print(errorMsg);
     }
   }
 
@@ -378,6 +388,71 @@ class _ExpendedRecords extends State<ExpendedRecords> {
       baseColor: Colors.gray,
       highlightColor: Color(0xFFD0D0D0),
       enabled: isLoading,
+    );
+  }
+
+  Widget _networkErrorui(String errorMsg) {
+    return Container(
+      width: 1.sw,
+      height: 1.sh,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                width: 150.r, height: 150.r, child: Image.asset(lightHouse)),
+            SizedBox(height: 20.h),
+            Text(
+              errorMsg,
+              style: TextStyle(
+                  fontFamily: "roboto",
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 10.h),
+            FittedBox(
+              child: Text(
+                "Check your connection, then refresh the page",
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Container(
+              width: 150.r,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (mounted)
+                    setState(() {
+                      networkerror = false;
+                      isLoading = true;
+                    });
+                  _getRecordList();
+                },
+                child: Text(
+                  "Refresh",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.sp,
+                      color: Colors.black),
+                ),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    shadowColor: MaterialStateProperty.all(Colors.transparent),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r))),
+                    side: MaterialStateProperty.all(
+                        BorderSide(color: Colors.gray, width: 2.0))),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

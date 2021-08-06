@@ -32,7 +32,10 @@ class _ViewRequest extends State<ViewRequest> {
   String course = "";
   String branch = "";
   String semester = "";
+
   bool isprocess = true;
+  bool networkerror = false;
+  String errorMsg = "";
 
   bool isCancel = false;
 
@@ -50,60 +53,58 @@ class _ViewRequest extends State<ViewRequest> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: Colors.white,
-              automaticallyImplyLeading: false,
-              shadowColor: Colors.transparent,
-              leadingWidth: 70.w,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.chevron_left,
-                  color: Colors.black,
-                  size: 30.0,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Material(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              AppBar(
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                shadowColor: Colors.transparent,
+                leadingWidth: 70.w,
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.black,
+                    size: 30.0,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-                child: Container(
-              color: Colors.white,
-              height: 1.sh,
-              width: 1.sw,
-              child: isprocess
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.black,
-                      ),
-                    )
-                  : ListView(
-                      padding: EdgeInsets.only(
-                          top: 0.0, bottom: 50.h, left: 30.w, right: 30.w),
-                      children: [
-                        _checkStatus(),
-                        SizedBox(height: 30.h),
-                        _header(),
-                        SizedBox(height: 15.h),
-                        _detailedCard(),
-                        SizedBox(height: 20.h),
-                        _reasonExpendedCard(),
-                        SizedBox(height: 50.h),
-                        isAcceptedStatus || isDeclinedStatus
-                            ? SizedBox(height: 0.0)
-                            : _cancelButton(),
-                        isAcceptedStatus
-                            ? _qrCodeButton()
-                            : SizedBox(height: 0.0),
-                      ],
-                    ),
-            ))
-          ],
+              Expanded(
+                  child: networkerror? _networkErrorui(errorMsg) : isprocess
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+                      : ListView(
+                          padding: EdgeInsets.only(
+                              top: 0.0, bottom: 50.h, left: 30.w, right: 30.w),
+                          children: [
+                            _checkStatus(),
+                            SizedBox(height: 30.h),
+                            _header(),
+                            SizedBox(height: 15.h),
+                            _detailedCard(),
+                            SizedBox(height: 20.h),
+                            _reasonExpendedCard(),
+                            SizedBox(height: 50.h),
+                            isAcceptedStatus || isDeclinedStatus
+                                ? SizedBox(height: 0.0)
+                                : _cancelButton(),
+                            isAcceptedStatus
+                                ? _qrCodeButton()
+                                : SizedBox(height: 0.0),
+                          ],
+                        ))
+            ],
+          ),
         ),
       ),
     );
@@ -179,6 +180,7 @@ class _ViewRequest extends State<ViewRequest> {
         if (isSuccess!) {
           setState(() {
             isprocess = false;
+            networkerror = false;
             if (recordModel.record != null) {
               rid = recordModel.record!.rid!;
               fromDate = DateFormat('dd MMM yyyy').format(_fromdate!);
@@ -203,13 +205,79 @@ class _ViewRequest extends State<ViewRequest> {
       }
     } catch (e) {
       print(e);
+      var dioError = e as DioError;
       setState(() {
         isprocess = false;
+        networkerror = true;
+        errorMsg = DioExceptions.fromDioError(dioError).toString();
       });
-      var dioError = e as DioError;
-      var error = DioExceptions.fromDioError(dioError).toString();
-      print(error);
+      print(errorMsg);
     }
+  }
+
+  Widget _networkErrorui(String errorMsg) {
+    return Container(
+      width: 1.sw,
+      height: 1.sh,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+                width: 150.r, height: 150.r, child: Image.asset(lightHouse)),
+            SizedBox(height: 20.h),
+            Text(
+              errorMsg,
+              style: TextStyle(
+                  fontFamily: "roboto",
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 10.h),
+            FittedBox(
+              child: Text(
+                "Check your connection, then refresh the page",
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Container(
+              width: 150.r,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (mounted)
+                    setState(() {
+                      networkerror = false;
+                      isprocess = true;
+                    });
+                  _fatchRecordDetails(recordId);
+                },
+                child: Text(
+                  "Refresh",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.sp,
+                      color: Colors.black),
+                ),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    shadowColor: MaterialStateProperty.all(Colors.transparent),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r))),
+                    side: MaterialStateProperty.all(
+                        BorderSide(color: Colors.gray, width: 2.0))),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _header() {
