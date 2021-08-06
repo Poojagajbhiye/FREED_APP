@@ -30,6 +30,8 @@ class _Dashboard extends State<Dashboard> {
   List<Record>? recordList;
   String? _sid;
   bool _isLoading = true;
+  bool networkError = false;
+  String errorMsg = "";
 
   //student info
   String registerId = "";
@@ -250,88 +252,92 @@ class _Dashboard extends State<Dashboard> {
           ),
         ),
         Expanded(
-          child: _isLoading
-              ? _loadingEffect()
-              : recordList == null || recordList?.length == 0
-                  ? Center(
-                      child: Text(
-                        "No Records Found",
-                        style: TextStyle(
-                            fontFamily: 'roboto',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.none,
-                            color: Colors.default_color),
-                      ),
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: recordList == null ? 0 : recordList?.length,
-                      padding: EdgeInsets.only(
-                          left: 20.w, right: 20.w, top: 5.h, bottom: 10.h),
-                      itemBuilder: (context, index) {
-                        Record record = recordList![index];
-                        DateTime? date = record.from;
-                        String formatedDate =
-                            DateFormat("dd MMM yyyy").format(date!);
-                        String? _recordId = record.id;
-                        return Card(
-                          elevation: 0.0,
-                          child: Container(
-                            height: 65.h,
-                            width: 0.sw,
-                            padding: EdgeInsets.symmetric(horizontal: 25.w),
-                            decoration: BoxDecoration(
-                                color: Colors.gray,
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(children: [
-                                  Opacity(
-                                    opacity: 0.7,
-                                    child: Icon(
-                                      Icons.timer_outlined,
-                                      size: 20.r,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Text(
-                                    formatedDate,
-                                    style: TextStyle(
-                                        fontSize: 14.sp,
-                                        fontFamily: 'roboto',
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black),
-                                  ),
-                                ]),
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
+          child: networkError
+              ? _networkErrorui(errorMsg)
+              : _isLoading
+                  ? _loadingEffect()
+                  : recordList == null || recordList?.length == 0
+                      ? Center(
+                          child: Text(
+                            "No Records Found",
+                            style: TextStyle(
+                                fontFamily: 'roboto',
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.none,
+                                color: Colors.default_color),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount:
+                              recordList == null ? 0 : recordList?.length,
+                          padding: EdgeInsets.only(
+                              left: 20.w, right: 20.w, top: 5.h, bottom: 10.h),
+                          itemBuilder: (context, index) {
+                            Record record = recordList![index];
+                            DateTime? date = record.from;
+                            String formatedDate =
+                                DateFormat("dd MMM yyyy").format(date!);
+                            String? _recordId = record.id;
+                            return Card(
+                              elevation: 0.0,
+                              child: Container(
+                                height: 65.h,
+                                width: 0.sw,
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                decoration: BoxDecoration(
+                                    color: Colors.gray,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(children: [
+                                      Opacity(
+                                        opacity: 0.7,
+                                        child: Icon(
+                                          Icons.timer_outlined,
+                                          size: 20.r,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.w),
+                                      Text(
+                                        formatedDate,
+                                        style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontFamily: 'roboto',
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black),
+                                      ),
+                                    ]),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          ViewRequest(
-                                                              recordId:
-                                                                  _recordId)))
-                                          .then((value) => _getRecordList());
-                                    },
-                                    child: Text(
-                                      "View",
-                                      style: TextStyle(
-                                          fontFamily: 'roboto',
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                                                  builder: (BuildContext
+                                                          context) =>
+                                                      ViewRequest(
+                                                          recordId:
+                                                              _recordId))).then(
+                                              (value) => _getRecordList());
+                                        },
+                                        child: Text(
+                                          "View",
+                                          style: TextStyle(
+                                              fontFamily: 'roboto',
+                                              fontSize: 14.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
         ),
       ],
     );
@@ -350,6 +356,7 @@ class _Dashboard extends State<Dashboard> {
           if (mounted)
             setState(() {
               _isLoading = false;
+              networkError = false;
               if (list != null) {
                 recordList = list.reversed
                     .where(
@@ -360,15 +367,16 @@ class _Dashboard extends State<Dashboard> {
         }
       }
     } catch (e) {
+      var err = e as DioError;
       if (mounted)
         setState(() {
           _isLoading = false;
+          networkError = true;
+          errorMsg = DioExceptions.fromDioError(err).toString();
         });
       recordList?.clear();
 
-      var err = e as DioError;
-      var error = DioExceptions.fromDioError(err).toString();
-      print(error);
+      print(errorMsg);
     }
   }
 
@@ -404,5 +412,69 @@ class _Dashboard extends State<Dashboard> {
     branch = await TempStorage.getBranch();
 
     registerId = await TempStorage.getRid();
+  }
+
+  Widget _networkErrorui(String errorMsg) {
+    return Container(
+      width: 1.sw,
+      height: 1.sh,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(width: 90.r, height: 90.r, child: Image.asset(lightHouse)),
+            SizedBox(height: 20.h),
+            Text(
+              errorMsg,
+              style: TextStyle(
+                  fontFamily: "roboto",
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 10.h),
+            FittedBox(
+              child: Text(
+                "Check your connection, then refresh the page",
+                style: TextStyle(
+                    fontFamily: "roboto",
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black),
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Container(
+              width: 150.r,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (mounted)
+                    setState(() {
+                      _isLoading = true;
+                      networkError = false;
+                    });
+                  _getRecordList();
+                },
+                child: Text(
+                  "Refresh",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.sp,
+                      color: Colors.black),
+                ),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    shadowColor: MaterialStateProperty.all(Colors.transparent),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r))),
+                    side: MaterialStateProperty.all(
+                        BorderSide(color: Colors.gray, width: 2.0))),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -7,3 +7,4 @@ const messyDoodle = 'assets/images/MessyDoodle.png';
 const homeIcon = 'assets/images/home.png';
 const bellIcon = 'assets/images/bell.png';
 const userIcon = 'assets/images/user.png';
+const lightHouse = 'assets/images/connectionMsg.png';
