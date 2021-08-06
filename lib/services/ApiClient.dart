@@ -8,6 +8,7 @@ abstract class ApiClient {
 
   static ApiClient getServices() {
     final dio = Dio();
+    dio.options = BaseOptions(connectTimeout: 15000);
     return ApiClient(dio);
   }
 
