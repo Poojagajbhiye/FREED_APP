@@ -231,10 +231,10 @@ class _ViewRequest extends State<ViewRequest> {
               style: TextStyle(
                   fontFamily: "roboto",
                   fontSize: 16.sp,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w400,
                   color: Colors.black),
             ),
-            SizedBox(height: 10.h),
+            SizedBox(height: 15.h),
             FittedBox(
               child: Text(
                 "Check your connection, then refresh the page",

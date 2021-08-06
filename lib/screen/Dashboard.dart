@@ -429,7 +429,7 @@ class _Dashboard extends State<Dashboard> {
               style: TextStyle(
                   fontFamily: "roboto",
                   fontSize: 14.sp,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w400,
                   color: Colors.black),
             ),
             SizedBox(height: 10.h),
