@@ -241,14 +241,18 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                               return null;
                             },
                             onTap: () async {
-                              DateTime? pickedDate = await _toDatePicker();
+                              if (pickedFromDate != null) {
+                                DateTime? pickedDate = await _toDatePicker();
 
-                              if (pickedDate != null) {
-                                formatToDate =
-                                    DateFormat('dd MMM').format(pickedDate);
-                                setState(() {
-                                  pickedToDate = pickedDate;
-                                });
+                                if (pickedDate != null) {
+                                  formatToDate =
+                                      DateFormat('dd MMM').format(pickedDate);
+                                  setState(() {
+                                    pickedToDate = pickedDate;
+                                  });
+                                }
+                              } else {
+                                return null;
                               }
                             },
                             controller: TextEditingController(
@@ -466,7 +470,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
         context: context,
         initialDate: pickedFromDate ?? DateTime.now(),
         firstDate: DateTime.now(),
-        lastDate: DateTime(DateTime.now().year + 2));
+        lastDate: DateTime(
+            DateTime.now().year, DateTime.now().month + 2, DateTime.now().day));
     if (dateTime != null) {
       return dateTime;
     }
@@ -475,9 +480,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   _toDatePicker() async {
     final DateTime? dateTime = await showDatePicker(
         context: context,
-        initialDate: pickedFromDate ?? DateTime.now(),
-        firstDate: pickedFromDate ?? DateTime.now(),
-        lastDate: DateTime(DateTime.now().year + 2));
+        initialDate: pickedFromDate!,     // ?? DateTime.now()
+        firstDate: pickedFromDate!,     //  ?? DateTime.now()
+        lastDate: DateTime(pickedFromDate!.year, pickedFromDate!.month + 2,
+            pickedFromDate!.day));
     if (dateTime != null) {
       return dateTime;
     }
