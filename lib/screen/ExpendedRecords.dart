@@ -193,45 +193,59 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                   ],
                 )),
             Expanded(
-                child: networkerror
-                    ? _networkErrorui(errorMsg)
-                    : RefreshIndicator(
-                        onRefresh: _getRecordList,
-                        child: isLoading
-                            ? _loadingEffect()
-                            : filteredRecordList == null ||
-                                    filteredRecordList?.length == 0
-                                ? ListView(
-                                    padding: EdgeInsets.only(top: 250.h),
-                                    children: [
-                                      Text(
-                                        "No Records Found",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            decoration: TextDecoration.none,
-                                            fontFamily: 'roboto',
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.sp,
-                                            color: Colors.default_color),
-                                      ),
-                                    ],
-                                  )
-                                : ListView.builder(
-                                    itemCount: filteredRecordList?.length,
-                                    padding: EdgeInsets.only(
-                                        left: 20.w,
-                                        right: 20.w,
-                                        top: 10.h,
-                                        bottom: 10.h),
-                                    itemBuilder: (context, index) {
-                                      Record record =
-                                          filteredRecordList![index];
-                                      DateTime? date = record.from;
-                                      String formatedDate =
-                                          DateFormat("dd MMM yyyy")
-                                              .format(date!);
-                                      String? _recordId = record.id;
-                                      return Card(
+                child: Container(
+              width: 1.sw,
+              height: 1.sh,
+              decoration: BoxDecoration(color: Colors.white),
+              child: networkerror
+                  ? _networkErrorui(errorMsg)
+                  : RefreshIndicator(
+                      onRefresh: _getRecordList,
+                      child: isLoading
+                          ? _loadingEffect()
+                          : filteredRecordList == null ||
+                                  filteredRecordList?.length == 0
+                              ? ListView(
+                                  padding: EdgeInsets.only(top: 250.h),
+                                  children: [
+                                    Text(
+                                      "No Records Found",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          decoration: TextDecoration.none,
+                                          fontFamily: 'roboto',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16.sp,
+                                          color: Colors.default_color),
+                                    ),
+                                  ],
+                                )
+                              : ListView.builder(
+                                  itemCount: filteredRecordList?.length,
+                                  padding: EdgeInsets.only(
+                                      left: 20.w,
+                                      right: 20.w,
+                                      top: 10.h,
+                                      bottom: 10.h),
+                                  itemBuilder: (context, index) {
+                                    Record record = filteredRecordList![index];
+                                    DateTime? date = record.from;
+                                    String formatedDate =
+                                        DateFormat("dd MMM yyyy").format(date!);
+                                    String? _recordId = record.id;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        ViewRequest(
+                                                            recordId:
+                                                                _recordId)))
+                                            .then((value) => _getRecordList());
+                                      },
+                                      child: Card(
                                         elevation: 0.0,
                                         child: Container(
                                           height: 65.h,
@@ -266,35 +280,23 @@ class _ExpendedRecords extends State<ExpendedRecords> {
                                                       color: Colors.black),
                                                 ),
                                               ]),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                ViewRequest(
-                                                                    recordId:
-                                                                        _recordId))).then(
-                                                        (value) =>
-                                                            _getRecordList());
-                                                  },
-                                                  child: Text(
-                                                    "View",
-                                                    style: TextStyle(
-                                                        fontFamily: 'roboto',
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Colors.black),
-                                                  ))
+                                              Text(
+                                                "View",
+                                                style: TextStyle(
+                                                    fontFamily: 'roboto',
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black),
+                                              )
                                             ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
-                      ))
+                                      ),
+                                    );
+                                  },
+                                ),
+                    ),
+            ))
           ],
         ),
       ),

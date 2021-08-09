@@ -280,59 +280,60 @@ class _Dashboard extends State<Dashboard> {
                             String formatedDate =
                                 DateFormat("dd MMM yyyy").format(date!);
                             String? _recordId = record.id;
-                            return Card(
-                              elevation: 0.0,
-                              child: Container(
-                                height: 65.h,
-                                width: 0.sw,
-                                padding: EdgeInsets.symmetric(horizontal: 25.w),
-                                decoration: BoxDecoration(
-                                    color: Colors.gray,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(children: [
-                                      Opacity(
-                                        opacity: 0.7,
-                                        child: Icon(
-                                          Icons.timer_outlined,
-                                          size: 20.r,
-                                          color: Colors.black,
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ViewRequest(
+                                                    recordId: _recordId)))
+                                    .then((value) => _getRecordList());
+                              },
+                              child: Card(
+                                elevation: 0.0,
+                                child: Container(
+                                  height: 65.h,
+                                  width: 0.sw,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 25.w),
+                                  decoration: BoxDecoration(
+                                      color: Colors.gray,
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(children: [
+                                        Opacity(
+                                          opacity: 0.7,
+                                          child: Icon(
+                                            Icons.timer_outlined,
+                                            size: 20.r,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(width: 10.w),
-                                      Text(
-                                        formatedDate,
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontFamily: 'roboto',
-                                            fontWeight: FontWeight.w300,
-                                            color: Colors.black),
-                                      ),
-                                    ]),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      ViewRequest(
-                                                          recordId:
-                                                              _recordId))).then(
-                                              (value) => _getRecordList());
-                                        },
-                                        child: Text(
-                                          "View",
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          formatedDate,
                                           style: TextStyle(
-                                              fontFamily: 'roboto',
                                               fontSize: 14.sp,
-                                              fontWeight: FontWeight.w500,
+                                              fontFamily: 'roboto',
+                                              fontWeight: FontWeight.w300,
                                               color: Colors.black),
-                                        ))
-                                  ],
+                                        ),
+                                      ]),
+                                      Text(
+                                        "View",
+                                        style: TextStyle(
+                                            fontFamily: 'roboto',
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -422,7 +423,8 @@ class _Dashboard extends State<Dashboard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(width: 90.r, height: 90.r, child: Image.asset(lightHouse)),
+            Container(
+                width: 90.r, height: 90.r, child: Image.asset(lightHouse)),
             SizedBox(height: 20.h),
             Text(
               errorMsg,
