@@ -257,97 +257,105 @@ class _Dashboard extends State<Dashboard> {
         Expanded(
           child: networkError
               ? _networkErrorui(errorMsg)
-              : _isLoading
-                  ? _loadingEffect()
-                  : recordList == null || recordList?.length == 0
-                      ? Center(
-                          child: Text(
-                            "No Records Found",
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                                decoration: TextDecoration.none,
-                                color: Colors.default_color),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount:
-                              recordList == null ? 0 : recordList?.length,
-                          padding: EdgeInsets.only(
-                              left: 20.w, right: 20.w, top: 5.h, bottom: 10.h),
-                          itemBuilder: (context, index) {
-                            Record record = recordList![index];
-                            DateTime? date = record.from;
-                            String formatedDate =
-                                DateFormat("dd MMM yyyy").format(date!);
-                            String? _recordId = record.id;
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
+              : RefreshIndicator(
+                  onRefresh: _getRecordList,
+                  child: _isLoading
+                      ? _loadingEffect()
+                      : recordList == null || recordList?.length == 0
+                          ? ListView(
+                            padding: EdgeInsets.only(top: 150.h),
+                            children: [
+                              Text(
+                                "No Records Found",
+                                style: TextStyle(
+                                    fontFamily: 'roboto',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.none,
+                                    color: Colors.default_color),
+                              ),
+                            ],
+                          )
+                          : ListView.builder(
+                              itemCount:
+                                  recordList == null ? 0 : recordList?.length,
+                              padding: EdgeInsets.only(
+                                  left: 20.w,
+                                  right: 20.w,
+                                  top: 5.h,
+                                  bottom: 10.h),
+                              itemBuilder: (context, index) {
+                                Record record = recordList![index];
+                                DateTime? date = record.from;
+                                String formatedDate =
+                                    DateFormat("dd MMM yyyy").format(date!);
+                                String? _recordId = record.id;
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
                                                 ViewRequest(
-                                                    recordId: _recordId)))
-                                    .then((value) => _getRecordList());
-                              },
-                              child: Card(
-                                elevation: 0.0,
-                                child: Container(
-                                  height: 65.h,
-                                  width: 0.sw,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 25.w),
-                                  decoration: BoxDecoration(
-                                      color: Colors.gray,
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(children: [
-                                        Opacity(
-                                          opacity: 0.7,
-                                          child: Icon(
-                                            Icons.timer_outlined,
-                                            size: 20.r,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(width: 10.w),
-                                        Text(
-                                          formatedDate,
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontFamily: 'roboto',
-                                              fontWeight: FontWeight.w300,
-                                              color: Colors.black),
-                                        ),
-                                      ]),
-                                      Text(
-                                        "View",
-                                        style: TextStyle(
-                                            fontFamily: 'roboto',
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                      )
-                                    ],
+                                                    recordId: _recordId))).then(
+                                        (value) => _getRecordList());
+                                  },
+                                  child: Card(
+                                    elevation: 0.0,
+                                    child: Container(
+                                      height: 65.h,
+                                      width: 0.sw,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 25.w),
+                                      decoration: BoxDecoration(
+                                          color: Colors.gray,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(children: [
+                                            Opacity(
+                                              opacity: 0.7,
+                                              child: Icon(
+                                                Icons.timer_outlined,
+                                                size: 20.r,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              formatedDate,
+                                              style: TextStyle(
+                                                  fontSize: 14.sp,
+                                                  fontFamily: 'roboto',
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.black),
+                                            ),
+                                          ]),
+                                          Text(
+                                            "View",
+                                            style: TextStyle(
+                                                fontFamily: 'roboto',
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                                );
+                              },
+                            ),
+                ),
         ),
       ],
     );
   }
 
-  _getRecordList() async {
+  Future<dynamic> _getRecordList() async {
     try {
       var response = await ApiClient.getServices().getStudentRecords(_sid!);
 
