@@ -21,7 +21,7 @@ class _BottomNavigation extends State<BottomNavigation> {
   _BottomNavigation(this._sid);
 
   late final List<Widget> tabs = <Widget>[
-    StudentProfile(),
+    StudentProfile(isLogoutVisible: true),
     Dashboard(sid: _sid),
     FreedNotification(),
   ];

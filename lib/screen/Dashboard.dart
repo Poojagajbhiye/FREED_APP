@@ -152,7 +152,10 @@ class _Dashboard extends State<Dashboard> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => RequestForm()))
-                            .then((value) => _getRecordList());
+                            .then((value) {
+                          _getStudentData();
+                          _getRecordList();
+                        });
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(

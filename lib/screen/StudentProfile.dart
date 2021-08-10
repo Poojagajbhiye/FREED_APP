@@ -10,13 +10,17 @@ import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 
 class StudentProfile extends StatefulWidget {
+  final isLogoutVisible;
+  StudentProfile({Key? key, @required this.isLogoutVisible}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _StudentProfile();
+    return _StudentProfile(isLogoutVisible);
   }
 }
 
 class _StudentProfile extends State<StudentProfile> {
+  bool? isLogoutVisible;
+  _StudentProfile(this.isLogoutVisible);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,34 +32,49 @@ class _StudentProfile extends State<StudentProfile> {
             automaticallyImplyLeading: false,
             shadowColor: Colors.transparent,
             actions: [
-              Padding(
-                padding: EdgeInsets.only(right: 8.w),
-                child: TextButton(
-                    onPressed: () {
-                      TempStorage.removePreferences();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignIn()),
-                          (route) => false);
-                    },
-                    child: Row(children: [
-                      Text(
-                        "Logout",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                            fontFamily: 'roboto',
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(width: 5.w),
-                      Icon(
-                        Icons.logout,
-                        color: Colors.black,
-                        size: 17.r,
-                      )
-                    ])),
-              )
+              isLogoutVisible!
+                  ? Padding(
+                      padding: EdgeInsets.only(right: 8.w),
+                      child: TextButton(
+                          onPressed: () {
+                            TempStorage.removePreferences();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignIn()),
+                                (route) => false);
+                          },
+                          child: Row(children: [
+                            Text(
+                              "Logout",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(width: 5.w),
+                            Icon(
+                              Icons.logout,
+                              color: Colors.black,
+                              size: 17.r,
+                            )
+                          ])),
+                    )
+                  : SizedBox()
             ],
+            leading: !isLogoutVisible!
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.chevron_left,
+                      size: 30,
+                      color: Colors.black,
+                    ),
+                  )
+                : SizedBox(),
           ),
           SizedBox(height: 20.h),
           Expanded(
@@ -66,7 +85,7 @@ class _StudentProfile extends State<StudentProfile> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(45.r),
                     topRight: Radius.circular(45.r))),
-            child: ProfileForm(),
+            child: ProfileForm(isLogoutVisible: isLogoutVisible),
           ))
         ],
       ),
@@ -75,13 +94,19 @@ class _StudentProfile extends State<StudentProfile> {
 }
 
 class ProfileForm extends StatefulWidget {
+  final isLogoutVisible;
+  ProfileForm({Key? key, @required this.isLogoutVisible}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _ProfileForm();
+    return _ProfileForm(isLogoutVisible);
   }
 }
 
 class _ProfileForm extends State<ProfileForm> {
+  bool? isLogoutVisible;
+
+  _ProfileForm(this.isLogoutVisible);
+
   var defCourse;
   var defSemester;
   var defBranch;
@@ -298,8 +323,8 @@ class _ProfileForm extends State<ProfileForm> {
                               }
                               return null;
                             },
-                            style: TextStyle(
-                                fontSize: 16.sp, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.black),
                             decoration: InputDecoration(
                                 isDense: true,
                                 fillColor: Colors.gray,
@@ -307,8 +332,7 @@ class _ProfileForm extends State<ProfileForm> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                     borderSide: BorderSide(
-                                        width: 0.0,
-                                        style: BorderStyle.none))),
+                                        width: 0.0, style: BorderStyle.none))),
                             items: courseList.map((String currentValue) {
                               return DropdownMenuItem(
                                 child: Text(currentValue),
@@ -356,8 +380,8 @@ class _ProfileForm extends State<ProfileForm> {
                               }
                               return null;
                             },
-                            style: TextStyle(
-                                fontSize: 16.sp, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.black),
                             decoration: InputDecoration(
                                 isDense: true,
                                 fillColor: Colors.gray,
@@ -365,8 +389,7 @@ class _ProfileForm extends State<ProfileForm> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(7.0),
                                     borderSide: BorderSide(
-                                        width: 0.0,
-                                        style: BorderStyle.none))),
+                                        width: 0.0, style: BorderStyle.none))),
                             items: semesterList.map((String currentValue) {
                               return DropdownMenuItem(
                                 child: Text(currentValue),
@@ -521,10 +544,13 @@ class _ProfileForm extends State<ProfileForm> {
           setState(() {
             isProgress = false;
           });
-          _snackBar(msg!);
+          isLogoutVisible!
+              ? _snackBar(msg!)
+              : {_snackBar(msg!), Navigator.pop(context, 1)};
         }
       }
     } catch (e) {
+      print(e);
       setState(() {
         isProgress = false;
       });

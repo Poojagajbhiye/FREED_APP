@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/NewleaveResponse.dart';
+import 'package:freed/screen/StudentProfile.dart';
 import 'package:freed/screen/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
@@ -480,8 +481,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   _toDatePicker() async {
     final DateTime? dateTime = await showDatePicker(
         context: context,
-        initialDate: pickedFromDate!,     // ?? DateTime.now()
-        firstDate: pickedFromDate!,     //  ?? DateTime.now()
+        initialDate: pickedFromDate!, // ?? DateTime.now()
+        firstDate: pickedFromDate!, //  ?? DateTime.now()
         lastDate: DateTime(pickedFromDate!.year, pickedFromDate!.month + 2,
             pickedFromDate!.day));
     if (dateTime != null) {
@@ -588,6 +589,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
   }
 
   _showDialog() async {
+    bool iscancel = false;
     Dialog dialog = Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7.0)),
@@ -617,7 +619,17 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
             SizedBox(height: 20.h),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                StudentProfile(isLogoutVisible: false)))
+                    .then((value) {
+                  if (value == 1)
+                    Navigator.pop(context);
+                  else
+                    return;
+                });
               },
               child: Text(
                 "Update Profile",
@@ -631,7 +643,22 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                   backgroundColor: MaterialStateProperty.all(Colors.black),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0)))),
-            )
+            ),
+            TextButton(
+                onPressed: () {
+                  setState(() {
+                    iscancel = true;
+                  });
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontFamily: "roboto",
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.default_color),
+                ))
           ],
         ),
       ),
@@ -643,6 +670,6 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
         builder: (context) {
           return WillPopScope(child: dialog, onWillPop: () async => false);
         });
-    Navigator.pop(context);
+    iscancel ? Navigator.pop(context) : null;
   }
 }

@@ -320,15 +320,18 @@ class _SignUpForm extends State<SignUpForm> {
       if (response.isNotEmpty) {
         SignUpResponse signUpResponse = signUpResponseFromJson(response);
         bool? isSuccess = signUpResponse.success;
+        String? msg = signUpResponse.msg;
 
+        setState(() {
+          isProgress = false;
+        });
         if (isSuccess!) {
-          setState(() {
-            isProgress = false;
-          });
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => SignIn()),
               (route) => false);
+        } else {
+          _snackBar(msg!);
         }
       }
     } catch (e) {
