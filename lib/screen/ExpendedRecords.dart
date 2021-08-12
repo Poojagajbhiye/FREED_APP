@@ -359,16 +359,24 @@ class _ExpendedRecords extends State<ExpendedRecords> {
       }
     } catch (e) {
       var err = e as DioError;
-      if (mounted)
-        setState(() {
-          isLoading = false;
-          networkerror = true;
-          errorMsg = DioExceptions.fromDioError(err).toString();
-        });
+      if (err.response?.statusCode == 404) {
+        if (mounted)
+          setState(() {
+            isLoading = false;
+            recordList = null;
+          });
+      } else {
+        if (mounted)
+          setState(() {
+            isLoading = false;
+            networkerror = true;
+            errorMsg = DioExceptions.fromDioError(err).toString();
+          });
 
-      recordList?.clear();
-      filteredRecordList?.clear();
-      print(errorMsg);
+        recordList?.clear();
+        filteredRecordList?.clear();
+        print(errorMsg);
+      }
     }
   }
 

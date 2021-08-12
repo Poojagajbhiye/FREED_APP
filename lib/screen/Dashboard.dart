@@ -381,15 +381,23 @@ class _Dashboard extends State<Dashboard> {
       }
     } catch (e) {
       var err = e as DioError;
-      if (mounted)
-        setState(() {
-          _isLoading = false;
-          networkError = true;
-          errorMsg = DioExceptions.fromDioError(err).toString();
-        });
-      recordList?.clear();
+      if (err.response?.statusCode == 404) {
+        if (mounted)
+          setState(() {
+            _isLoading = false;
+            recordList = null;
+          });
+      } else {
+        if (mounted)
+          setState(() {
+            _isLoading = false;
+            networkError = true;
+            errorMsg = DioExceptions.fromDioError(err).toString();
+          });
+        recordList?.clear();
 
-      print(errorMsg);
+        print(errorMsg);
+      }
     }
   }
 
