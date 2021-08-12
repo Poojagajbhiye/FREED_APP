@@ -263,19 +263,20 @@ class _Dashboard extends State<Dashboard> {
                       ? _loadingEffect()
                       : recordList == null || recordList?.length == 0
                           ? ListView(
-                            padding: EdgeInsets.only(top: 150.h),
-                            children: [
-                              Text(
-                                "No Records Found",
-                                style: TextStyle(
-                                    fontFamily: 'roboto',
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.none,
-                                    color: Colors.default_color),
-                              ),
-                            ],
-                          )
+                              padding: EdgeInsets.only(top: 150.h),
+                              children: [
+                                Text(
+                                  "No Records Found",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'roboto',
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.none,
+                                      color: Colors.default_color),
+                                ),
+                              ],
+                            )
                           : ListView.builder(
                               itemCount:
                                   recordList == null ? 0 : recordList?.length,
