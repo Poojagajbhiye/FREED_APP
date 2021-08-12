@@ -77,32 +77,37 @@ class _ViewRequest extends State<ViewRequest> {
                 ),
               ),
               Expanded(
-                  child: networkerror? _networkErrorui(errorMsg) : isprocess
-                      ? Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        )
-                      : ListView(
-                          padding: EdgeInsets.only(
-                              top: 0.0, bottom: 50.h, left: 30.w, right: 30.w),
-                          children: [
-                            _checkStatus(),
-                            SizedBox(height: 30.h),
-                            _header(),
-                            SizedBox(height: 15.h),
-                            _detailedCard(),
-                            SizedBox(height: 20.h),
-                            _reasonExpendedCard(),
-                            SizedBox(height: 50.h),
-                            isAcceptedStatus || isDeclinedStatus
-                                ? SizedBox(height: 0.0)
-                                : _cancelButton(),
-                            isAcceptedStatus
-                                ? _qrCodeButton()
-                                : SizedBox(height: 0.0),
-                          ],
-                        ))
+                  child: networkerror
+                      ? _networkErrorui(errorMsg)
+                      : isprocess
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
+                            )
+                          : ListView(
+                              padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: 50.h,
+                                  left: 30.w,
+                                  right: 30.w),
+                              children: [
+                                _checkStatus(),
+                                SizedBox(height: 30.h),
+                                _header(),
+                                SizedBox(height: 15.h),
+                                _detailedCard(),
+                                SizedBox(height: 20.h),
+                                _reasonExpendedCard(),
+                                SizedBox(height: 50.h),
+                                isAcceptedStatus || isDeclinedStatus
+                                    ? SizedBox(height: 0.0)
+                                    : _cancelButton(),
+                                isAcceptedStatus
+                                    ? _qrCodeButton()
+                                    : SizedBox(height: 0.0),
+                              ],
+                            ))
             ],
           ),
         ),
@@ -520,7 +525,10 @@ class _ViewRequest extends State<ViewRequest> {
   }
 
   _snackBar(String msg) {
-    var snackbar = SnackBar(content: Text(msg));
+    var snackbar = SnackBar(
+      content: Text(msg),
+      behavior: SnackBarBehavior.floating,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }

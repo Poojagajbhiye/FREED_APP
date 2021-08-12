@@ -561,7 +561,10 @@ class _ProfileForm extends State<ProfileForm> {
   }
 
   _snackBar(String msg) {
-    var snackbar = SnackBar(content: Text(msg));
+    var snackbar = SnackBar(
+      content: Text(msg),
+      behavior: SnackBarBehavior.floating,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 
