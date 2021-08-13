@@ -364,7 +364,10 @@ class _SignIn extends State<SignIn> {
   }
 
   _snackBar(String msg) {
-    var snackBar = SnackBar(content: Text(msg));
+    var snackBar = SnackBar(
+      content: Text(msg),
+      behavior: SnackBarBehavior.floating,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

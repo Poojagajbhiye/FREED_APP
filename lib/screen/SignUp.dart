@@ -345,7 +345,10 @@ class _SignUpForm extends State<SignUpForm> {
   }
 
   _snackBar(String msg) {
-    var snackbar = SnackBar(content: Text(msg));
+    var snackbar = SnackBar(
+      content: Text(msg),
+      behavior: SnackBarBehavior.floating,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }
