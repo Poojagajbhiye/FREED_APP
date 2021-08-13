@@ -128,10 +128,8 @@ class _ProfileForm extends State<ProfileForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-
     _getStudentData();
+    super.initState();
   }
 
   @override
