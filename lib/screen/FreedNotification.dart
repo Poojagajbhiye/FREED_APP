@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FreedNotification extends StatefulWidget {
   @override
@@ -18,9 +19,13 @@ class _FreedNotification extends State<FreedNotification> {
   TextEditingController textEditingController = TextEditingController();
   StreamController streamController = StreamController<String>();
 
+  FlutterLocalNotificationsPlugin localNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   @override
   void initState() {
     connectToServer();
+    initNotification();
     super.initState();
   }
 
@@ -50,12 +55,16 @@ class _FreedNotification extends State<FreedNotification> {
                     onPressed: () {
                       String inputmsg = textEditingController.text;
                       sendMsgtoServer(inputmsg);
+                      //showNotification();
                     },
                     child: Text("Send")),
                 SizedBox(height: 20),
                 StreamBuilder(
                     stream: streamController.stream,
                     builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        showNotification(snapshot.data.toString());
+                      }
                       return Text("response: ${snapshot.data}");
                     })
               ],
@@ -87,40 +96,18 @@ class _FreedNotification extends State<FreedNotification> {
     }
   }
 
-  //STEP2: Add this function in main function in main.dart file and add incoming data to the stream
-  // void connectAndListen() {
-  //   try {
-  //     socket = io('https://dco-leave-app-api.herokuapp.com/',
-  //         OptionBuilder().setTransports(['websocket']).build());
+  Future<void> showNotification(String msg) async {
+    var androidDetails = AndroidNotificationDetails(
+        "channelId", "channelName", "channelDescription");
+    var generalNotification = NotificationDetails(android: androidDetails);
+    await localNotificationsPlugin.show(
+        1, "Message", "* $msg", generalNotification);
+  }
 
-  //     socket?.onConnect((_) {
-  //       print('connect: ${socket?.id}');
-  //       socket?.emit('msg from admin', 'test message');
-  //     });
-
-  //     //When an event recieved from server, data is added to the stream
-  //     socket?.on('message', (data) => streamSocket.addResponse);
-  //     //socket?.on('typing', fromAdmin());
-  //     socket?.onDisconnect((_) => print('disconnect'));
-  //   } catch (e) {
-  //     print(e);
-  //   }
-
-  //   fromAdmin() {
-  //     socket?.emit("msg from admin", "hello roshan");
-  //   }
-  // }
+  initNotification() {
+    //localNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    var initializeAndroid = AndroidInitializationSettings('ic_launcher');
+    var initializeSetting = InitializationSettings(android: initializeAndroid);
+    localNotificationsPlugin.initialize(initializeSetting);
+  }
 }
-
-// STEP1:  Stream setup
-// class StreamSocket {
-//   final _socketResponse = StreamController<String>();
-
-//   void Function(String) get addResponse => _socketResponse.sink.add;
-
-//   Stream<String> get getResponse => _socketResponse.stream;
-
-//   void dispose() {
-//     _socketResponse.close();
-//   }
-// }
