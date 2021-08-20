@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:freed/screen/Dashboard.dart';
 import 'package:freed/screen/FreedNotification.dart';
 import 'package:freed/screen/StudentProfile.dart';
+import 'package:freed/services/SocketServer.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 
@@ -19,6 +20,13 @@ class _BottomNavigation extends State<BottomNavigation> {
   String? _sid;
 
   _BottomNavigation(this._sid);
+
+  @override
+  void initState() {
+    SocketServer.connect();
+    SocketServer.join(studentId: _sid);
+    super.initState();
+  }
 
   late final List<Widget> tabs = <Widget>[
     StudentProfile(isLogoutVisible: true),
