@@ -7,7 +7,8 @@ import 'package:socket_io_client/socket_io_client.dart';
 class SocketServer {
   static Socket? socket;
 
-  static StreamController streamController = StreamController();
+  static StreamController streamController =
+      StreamController<Map<String, dynamic>>.broadcast();
 
   static void connect() {
     try {
@@ -31,5 +32,9 @@ class SocketServer {
 
   static void initListen() {
     socket?.on("msg to student", (data) => streamController.sink.add(data));
+  }
+
+  static void socketConnectionClose() {
+    socket?.dispose();
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/screen/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
+import 'package:freed/services/SocketServer.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
@@ -38,6 +39,7 @@ class _StudentProfile extends State<StudentProfile> {
                       child: TextButton(
                           onPressed: () {
                             TempStorage.removePreferences();
+                            SocketServer.socketConnectionClose();
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

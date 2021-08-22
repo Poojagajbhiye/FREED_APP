@@ -18,6 +18,10 @@ class Colors {
   static const Color shadow = Color(0x50000000);
   static const Color default_color = Color(0xFF797B7D);
 
+  //GREEN
+  static const green = Color(0xFF1DE136);
+  static const green_32 = Color(0x321DE136);
+
   //list background colors
   static const Color blue_50 = Color(0x50468CF8);
   static const Color red_50 = Color(0x50FE5F55);
