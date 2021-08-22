@@ -28,6 +28,12 @@ class _BottomNavigation extends State<BottomNavigation> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    SocketServer.socketConnectionClose();
+    super.dispose();
+  }
+
   late final List<Widget> tabs = <Widget>[
     StudentProfile(isLogoutVisible: true),
     Dashboard(sid: _sid),
