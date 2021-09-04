@@ -319,7 +319,6 @@ class _SignIn extends State<SignIn> {
   _getDataFromToken(String token) async {
     try {
       var response = await ApiClient.getServices().tokenDecodeRequest(token);
-      print(response);
       if (response.isNotEmpty) {
         StudentInfo studentInfo = studentInfoFromJson(response);
 
@@ -332,8 +331,8 @@ class _SignIn extends State<SignIn> {
         String? _branch = studentInfo.decoded?.branch ?? "";
         String? _course = studentInfo.decoded?.course ?? "";
         String? _semester = studentInfo.decoded?.semester ?? "";
-        // String? _personalNo = studentInfo.decoded?.contact?.personal ?? "";
-        // String? _parentsNo = studentInfo.decoded?.contact?.guardian ?? "";
+        String? _personalNo = studentInfo.decoded?.contact?.personal ?? "";
+        String? _parentsNo = studentInfo.decoded?.contact?.guardian ?? "";
 
         if (success!) {
           TempStorage.setRid(rid!);
@@ -344,8 +343,8 @@ class _SignIn extends State<SignIn> {
           TempStorage.setBranch(_branch);
           TempStorage.setCourse(_course);
           TempStorage.setSemester(_semester);
-          // TempStorage.setPersonalNo(_personalNo);
-          // TempStorage.setParentsNo(_parentsNo);
+          TempStorage.setPersonalNo(_personalNo);
+          TempStorage.setParentsNo(_parentsNo);
 
           setState(() {
             isprogress = false;

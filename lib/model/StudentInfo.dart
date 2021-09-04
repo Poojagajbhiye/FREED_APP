@@ -55,7 +55,7 @@ class Decoded {
   DateTime? updatedAt;
 
   factory Decoded.fromJson(Map<String, dynamic> json) => Decoded(
-        contact: Contact.fromJson(json["contact"]),
+        contact: json["contact"] == null? null : Contact.fromJson(json["contact"]),
         id: json["_id"],
         rid: json["RID"],
         branch: json["branch"],
