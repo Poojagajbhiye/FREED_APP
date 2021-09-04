@@ -120,6 +120,8 @@ class _ProfileForm extends State<ProfileForm> {
   String firstname = "";
   String lastname = "";
   String email = "";
+  String personal_phoneNo = "";
+  String parents_phoneNo = "";
 
   //dropdown lists
   var courseList = ["Diploma", "M.tech", "B.tech"];
@@ -276,6 +278,102 @@ class _ProfileForm extends State<ProfileForm> {
                       },
                       decoration: InputDecoration(
                         hintText: "eg- abc@gmail.com",
+                        isDense: true,
+                        filled: true,
+                        fillColor: Colors.gray,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                            borderSide: BorderSide(
+                                width: 0.0, style: BorderStyle.none)),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 20.h),
+                      ),
+                    )
+                  ],
+                ),
+
+                SizedBox(height: 20.h),
+
+                //personal contact field
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
+                      child: Text(
+                        "Personal Contact",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
+                            color: Colors.default_color),
+                      ),
+                    ),
+                    TextFormField(
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      keyboardType: TextInputType.phone,
+                      controller: TextEditingController(text: personal_phoneNo),
+                      onChanged: (value) {
+                        personal_phoneNo = value;
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "*required";
+                        } else if (value.length < 10 || value.length > 10) {
+                          return "Enter valid phone number";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "1234567890",
+                        isDense: true,
+                        filled: true,
+                        fillColor: Colors.gray,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                            borderSide: BorderSide(
+                                width: 0.0, style: BorderStyle.none)),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 20.h),
+                      ),
+                    )
+                  ],
+                ),
+
+                SizedBox(height: 20.h),
+
+                //parents contact field
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
+                      child: Text(
+                        "Parents Contact",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
+                            color: Colors.default_color),
+                      ),
+                    ),
+                    TextFormField(
+                      style: TextStyle(fontSize: 16.sp, color: Colors.black),
+                      keyboardType: TextInputType.phone,
+                      controller: TextEditingController(text: parents_phoneNo),
+                      onChanged: (value) {
+                        parents_phoneNo = value;
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "*required";
+                        } else if (value.length < 10 || value.length > 10) {
+                          return "Enter valid phone number";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: "1234567890",
                         isDense: true,
                         filled: true,
                         fillColor: Colors.gray,
@@ -476,8 +574,17 @@ class _ProfileForm extends State<ProfileForm> {
                         setState(() {
                           isProgress = true;
                         });
-                        _saveChanges(sid, firstname, lastname, email, defCourse,
-                            defBranch, defSemester);
+                        _saveChanges(
+                          sid,
+                          firstname,
+                          lastname,
+                          email,
+                          defCourse,
+                          defBranch,
+                          defSemester,
+                          personal_phoneNo,
+                          parents_phoneNo,
+                        );
                       }
                     },
                     child: isProgress
@@ -512,8 +619,16 @@ class _ProfileForm extends State<ProfileForm> {
   }
 
 //api call for save changes
-  _saveChanges(String _sid, String _firstname, String _lastname, String _email,
-      String _course, String _branch, String _semester) async {
+  _saveChanges(
+      String _sid,
+      String _firstname,
+      String _lastname,
+      String _email,
+      String _course,
+      String _branch,
+      String _semester,
+      String _personalNo,
+      String _parentsNo) async {
     Map<String, dynamic> changedData = {
       "_id": _sid,
       "firstName": _firstname,
@@ -521,7 +636,8 @@ class _ProfileForm extends State<ProfileForm> {
       "email": _email,
       "course": _course,
       "semester": _semester,
-      "branch": _branch
+      "branch": _branch,
+      "contact": {"personal": _personalNo, "guardian": _parentsNo}
     };
     try {
       var rawResponse =
@@ -540,6 +656,8 @@ class _ProfileForm extends State<ProfileForm> {
           TempStorage.setCourse(_course);
           TempStorage.setBranch(_branch);
           TempStorage.setSemester(_semester);
+          TempStorage.setPersonalNo(_personalNo);
+          TempStorage.setParentsNo(_parentsNo);
 
           setState(() {
             isProgress = false;
@@ -576,12 +694,16 @@ class _ProfileForm extends State<ProfileForm> {
     String _course = await TempStorage.getCourse();
     String _branch = await TempStorage.getBranch();
     String _semester = await TempStorage.getSemester();
+    String _personalNo = await TempStorage.getPersonalNo();
+    String _parentsNo = await TempStorage.getParentsNo();
 
     setState(() {
       sid = _sid;
       firstname = _firstname;
       lastname = _lastname;
       email = _email;
+      personal_phoneNo = _personalNo;
+      parents_phoneNo = _parentsNo;
 
       if (_course.isNotEmpty)
         defCourse = courseList.indexOf(_course) < 0

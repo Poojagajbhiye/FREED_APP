@@ -31,6 +31,7 @@ class StudentInfo {
 
 class Decoded {
   Decoded({
+    this.contact,
     this.id,
     this.rid,
     this.branch,
@@ -39,8 +40,10 @@ class Decoded {
     this.firstName,
     this.lastName,
     this.semester,
+    this.updatedAt,
   });
 
+  Contact? contact;
   String? id;
   String? rid;
   String? branch;
@@ -49,8 +52,10 @@ class Decoded {
   String? firstName;
   String? lastName;
   String? semester;
+  DateTime? updatedAt;
 
   factory Decoded.fromJson(Map<String, dynamic> json) => Decoded(
+        contact: Contact.fromJson(json["contact"]),
         id: json["_id"],
         rid: json["RID"],
         branch: json["branch"],
@@ -59,9 +64,11 @@ class Decoded {
         firstName: json["firstName"],
         lastName: json["lastName"],
         semester: json["semester"].toString(),
+        updatedAt: DateTime.parse(json["updatedAt"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "contact": contact?.toJson(),
         "_id": id,
         "RID": rid,
         "branch": branch,
@@ -70,5 +77,26 @@ class Decoded {
         "firstName": firstName,
         "lastName": lastName,
         "semester": semester,
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
+}
+
+class Contact {
+  Contact({
+    this.personal,
+    this.guardian,
+  });
+
+  String? personal;
+  String? guardian;
+
+  factory Contact.fromJson(Map<String, dynamic> json) => Contact(
+        personal: json["personal"].toString(),
+        guardian: json["guardian"].toString(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "personal": personal,
+        "guardian": guardian,
       };
 }
