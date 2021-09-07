@@ -13,6 +13,8 @@ class TempStorage {
   static const semester = "semester";
   static const personal_phoneNo = "personal phone number";
   static const parent_phoneNo = "parents phone number";
+  static const gender_ = "gender";
+  static const room_no = "room number";
 
   //get token
   static Future<String> getToken() async {
@@ -146,6 +148,30 @@ class TempStorage {
     preferences.setString(parent_phoneNo, _parentsNo);
   }
 
+  //get student gender
+  static Future<String> getGender() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(gender_) ?? "";
+  }
+
+  //set student gender
+  static setGender(String gender) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(gender_, gender);
+  }
+
+  //get room number
+  static Future<String> getRoomNo() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return preferences.getString(room_no) ?? "";
+  }
+
+  //set room number
+  static setRoomNo(String roomno) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(room_no, roomno);
+  }
+
   //clear all data in shared preferences
   static removePreferences() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -160,5 +186,7 @@ class TempStorage {
     preferences.remove(semester);
     preferences.remove(personal_phoneNo);
     preferences.remove(parent_phoneNo);
+    preferences.remove(gender_);
+    preferences.remove(room_no);
   }
 }

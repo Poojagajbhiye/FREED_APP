@@ -112,6 +112,7 @@ class _ProfileForm extends State<ProfileForm> {
   var defCourse;
   var defSemester;
   var defBranch;
+  var defGender;
 
   final profileKey = GlobalKey<FormState>();
 
@@ -122,11 +123,13 @@ class _ProfileForm extends State<ProfileForm> {
   String email = "";
   String personal_phoneNo = "";
   String parents_phoneNo = "";
+  String roomNo = "";
 
   //dropdown lists
   var courseList = ["Diploma", "M.tech", "B.tech"];
   var semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
   var branchList = ["CIVIL", "CSE", "EEE", "MECH", "META"];
+  var genderList = ["Male", "Female"];
 
   bool isProgress = false;
 
@@ -389,6 +392,115 @@ class _ProfileForm extends State<ProfileForm> {
                 ),
 
                 SizedBox(height: 20.h),
+                Row(
+                  children: [
+                    //room number
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
+                            child: Text(
+                              "Room No",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp,
+                                  color: Colors.default_color),
+                            ),
+                          ),
+                          TextFormField(
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.black),
+                            keyboardType: TextInputType.text,
+                            controller: TextEditingController(text: roomNo),
+                            onChanged: (value) {
+                              roomNo = value;
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "A123",
+                              isDense: true,
+                              filled: true,
+                              fillColor: Colors.gray,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(7.0),
+                                  borderSide: BorderSide(
+                                      width: 0.0, style: BorderStyle.none)),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 15.w, vertical: 20.h),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(width: 20.w),
+
+                    //Gender
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 7.w, bottom: 5.h),
+                            child: Text(
+                              "Gender",
+                              style: TextStyle(
+                                  fontFamily: 'roboto',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp,
+                                  color: Colors.default_color),
+                            ),
+                          ),
+                          DropdownButtonFormField<String>(
+                            isExpanded: true,
+                            hint: Text(
+                              "choose",
+                              style: TextStyle(fontSize: 16.sp),
+                            ),
+                            validator: (value) {
+                              if (value == null) {
+                                return "*required";
+                              }
+                              return null;
+                            },
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.black),
+                            decoration: InputDecoration(
+                                isDense: true,
+                                fillColor: Colors.gray,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                    borderSide: BorderSide(
+                                        width: 0.0, style: BorderStyle.none))),
+                            items: genderList.map((String currentValue) {
+                              return DropdownMenuItem(
+                                child: Text(currentValue),
+                                value: currentValue,
+                              );
+                            }).toList(),
+                            value: defGender,
+                            onChanged: (value) {
+                              setState(() {
+                                defGender = value;
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20.h),
 
                 //course and semester dropdown
                 Row(
@@ -584,6 +696,8 @@ class _ProfileForm extends State<ProfileForm> {
                           defSemester,
                           personal_phoneNo,
                           parents_phoneNo,
+                          defGender,
+                          roomNo,
                         );
                       }
                     },
@@ -628,7 +742,9 @@ class _ProfileForm extends State<ProfileForm> {
       String _branch,
       String _semester,
       String _personalNo,
-      String _parentsNo) async {
+      String _parentsNo,
+      String _gender,
+      String _roomNo) async {
     Map<String, dynamic> changedData = {
       "_id": _sid,
       "firstName": _firstname,
@@ -637,7 +753,9 @@ class _ProfileForm extends State<ProfileForm> {
       "course": _course,
       "semester": _semester,
       "branch": _branch,
-      "contact": {"personal": _personalNo, "guardian": _parentsNo}
+      "contact": {"personal": _personalNo, "guardian": _parentsNo},
+      "gender": _gender.contains("Male") ? "M" : "F",
+      "room_no": _roomNo
     };
     try {
       var rawResponse =
@@ -658,6 +776,8 @@ class _ProfileForm extends State<ProfileForm> {
           TempStorage.setSemester(_semester);
           TempStorage.setPersonalNo(_personalNo);
           TempStorage.setParentsNo(_parentsNo);
+          TempStorage.setGender(_gender);
+          TempStorage.setRoomNo(_roomNo);
 
           setState(() {
             isProgress = false;
@@ -697,6 +817,10 @@ class _ProfileForm extends State<ProfileForm> {
     String _personalNo = await TempStorage.getPersonalNo();
     String _parentsNo = await TempStorage.getParentsNo();
 
+    String _genderChar = await TempStorage.getGender();
+    String _gender = _genderChar.contains("M") ? "Male" : "Female";
+    String _roomno = await TempStorage.getRoomNo();
+
     setState(() {
       sid = _sid;
       firstname = _firstname;
@@ -704,6 +828,7 @@ class _ProfileForm extends State<ProfileForm> {
       email = _email;
       personal_phoneNo = _personalNo;
       parents_phoneNo = _parentsNo;
+      roomNo = _roomno;
 
       if (_course.isNotEmpty)
         defCourse = courseList.indexOf(_course) < 0
@@ -719,6 +844,11 @@ class _ProfileForm extends State<ProfileForm> {
         defSemester = semesterList.indexOf(_semester) < 0
             ? null
             : semesterList[semesterList.indexOf(_semester)];
+
+      if (_gender.isNotEmpty)
+        defGender = genderList.indexOf(_gender) < 0
+            ? null
+            : genderList[genderList.indexOf(_gender)];
     });
   }
 }

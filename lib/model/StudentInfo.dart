@@ -34,50 +34,62 @@ class Decoded {
     this.contact,
     this.id,
     this.rid,
+    this.createdAt,
+    this.updatedAt,
     this.branch,
     this.course,
     this.email,
     this.firstName,
     this.lastName,
     this.semester,
-    this.updatedAt,
+    this.gender,
+    this.roomNo,
   });
 
   Contact? contact;
   String? id;
   String? rid;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   String? branch;
   String? course;
   String? email;
   String? firstName;
   String? lastName;
-  String? semester;
-  DateTime? updatedAt;
+  int? semester;
+  String? gender;
+  String? roomNo;
 
   factory Decoded.fromJson(Map<String, dynamic> json) => Decoded(
-        contact: json["contact"] == null? null : Contact.fromJson(json["contact"]),
+        contact: json["contact"] == null ? null : Contact.fromJson(json["contact"]),
         id: json["_id"],
         rid: json["RID"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
         branch: json["branch"],
         course: json["course"],
         email: json["email"],
         firstName: json["firstName"],
         lastName: json["lastName"],
-        semester: json["semester"].toString(),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        semester: json["semester"],
+        gender: json["gender"],
+        roomNo: json["room_no"],
       );
 
   Map<String, dynamic> toJson() => {
         "contact": contact?.toJson(),
         "_id": id,
         "RID": rid,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
         "branch": branch,
         "course": course,
         "email": email,
         "firstName": firstName,
         "lastName": lastName,
         "semester": semester,
-        "updatedAt": updatedAt?.toIso8601String(),
+        "gender": gender,
+        "room_no": roomNo,
       };
 }
 
@@ -87,12 +99,12 @@ class Contact {
     this.guardian,
   });
 
-  String? personal;
-  String? guardian;
+  int? personal;
+  int? guardian;
 
   factory Contact.fromJson(Map<String, dynamic> json) => Contact(
-        personal: json["personal"].toString(),
-        guardian: json["guardian"].toString(),
+        personal: json["personal"],
+        guardian: json["guardian"],
       );
 
   Map<String, dynamic> toJson() => {

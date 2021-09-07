@@ -330,9 +330,11 @@ class _SignIn extends State<SignIn> {
         String? _email = studentInfo.decoded?.email ?? "";
         String? _branch = studentInfo.decoded?.branch ?? "";
         String? _course = studentInfo.decoded?.course ?? "";
-        String? _semester = studentInfo.decoded?.semester ?? "";
-        String? _personalNo = studentInfo.decoded?.contact?.personal ?? "";
-        String? _parentsNo = studentInfo.decoded?.contact?.guardian ?? "";
+        String? _semester = studentInfo.decoded?.semester.toString() ?? "";
+        String? _personalNo = studentInfo.decoded?.contact?.personal.toString() ?? "";
+        String? _parentsNo = studentInfo.decoded?.contact?.guardian.toString() ?? "";
+        String? _gender = studentInfo.decoded?.gender ?? "";
+        String? _roomNo = studentInfo.decoded?.roomNo ?? "";
 
         if (success!) {
           TempStorage.setRid(rid!);
@@ -345,6 +347,8 @@ class _SignIn extends State<SignIn> {
           TempStorage.setSemester(_semester);
           TempStorage.setPersonalNo(_personalNo);
           TempStorage.setParentsNo(_parentsNo);
+          TempStorage.setGender(_gender);
+          TempStorage.setRoomNo(_roomNo);
 
           setState(() {
             isprogress = false;
