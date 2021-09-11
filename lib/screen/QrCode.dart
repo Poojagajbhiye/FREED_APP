@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:freed/screen/SuccessScanned.dart';
 import 'package:freed/services/SocketServer.dart';
 import 'package:freed/value/Colors.dart';
@@ -33,7 +34,14 @@ class _QrCode extends State<QrCode> {
   @override
   void initState() {
     SocketServer.initListen();
+    preventScreenShot();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    super.dispose();
   }
 
   @override
@@ -127,5 +135,9 @@ class _QrCode extends State<QrCode> {
             ),
           );
         });
+  }
+
+  void preventScreenShot() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 }
