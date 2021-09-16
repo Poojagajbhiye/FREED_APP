@@ -357,6 +357,9 @@ class _Dashboard extends State<Dashboard> {
   }
 
   Future<dynamic> _getRecordList() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       var response = await ApiClient.getServices().getStudentRecords(_sid!);
 
