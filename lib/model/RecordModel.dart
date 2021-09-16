@@ -41,6 +41,7 @@ class Record {
     this.destination,
     this.reason,
     this.v,
+    this.remarkByWarden,
   });
 
   DateTime? issuedDate;
@@ -53,6 +54,7 @@ class Record {
   String? destination;
   String? reason;
   int? v;
+  RemarkByWarden? remarkByWarden;
 
   factory Record.fromJson(Map<String, dynamic> json) => Record(
         issuedDate: DateTime.parse(json["issuedDate"]),
@@ -65,6 +67,7 @@ class Record {
         destination: json["destination"],
         reason: json["reason"],
         v: json["__v"],
+        remarkByWarden: RemarkByWarden.fromJson(json["remark_by_warden"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -78,7 +81,28 @@ class Record {
         "destination": destination,
         "reason": reason,
         "__v": v,
+        "remark_by_warden": remarkByWarden?.toJson(),
       };
+}
+
+class RemarkByWarden {
+    RemarkByWarden({
+        this.by,
+        this.msg,
+    });
+
+    String? by;
+    String? msg;
+
+    factory RemarkByWarden.fromJson(Map<String, dynamic> json) => RemarkByWarden(
+        by: json["by"],
+        msg: json["msg"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "by": by,
+        "msg": msg,
+    };
 }
 
 class StudentId {
