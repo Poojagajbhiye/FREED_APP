@@ -91,17 +91,49 @@ class RemarkByWarden {
         this.msg,
     });
 
-    String? by;
+    By? by;
     String? msg;
 
     factory RemarkByWarden.fromJson(Map<String, dynamic> json) => RemarkByWarden(
-        by: json["by"],
+        by: By.fromJson(json["by"]),
         msg: json["msg"],
     );
 
     Map<String, dynamic> toJson() => {
         "by": by,
         "msg": msg,
+    };
+}
+
+class By {
+    By({
+        this.adminIs,
+        this.id,
+        this.firstname,
+        this.lastname,
+        this.contact,
+    });
+
+    String? adminIs;
+    String? id;
+    String? firstname;
+    String? lastname;
+    int? contact;
+
+    factory By.fromJson(Map<String, dynamic> json) => By(
+        adminIs: json["adminIs"],
+        id: json["_id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        contact: json["contact"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "adminIs": adminIs,
+        "_id": id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "contact": contact,
     };
 }
 

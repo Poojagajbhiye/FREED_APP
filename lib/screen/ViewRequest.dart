@@ -10,6 +10,7 @@ import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/value/Colors.dart';
 import 'package:freed/value/Image.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewRequest extends StatefulWidget {
   final recordId;
@@ -42,6 +43,12 @@ class _ViewRequest extends State<ViewRequest> {
   bool isAcceptedStatus = false;
   bool isDeclinedStatus = false;
   bool isProcessStatus = false;
+
+  //warden remark
+  String? remarkMsg;
+  String? remarkFirstname;
+  String? remarkLastname;
+  String? remarkContact;
 
   _ViewRequest(this.recordId);
 
@@ -158,7 +165,12 @@ class _ViewRequest extends State<ViewRequest> {
     if (isAcceptedStatus)
       return AcceptedDoodle();
     else if (isDeclinedStatus)
-      return DeclinedDoodle();
+      return DeclinedDoodle(
+        remark_msg: remarkMsg,
+        remark_firstname: remarkFirstname,
+        remark_contact: remarkContact,
+        remark_lastname: remarkLastname,
+      );
     else
       return ProcessDoodle();
   }
@@ -182,6 +194,15 @@ class _ViewRequest extends State<ViewRequest> {
         String? _branch = recordModel.record!.studentId!.branch;
         String? _semester = recordModel.record!.studentId!.semester.toString();
 
+        //remark
+        String? _remarkMsg = recordModel.record!.remarkByWarden!.msg;
+        String? _remarkFirstname =
+            recordModel.record!.remarkByWarden!.by!.firstname;
+        String? _remarkLastname =
+            recordModel.record!.remarkByWarden!.by!.lastname;
+        String? _remarkContact =
+            recordModel.record!.remarkByWarden!.by!.contact.toString();
+
         if (isSuccess!) {
           setState(() {
             isprocess = false;
@@ -197,6 +218,12 @@ class _ViewRequest extends State<ViewRequest> {
               course = _course!;
               branch = _branch!;
               semester = _semester;
+
+              //remark
+              remarkMsg = _remarkMsg;
+              remarkFirstname = _remarkFirstname;
+              remarkLastname = _remarkLastname;
+              remarkContact = _remarkContact;
 
               if (_status!.contains("ACCEPTED"))
                 isAcceptedStatus = true;
@@ -383,6 +410,7 @@ class _ViewRequest extends State<ViewRequest> {
     );
   }
 
+  //api call
   _deleteRecord(String recordId) async {
     try {
       var response = await ApiClient.getServices().deleteRecord(recordId);
@@ -619,6 +647,16 @@ class ProcessDoodle extends StatelessWidget {
 }
 
 class DeclinedDoodle extends StatelessWidget {
+  final remark_msg;
+  final remark_firstname;
+  final remark_lastname;
+  final remark_contact;
+  DeclinedDoodle(
+      {@required this.remark_msg,
+      @required this.remark_firstname,
+      @required this.remark_contact,
+      this.remark_lastname});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -630,7 +668,7 @@ class DeclinedDoodle extends StatelessWidget {
             width: 1.sw,
             padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 5.w),
             decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(10.0)),
+                color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
             child: Column(
               children: [
                 Text(
@@ -639,7 +677,7 @@ class DeclinedDoodle extends StatelessWidget {
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w700,
                       fontSize: 16.sp,
-                      color: Colors.white),
+                      color: Colors.red),
                 ),
                 SizedBox(height: 5.h),
                 Text(
@@ -649,11 +687,78 @@ class DeclinedDoodle extends StatelessWidget {
                       fontFamily: 'roboto',
                       fontWeight: FontWeight.w300,
                       fontSize: 16.sp,
-                      color: Colors.white),
+                      color: Colors.black),
                 )
               ],
             ),
-          )
+          ),
+          SizedBox(height: 10.h),
+
+          //remark expanded card
+          Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red_50),
+              child: Theme(
+                data: Theme.of(context)
+                    .copyWith(dividerColor: Colors.transparent),
+                child: ExpansionTile(
+                  title: Text(
+                    "Info",
+                    style: TextStyle(
+                        fontFamily: 'roboto',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14.sp,
+                        color: Colors.black),
+                  ),
+                  childrenPadding:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "$remark_msg. declined by $remark_firstname $remark_lastname",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14.sp,
+                            color: Colors.black),
+                      ),
+                    ),
+                    SizedBox(height: 5.h),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Contact:",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontFamily: 'roboto',
+                                fontWeight: FontWeight.w300,
+                                fontSize: 14.sp,
+                                color: Colors.black),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                launch("tel://$remark_contact");
+                              },
+                              child: Text(
+                                "$remark_contact",
+                                style: TextStyle(
+                                    fontFamily: 'roboto',
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 14.sp,
+                                    color: Colors.black),
+                              ))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ))
         ],
       ),
     );
