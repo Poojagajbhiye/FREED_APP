@@ -67,7 +67,7 @@ class Record {
         destination: json["destination"],
         reason: json["reason"],
         v: json["__v"],
-        remarkByWarden: RemarkByWarden.fromJson(json["remark_by_warden"]),
+        remarkByWarden: json["remark_by_warden"] == null ? null : RemarkByWarden.fromJson(json["remark_by_warden"]),
       );
 
   Map<String, dynamic> toJson() => {

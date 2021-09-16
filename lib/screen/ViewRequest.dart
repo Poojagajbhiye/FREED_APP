@@ -195,13 +195,13 @@ class _ViewRequest extends State<ViewRequest> {
         String? _semester = recordModel.record!.studentId!.semester.toString();
 
         //remark
-        String? _remarkMsg = recordModel.record!.remarkByWarden!.msg;
+        String? _remarkMsg = recordModel.record?.remarkByWarden?.msg;
         String? _remarkFirstname =
-            recordModel.record!.remarkByWarden!.by!.firstname;
+            recordModel.record?.remarkByWarden?.by?.firstname;
         String? _remarkLastname =
-            recordModel.record!.remarkByWarden!.by!.lastname;
+            recordModel.record?.remarkByWarden?.by?.lastname;
         String? _remarkContact =
-            recordModel.record!.remarkByWarden!.by!.contact.toString();
+            recordModel.record?.remarkByWarden?.by?.contact.toString();
 
         if (isSuccess!) {
           setState(() {

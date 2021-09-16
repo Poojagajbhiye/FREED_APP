@@ -367,7 +367,6 @@ class _Dashboard extends State<Dashboard> {
         RecordListModel recordListModel = recordListModelFromJson(response);
         bool? isSuccess = recordListModel.success;
         List<Record>? list = recordListModel.records;
-
         if (isSuccess!) {
           if (mounted)
             setState(() {
