@@ -4,12 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/StudentInfo.dart';
 import 'package:freed/screen/BottomNavigation.dart';
-import 'package:freed/screen/SignUp.dart';
+import 'package:freed/screen/SignUp/SignUp.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
-import 'package:freed/value/Colors.dart';
-import 'package:freed/value/Image.dart';
+import 'package:freed/utils/Colors.dart';
+import 'package:freed/utils/Image.dart';
 import 'package:freed/model/LoginResponse.dart';
 
 class SignIn extends StatefulWidget {

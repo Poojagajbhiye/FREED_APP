@@ -4,11 +4,11 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordListModel.dart';
-import 'package:freed/screen/ViewRequest.dart';
+import 'package:freed/screen/ParticularRecord/ViewRequest.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
-import 'package:freed/value/Colors.dart';
-import 'package:freed/value/Image.dart';
+import 'package:freed/utils/Colors.dart';
+import 'package:freed/utils/Image.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 

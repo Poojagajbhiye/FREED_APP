@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:freed/value/Colors.dart';
-import 'package:freed/value/Image.dart';
+import 'package:freed/utils/Colors.dart';
+import 'package:freed/utils/Image.dart';
 
 class Background extends StatelessWidget {
   final Widget? child;

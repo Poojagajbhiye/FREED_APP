@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/screen/BottomNavigation.dart';
-import 'package:freed/screen/SignIn.dart';
-import 'package:freed/screen/SignUp.dart';
+import 'package:freed/screen/SignIn/SignIn.dart';
+import 'package:freed/screen/SignUp/SignUp.dart';
 import 'package:freed/storage/TempStorage.dart';
-import 'package:freed/value/Colors.dart';
+import 'package:freed/utils/Colors.dart';
 
 import 'Background.dart';
 

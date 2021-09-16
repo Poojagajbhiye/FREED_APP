@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart' hide Colors;
-import 'package:freed/screen/Dashboard.dart';
-import 'package:freed/screen/FreedNotification.dart';
-import 'package:freed/screen/StudentProfile.dart';
+import 'package:freed/screen/Dashboard/Dashboard.dart';
+import 'package:freed/screen/Notification/FreedNotification.dart';
+import 'package:freed/screen/Profile/StudentProfile.dart';
 import 'package:freed/services/SocketServer.dart';
-import 'package:freed/value/Colors.dart';
-import 'package:freed/value/Image.dart';
+import 'package:freed/utils/Colors.dart';
+import 'package:freed/utils/Image.dart';
 
 class BottomNavigation extends StatefulWidget {
   final sid;

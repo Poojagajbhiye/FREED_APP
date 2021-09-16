@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/utils/CustomIcon.dart';
-import 'package:freed/value/Colors.dart';
+import 'package:freed/utils/Colors.dart';
 
 class SuccessScanned extends StatefulWidget {
   final titleStatus;

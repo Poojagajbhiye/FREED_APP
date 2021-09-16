@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:freed/screen/SignIn.dart';
+import 'package:freed/screen/SignIn/SignIn.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/services/SocketServer.dart';
 import 'package:freed/storage/TempStorage.dart';
 import 'package:freed/utils/DioExceptions.dart';
-import 'package:freed/value/Colors.dart';
+import 'package:freed/utils/Colors.dart';
 
 class StudentProfile extends StatefulWidget {
   final isLogoutVisible;

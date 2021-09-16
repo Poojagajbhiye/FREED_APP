@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Colors;
-import 'package:freed/screen/SplashScreen.dart';
+import 'package:freed/screen/SplashScreen/SplashScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:freed/value/Colors.dart';
+import 'package:freed/utils/Colors.dart';
 
 void main() {
   runApp(

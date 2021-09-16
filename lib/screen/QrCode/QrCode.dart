@@ -3,9 +3,9 @@ import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
-import 'package:freed/screen/SuccessScanned.dart';
+import 'package:freed/screen/QrCode/SuccessScanned.dart';
 import 'package:freed/services/SocketServer.dart';
-import 'package:freed/value/Colors.dart';
+import 'package:freed/utils/Colors.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatefulWidget {
