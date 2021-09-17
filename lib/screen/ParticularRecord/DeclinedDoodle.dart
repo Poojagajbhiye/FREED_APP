@@ -61,8 +61,9 @@ class DeclinedDoodle extends StatelessWidget {
                 data: Theme.of(context)
                     .copyWith(dividerColor: Colors.transparent),
                 child: ExpansionTile(
+                  // tilePadding: EdgeInsets.,
                   title: Text(
-                    "Info",
+                    "Application declined",
                     style: TextStyle(
                         fontFamily: 'roboto',
                         fontWeight: FontWeight.w700,
@@ -75,7 +76,7 @@ class DeclinedDoodle extends StatelessWidget {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "$remark_msg. declined by $remark_firstname $remark_lastname",
+                        "$remark_msg.",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontFamily: 'roboto',
@@ -85,34 +86,35 @@ class DeclinedDoodle extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5.h),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Contact:",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontFamily: 'roboto',
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14.sp,
-                                color: Colors.black),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                launch("tel://$remark_contact");
-                              },
-                              child: Text(
-                                "$remark_contact",
-                                style: TextStyle(
-                                    fontFamily: 'roboto',
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 14.sp,
-                                    color: Colors.black),
-                              ))
-                        ],
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        launch("tel://$remark_contact");
+                      },
+                      icon: Icon(
+                        Icons.call,
+                        size: 15.r,
                       ),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.r)))),
+                      label: Text(
+                        "Contact",
+                        style: TextStyle(
+                            fontFamily: 'roboto',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14.sp,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Text(
+                      "$remark_firstname $remark_lastname",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontFamily: 'roboto',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14.sp,
+                          color: Colors.black),
                     ),
                   ],
                 ),
