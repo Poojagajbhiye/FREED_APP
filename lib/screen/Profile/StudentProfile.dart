@@ -683,6 +683,10 @@ class _ProfileForm extends State<ProfileForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (profileKey.currentState!.validate()) {
+                        
+                        //hide on screen keyboard
+                        FocusScope.of(context).unfocus();
+
                         setState(() {
                           isProgress = true;
                         });

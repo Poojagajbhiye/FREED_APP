@@ -254,6 +254,9 @@ class _SignUpForm extends State<SignUpForm> {
                           String id = _rid.text;
                           String pass = _pass.text;
 
+                          //hide on screen keyboard
+                          FocusScope.of(context).unfocus();
+
                           setState(() {
                             isProgress = true;
                           });

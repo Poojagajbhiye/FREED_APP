@@ -357,6 +357,10 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_leaveFormKey.currentState!.validate()) {
+
+                          //hide on screen keyboard
+                          FocusScope.of(context).unfocus();
+                          
                           setState(() {
                             isProgress = true;
                           });

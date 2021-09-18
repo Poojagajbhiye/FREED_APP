@@ -192,6 +192,9 @@ class _SignIn extends State<SignIn> {
                           String id = _rid.text;
                           String pass = _pass.text;
 
+                          //hide on screen keyboard
+                          FocusScope.of(context).unfocus();
+
                           setState(() {
                             isprogress = true;
                           });
