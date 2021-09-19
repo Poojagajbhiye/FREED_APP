@@ -41,7 +41,7 @@ class Result {
     this.status,
     this.id,
     this.rid,
-    this.studentId,
+    this.student,
     this.from,
     this.to,
     this.destination,
@@ -53,7 +53,7 @@ class Result {
   String? status;
   String? id;
   String? rid;
-  String? studentId;
+  String? student;
   DateTime? from;
   DateTime? to;
   String? destination;
@@ -65,7 +65,7 @@ class Result {
         status: json["status"],
         id: json["_id"],
         rid: json["RID"],
-        studentId: json["studentId"],
+        student: json["student"],
         from: DateTime.parse(json["from"]),
         to: DateTime.parse(json["to"]),
         destination: json["destination"],
@@ -78,7 +78,7 @@ class Result {
         "status": status,
         "_id": id,
         "RID": rid,
-        "studentId": studentId,
+        "student": student,
         "from": from?.toIso8601String(),
         "to": to?.toIso8601String(),
         "destination": destination,

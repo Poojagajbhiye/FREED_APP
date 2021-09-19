@@ -426,7 +426,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
       String destination, String reason) async {
     Map<String, dynamic> reqdata = {
       "RID": rid,
-      "studentId": sid,
+      "student": sid,
       "from": fromDate,
       "to": toDate,
       "destination": destination,
