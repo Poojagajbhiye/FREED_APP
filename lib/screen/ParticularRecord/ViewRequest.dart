@@ -190,11 +190,11 @@ class _ViewRequest extends State<ViewRequest> {
         String? _status = recordModel.record!.status;
 
         //student detail
-        String? _firstname = recordModel.record!.studentId!.firstName;
-        String? _lastname = recordModel.record!.studentId!.lastName.toString();
-        String? _course = recordModel.record!.studentId!.course;
-        String? _branch = recordModel.record!.studentId!.branch;
-        String? _semester = recordModel.record!.studentId!.semester.toString();
+        String? _firstname = recordModel.record!.student!.firstName;
+        String? _lastname = recordModel.record!.student!.lastName.toString();
+        String? _course = recordModel.record!.student!.course;
+        String? _branch = recordModel.record!.student!.branch;
+        String? _semester = recordModel.record!.student!.semester.toString();
 
         //remark
         String? _remarkMsg = recordModel.record?.remarkByWarden?.msg;

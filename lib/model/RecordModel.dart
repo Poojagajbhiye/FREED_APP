@@ -35,7 +35,7 @@ class Record {
     this.status,
     this.id,
     this.rid,
-    this.studentId,
+    this.student,
     this.from,
     this.to,
     this.destination,
@@ -48,7 +48,7 @@ class Record {
   String? status;
   String? id;
   String? rid;
-  StudentId? studentId;
+  Student? student;
   DateTime? from;
   DateTime? to;
   String? destination;
@@ -61,7 +61,7 @@ class Record {
         status: json["status"],
         id: json["_id"],
         rid: json["RID"],
-        studentId: StudentId.fromJson(json["studentId"]),
+        student: Student.fromJson(json["student"]),
         from: DateTime.parse(json["from"]),
         to: DateTime.parse(json["to"]),
         destination: json["destination"],
@@ -75,7 +75,7 @@ class Record {
         "status": status,
         "_id": id,
         "RID": rid,
-        "studentId": studentId?.toJson(),
+        "student": student?.toJson(),
         "from": from?.toIso8601String(),
         "to": to?.toIso8601String(),
         "destination": destination,
@@ -137,8 +137,8 @@ class By {
     };
 }
 
-class StudentId {
-  StudentId({
+class Student {
+  Student({
     this.id,
     this.rid,
     this.v,
@@ -160,7 +160,7 @@ class StudentId {
   String? lastName;
   int? semester;
 
-  factory StudentId.fromJson(Map<String, dynamic> json) => StudentId(
+  factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json["_id"],
         rid: json["RID"],
         v: json["__v"],
