@@ -26,7 +26,7 @@ abstract class ApiClient {
 
   //student new leave request
   @POST('api/records/new')
-  Future<String> newLeaveRequest(@Body() Map<String, dynamic> requestBody);
+  Future<String> newLeaveRequest(@Header('x-device-id') String deviceId, @Body() Map<String, dynamic> requestBody);
 
   //get student records
   @GET('api/records/sid/{sid}')
