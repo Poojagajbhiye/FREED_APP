@@ -4,9 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/RecordModel.dart';
-import 'package:freed/screen/ParticularRecord/AcceptedDoodle.dart';
-import 'package:freed/screen/ParticularRecord/DeclinedDoodle.dart';
-import 'package:freed/screen/ParticularRecord/ProcessDoodle.dart';
 import 'package:freed/screen/QrCode/QrCode.dart';
 import 'package:freed/services/ApiClient.dart';
 import 'package:freed/utils/DioExceptions.dart';
@@ -54,6 +51,8 @@ class _ViewRequest extends State<ViewRequest> {
 
   //approval
   bool sent_for_approval = false;
+  bool hod_accepted = false;
+  bool hod_declined = false;
 
   _ViewRequest(this.recordId);
 
@@ -104,8 +103,6 @@ class _ViewRequest extends State<ViewRequest> {
                                   left: 15.w,
                                   right: 15.w),
                               children: [
-                                _checkStatus(),
-                                SizedBox(height: 30.h),
                                 _header(),
                                 SizedBox(height: 15.h),
                                 _detailedCard(),
@@ -113,7 +110,7 @@ class _ViewRequest extends State<ViewRequest> {
                                 _reasonExpendedCard(),
                                 SizedBox(height: 20.h),
                                 _recordTracker(),
-                                SizedBox(height: 50.h),
+                                SizedBox(height: 35.h),
                                 isAcceptedStatus || isDeclinedStatus
                                     ? SizedBox(height: 0.0)
                                     : _cancelButton(),
@@ -140,34 +137,54 @@ class _ViewRequest extends State<ViewRequest> {
       return StepState.disabled;
   }
 
+  _hodCurrentState() {
+    if (isProcessStatus)
+      return StepState.disabled;
+    else if (hod_accepted)
+      return StepState.complete;
+    else if (hod_declined)
+      return StepState.error;
+    else
+      return StepState.disabled;
+  }
+
+  List<Step> _step() {
+    List<Step> step = [];
+
+    step.add(Step(
+        title: Text("Sent for Approval"),
+        content: SizedBox(),
+        isActive: true,
+        state: StepState.complete));
+    step.add(Step(
+        title: Text("Warden Approval"),
+        content: SizedBox(),
+        isActive: isAcceptedStatus,
+        state: _currentState()));
+    if (sent_for_approval) {
+      step.insert(
+          1,
+          Step(
+              title: Text("HOD Approval"),
+              content: SizedBox(),
+              isActive: hod_accepted || hod_declined,
+              state: _hodCurrentState()));
+    }
+
+    return step;
+  }
+
   Widget _recordTracker() {
     return Container(
       child: Stepper(
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-          return SizedBox();
-        },
-        physics: ScrollPhysics(),
-        margin: EdgeInsets.all(0.0),
-        type: StepperType.vertical,
-        currentStep: 0,
-        steps: [
-          Step(
-              title: Text("Sent for Approval"),
-              content: SizedBox(),
-              isActive: true,
-              state: StepState.complete),
-          sent_for_approval ? Step(
-              title: Text("Hod Approval"),
-              content: SizedBox(),
-              isActive: false,
-              state: StepState.disabled) : ,
-          Step(
-              title: Text("Warden Approval"),
-              content: SizedBox(),
-              isActive: isAcceptedStatus,
-              state: _currentState()),
-        ],
-      ),
+          controlsBuilder: (BuildContext context, ControlsDetails details) {
+            return SizedBox();
+          },
+          physics: ScrollPhysics(),
+          margin: EdgeInsets.all(0.0),
+          type: StepperType.vertical,
+          currentStep: 0,
+          steps: _step()),
     );
   }
 
@@ -210,20 +227,6 @@ class _ViewRequest extends State<ViewRequest> {
     );
   }
 
-  Widget _checkStatus() {
-    if (isAcceptedStatus)
-      return AcceptedDoodle();
-    else if (isDeclinedStatus)
-      return DeclinedDoodle(
-        remark_msg: remarkMsg,
-        remark_firstname: remarkFirstname,
-        remark_contact: remarkContact,
-        remark_lastname: remarkLastname,
-      );
-    else
-      return ProcessDoodle();
-  }
-
   _fatchRecordDetails(String recordId) async {
     try {
       var response =
@@ -255,6 +258,8 @@ class _ViewRequest extends State<ViewRequest> {
         //approval
         bool _sent_for_approval =
             recordModel.record?.approval?.sentForApproval ?? false;
+        bool _hod_accepted = recordModel.record?.approval?.accepted ?? false;
+        bool _hod_declined = recordModel.record?.approval?.declined ?? false;
 
         if (isSuccess!) {
           setState(() {
@@ -280,6 +285,8 @@ class _ViewRequest extends State<ViewRequest> {
 
               //approval
               sent_for_approval = _sent_for_approval;
+              hod_accepted = _hod_accepted;
+              hod_declined = _hod_declined;
 
               if (_status!.contains("ACCEPTED"))
                 isAcceptedStatus = true;
