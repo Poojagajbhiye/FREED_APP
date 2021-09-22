@@ -98,8 +98,8 @@ class _ViewRequest extends State<ViewRequest> {
                               padding: EdgeInsets.only(
                                   top: 0.0,
                                   bottom: 50.h,
-                                  left: 30.w,
-                                  right: 30.w),
+                                  left: 15.w,
+                                  right: 15.w),
                               children: [
                                 _checkStatus(),
                                 SizedBox(height: 30.h),
@@ -108,6 +108,8 @@ class _ViewRequest extends State<ViewRequest> {
                                 _detailedCard(),
                                 SizedBox(height: 20.h),
                                 _reasonExpendedCard(),
+                                SizedBox(height: 20.h),
+                                _recordTracker(),
                                 SizedBox(height: 50.h),
                                 isAcceptedStatus || isDeclinedStatus
                                     ? SizedBox(height: 0.0)
@@ -120,6 +122,25 @@ class _ViewRequest extends State<ViewRequest> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _recordTracker() {
+    return Container(
+      child: Stepper(
+        controlsBuilder: (BuildContext context, ControlsDetails details) {
+          return SizedBox();
+        },
+        physics: ScrollPhysics(),
+        margin: EdgeInsets.all(0.0),
+        type: StepperType.vertical,
+        currentStep: 2,
+        steps: [
+          Step(title: Text("Sent for Approval"), content: SizedBox(), isActive: true),
+          Step(title: Text("Hod Approval"), content: SizedBox()),
+          Step(title: Text("Warden Approval"), content: SizedBox()),
+        ],
       ),
     );
   }
@@ -562,9 +583,3 @@ class _ViewRequest extends State<ViewRequest> {
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }
-
-
-
-
-
-
