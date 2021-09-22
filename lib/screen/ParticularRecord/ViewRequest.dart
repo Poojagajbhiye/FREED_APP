@@ -52,6 +52,9 @@ class _ViewRequest extends State<ViewRequest> {
   String? remarkLastname;
   String? remarkContact;
 
+  //approval
+  bool sent_for_approval = false;
+
   _ViewRequest(this.recordId);
 
   @override
@@ -126,6 +129,17 @@ class _ViewRequest extends State<ViewRequest> {
     );
   }
 
+  _currentState() {
+    if (isProcessStatus)
+      return StepState.disabled;
+    else if (isAcceptedStatus)
+      return StepState.complete;
+    else if (isDeclinedStatus)
+      return StepState.error;
+    else
+      return StepState.disabled;
+  }
+
   Widget _recordTracker() {
     return Container(
       child: Stepper(
@@ -135,11 +149,23 @@ class _ViewRequest extends State<ViewRequest> {
         physics: ScrollPhysics(),
         margin: EdgeInsets.all(0.0),
         type: StepperType.vertical,
-        currentStep: 2,
+        currentStep: 0,
         steps: [
-          Step(title: Text("Sent for Approval"), content: SizedBox(), isActive: true),
-          Step(title: Text("Hod Approval"), content: SizedBox()),
-          Step(title: Text("Warden Approval"), content: SizedBox()),
+          Step(
+              title: Text("Sent for Approval"),
+              content: SizedBox(),
+              isActive: true,
+              state: StepState.complete),
+          sent_for_approval ? Step(
+              title: Text("Hod Approval"),
+              content: SizedBox(),
+              isActive: false,
+              state: StepState.disabled) : ,
+          Step(
+              title: Text("Warden Approval"),
+              content: SizedBox(),
+              isActive: isAcceptedStatus,
+              state: _currentState()),
         ],
       ),
     );
@@ -226,6 +252,10 @@ class _ViewRequest extends State<ViewRequest> {
         String? _remarkContact =
             recordModel.record?.remarkByWarden?.by?.contact.toString();
 
+        //approval
+        bool _sent_for_approval =
+            recordModel.record?.approval?.sentForApproval ?? false;
+
         if (isSuccess!) {
           setState(() {
             isprocess = false;
@@ -247,6 +277,9 @@ class _ViewRequest extends State<ViewRequest> {
               remarkFirstname = _remarkFirstname;
               remarkLastname = _remarkLastname;
               remarkContact = _remarkContact;
+
+              //approval
+              sent_for_approval = _sent_for_approval;
 
               if (_status!.contains("ACCEPTED"))
                 isAcceptedStatus = true;

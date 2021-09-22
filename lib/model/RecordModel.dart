@@ -31,6 +31,7 @@ class RecordModel {
 
 class Record {
   Record({
+    this.deviceId,
     this.issuedDate,
     this.status,
     this.id,
@@ -42,8 +43,10 @@ class Record {
     this.reason,
     this.v,
     this.remarkByWarden,
+    this.approval,
   });
 
+String? deviceId;
   DateTime? issuedDate;
   String? status;
   String? id;
@@ -55,8 +58,10 @@ class Record {
   String? reason;
   int? v;
   RemarkByWarden? remarkByWarden;
+  Approval? approval;
 
   factory Record.fromJson(Map<String, dynamic> json) => Record(
+    deviceId: json["device_id"],
         issuedDate: DateTime.parse(json["issuedDate"]),
         status: json["status"],
         id: json["_id"],
@@ -68,9 +73,11 @@ class Record {
         reason: json["reason"],
         v: json["__v"],
         remarkByWarden: json["remark_by_warden"] == null ? null : RemarkByWarden.fromJson(json["remark_by_warden"]),
+        approval: json["approval"] == null ? null : Approval.fromJson(json["approval"]),
       );
 
   Map<String, dynamic> toJson() => {
+    "device_id": deviceId,
         "issuedDate": issuedDate?.toIso8601String(),
         "status": status,
         "_id": id,
@@ -82,7 +89,80 @@ class Record {
         "reason": reason,
         "__v": v,
         "remark_by_warden": remarkByWarden?.toJson(),
+        "approval": approval?.toJson(),
       };
+}
+
+class Approval {
+    Approval({
+        this.accepted,
+        this.sentForApproval,
+        this.declined,
+        this.id,
+        this.sentForApprovalBy,
+        this.declinedBy,
+        this.remark,
+    });
+
+    bool? accepted;
+    bool? sentForApproval;
+    bool? declined;
+    String? id;
+    ApproveBy? sentForApprovalBy;
+    ApproveBy? declinedBy;
+    String? remark;
+
+    factory Approval.fromJson(Map<String, dynamic> json) => Approval(
+        accepted: json["accepted"],
+        sentForApproval: json["sent_for_approval"],
+        declined: json["declined"],
+        id: json["_id"],
+        sentForApprovalBy: json["sent_for_approval_by"] == null ? null : ApproveBy.fromJson(json["sent_for_approval_by"]),
+        declinedBy: json["declined_by"] == null ? null : ApproveBy.fromJson(json["declined_by"]),
+        remark: json["remark"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "accepted": accepted,
+        "sent_for_approval": sentForApproval,
+        "declined": declined,
+        "_id": id,
+        "sent_for_approval_by": sentForApprovalBy?.toJson(),
+        "declined_by": declinedBy?.toJson(),
+        "remark": remark,
+    };
+}
+
+class ApproveBy {
+    ApproveBy({
+        this.id,
+        this.firstname,
+        this.lastname,
+        this.email,
+        this.contact,
+    });
+
+    String? id;
+    String? firstname;
+    String? lastname;
+    String? email;
+    int? contact;
+
+    factory ApproveBy.fromJson(Map<String, dynamic> json) => ApproveBy(
+        id: json["_id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        email: json["email"],
+        contact: json["contact"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "_id": id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "contact": contact,
+    };
 }
 
 class RemarkByWarden {
