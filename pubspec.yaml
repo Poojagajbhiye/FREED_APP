@@ -39,6 +39,8 @@ dependencies:
   socket_io_client: ^2.0.0-beta
   flutter_windowmanager: ^0.2.0
   url_launcher: ^6.0.10
+  firebase_messaging: ^10.0.7
+  firebase_core: ^1.6.0
   
 
 dev_dependencies:
