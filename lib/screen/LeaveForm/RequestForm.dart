@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/model/NewleaveResponse.dart';
@@ -357,10 +358,9 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_leaveFormKey.currentState!.validate()) {
-
                           //hide on screen keyboard
                           FocusScope.of(context).unfocus();
-                          
+
                           setState(() {
                             isProgress = true;
                           });
@@ -424,6 +424,7 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
 
   _leaveRequestCall(String rid, String sid, String fromDate, String toDate,
       String destination, String reason) async {
+    String? deviceToken = await FirebaseMessaging.instance.getToken();
     Map<String, dynamic> reqdata = {
       "RID": rid,
       "student": sid,
@@ -434,7 +435,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     };
 
     try {
-      var response = await ApiClient.getServices().newLeaveRequest("get your device id", reqdata);
+      var response = await ApiClient.getServices()
+          .newLeaveRequest(deviceToken!, reqdata);
 
       if (response.isNotEmpty) {
         NewleaveResponse newleaveResponse = newleaveResponseFromJson(response);
