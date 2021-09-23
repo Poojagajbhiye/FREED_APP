@@ -152,7 +152,8 @@ class _ViewRequest extends State<ViewRequest> {
     List<Step> step = [];
 
     step.add(Step(
-        title: Text("Sent for Approval"),
+        title: Text("Application Requested"),
+        subtitle: Text("your request has been processed"),
         content: SizedBox(),
         isActive: true,
         state: StepState.complete));
@@ -165,7 +166,8 @@ class _ViewRequest extends State<ViewRequest> {
       step.insert(
           1,
           Step(
-              title: Text("HOD Approval"),
+              title: Text("Sent for Approval"),
+              subtitle: Text("your application has been sent for approval to HOD."),
               content: SizedBox(),
               isActive: hod_accepted || hod_declined,
               state: _hodCurrentState()));
