@@ -435,8 +435,8 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     };
 
     try {
-      var response = await ApiClient.getServices()
-          .newLeaveRequest(deviceToken!, reqdata);
+      var response =
+          await ApiClient.getServices().newLeaveRequest(deviceToken!, reqdata);
 
       if (response.isNotEmpty) {
         NewleaveResponse newleaveResponse = newleaveResponseFromJson(response);
@@ -449,12 +449,16 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
           if (controller!.isDismissed) {
             controller!.forward();
           }
+
           setState(() {
             isProgress = false;
             successMsg = msg!;
             recordId = _recordId;
             _visible = !_visible;
           });
+
+          //notify to the warden
+          _notifyToWarden();
         }
       }
     } catch (e) {
@@ -677,5 +681,30 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
           return WillPopScope(child: dialog, onWillPop: () async => false);
         });
     iscancel ? Navigator.pop(context) : null;
+  }
+
+  _notifyToWarden() async {
+    String serverKey =
+        "key=AAAAbEj7ATs:APA91bH8GhXCY55CQ3DfxZOeTOLxY0aPEZuViUMi5PHD44iK-4KsGBrhjshkB7vKDeFtAlj9Lol19hhPaUXtKBGMF1XsrEXU2nle4xL44uI9XL0EPVIEQ52z0UjMCrHjg5OK7WqgiySP";
+    String topic = "warden";
+    Map<String, dynamic> body = {
+      'notification': <String, dynamic>{
+        'body': 'Firebase Cloud Messaging Topic Message',
+        'title': 'student'
+      },
+      'priority': 'high',
+      'data': <String, dynamic>{
+        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        'id': '1',
+        'status': 'done'
+      },
+      'to': '/topics/$topic'
+    };
+    try {
+      await ApiClient.getServices().sendNotificationToWarden(serverKey, body);
+      print("sent notification successfully..");
+    } catch (e) {
+      print("firebase notification exception: $e");
+    }
   }
 }

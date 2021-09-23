@@ -135,6 +135,22 @@ class _ApiClient implements ApiClient {
     return value;
   }
 
+  @override
+  Future<void> sendNotificationToWarden(serverKey, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    await _dio.fetch<void>(_setStreamType<void>(Options(
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': serverKey},
+            extra: _extra)
+        .compose(_dio.options, 'https://fcm.googleapis.com/fcm/send',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

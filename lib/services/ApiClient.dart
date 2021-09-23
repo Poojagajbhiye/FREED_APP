@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
 part 'ApiClient.g.dart';
@@ -27,7 +26,8 @@ abstract class ApiClient {
 
   //student new leave request
   @POST('api/records/new')
-  Future<String> newLeaveRequest(@Header('x-device-id') String deviceId, @Body() Map<String, dynamic> requestBody);
+  Future<String> newLeaveRequest(@Header('x-device-id') String deviceId,
+      @Body() Map<String, dynamic> requestBody);
 
   //get student records
   @GET('api/records/sid/{sid}')
@@ -44,4 +44,10 @@ abstract class ApiClient {
   //update profile
   @POST('api/student/update')
   Future<String> updateProfile(@Body() Map<String, dynamic> progileData);
+
+  //application request notification to warden
+  @POST('https://fcm.googleapis.com/fcm/send')
+  Future<void> sendNotificationToWarden(
+      @Header('Authorization') String serverKey,
+      @Body() Map<String, dynamic> body);
 }
