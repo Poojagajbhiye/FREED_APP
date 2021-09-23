@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter/rendering.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:freed/main.dart';
 import 'package:freed/model/RecordListModel.dart';
 import 'package:freed/screen/RecordList/ExpendedRecords.dart';
 import 'package:freed/screen/QrCode/QrCode.dart';
@@ -19,6 +22,7 @@ import 'package:shimmer/shimmer.dart';
 class Dashboard extends StatefulWidget {
   final sid;
   Dashboard({Key? key, @required this.sid}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _Dashboard(sid);
@@ -45,6 +49,8 @@ class _Dashboard extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    //firebase notification configration
+    this._firebaseNotificationHandler();
 
     //get student information from temp storage
     this._getStudentData();
@@ -500,5 +506,25 @@ class _Dashboard extends State<Dashboard> {
         ),
       ),
     );
+  }
+
+  _firebaseNotificationHandler() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage msg) {
+      RemoteNotification? remoteNotification = msg.notification;
+      AndroidNotification? androidNotification = msg.notification?.android;
+
+      if (remoteNotification != null && androidNotification != null) {
+        flutterLocalNotificationsPlugin.show(
+            remoteNotification.hashCode,
+            remoteNotification.title,
+            remoteNotification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(
+                    channel.id, channel.name, channel.description,
+                    playSound: true,
+                    icon: '@mipmap/ic_launcher',
+                    priority: Priority.high)));
+      }
+    });
   }
 }

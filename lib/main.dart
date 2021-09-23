@@ -6,15 +6,33 @@ import 'package:freed/screen/SplashScreen/SplashScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/utils/Colors.dart';
 
-const AndroidNotificationChannel androidNotificationChannel =
-    AndroidNotificationChannel("id", "name", "description");
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    "01",
+    "freed student notification",
+    "student side notification when accept or declined the request",
+    importance: Importance.high);
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage msg) async {
+  await Firebase.initializeApp();
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, badge: true, sound: true);
+
   runApp(
     ScreenUtilInit(
       designSize: Size(360, 780),
