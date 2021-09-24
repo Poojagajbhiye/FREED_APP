@@ -46,7 +46,7 @@ class Record {
     this.approval,
   });
 
-String? deviceId;
+  String? deviceId;
   DateTime? issuedDate;
   String? status;
   String? id;
@@ -61,7 +61,7 @@ String? deviceId;
   Approval? approval;
 
   factory Record.fromJson(Map<String, dynamic> json) => Record(
-    deviceId: json["device_id"],
+        deviceId: json["device_id"],
         issuedDate: DateTime.parse(json["issuedDate"]),
         status: json["status"],
         id: json["_id"],
@@ -72,12 +72,16 @@ String? deviceId;
         destination: json["destination"],
         reason: json["reason"],
         v: json["__v"],
-        remarkByWarden: json["remark_by_warden"] == null ? null : RemarkByWarden.fromJson(json["remark_by_warden"]),
-        approval: json["approval"] == null ? null : Approval.fromJson(json["approval"]),
+        remarkByWarden: json["remark_by_warden"] == null
+            ? null
+            : RemarkByWarden.fromJson(json["remark_by_warden"]),
+        approval: json["approval"] == null
+            ? null
+            : Approval.fromJson(json["approval"]),
       );
 
   Map<String, dynamic> toJson() => {
-    "device_id": deviceId,
+        "device_id": deviceId,
         "issuedDate": issuedDate?.toIso8601String(),
         "status": status,
         "_id": id,
@@ -94,35 +98,42 @@ String? deviceId;
 }
 
 class Approval {
-    Approval({
-        this.accepted,
-        this.sentForApproval,
-        this.declined,
-        this.id,
-        this.sentForApprovalBy,
-        this.declinedBy,
-        this.remark,
-    });
+  Approval({
+    this.accepted,
+    this.sentForApproval,
+    this.declined,
+    this.id,
+    this.sentForApprovalBy,
+    this.declinedBy,
+    this.remark,
+    this.acceptedBy,
+  });
 
-    bool? accepted;
-    bool? sentForApproval;
-    bool? declined;
-    String? id;
-    ApproveBy? sentForApprovalBy;
-    ApproveBy? declinedBy;
-    String? remark;
+  bool? accepted;
+  bool? sentForApproval;
+  bool? declined;
+  String? id;
+  ApproveBy? sentForApprovalBy;
+  ApproveBy? declinedBy;
+  String? remark;
+  ApproveBy? acceptedBy;
 
-    factory Approval.fromJson(Map<String, dynamic> json) => Approval(
+  factory Approval.fromJson(Map<String, dynamic> json) => Approval(
         accepted: json["accepted"],
         sentForApproval: json["sent_for_approval"],
         declined: json["declined"],
         id: json["_id"],
-        sentForApprovalBy: json["sent_for_approval_by"] == null ? null : ApproveBy.fromJson(json["sent_for_approval_by"]),
-        declinedBy: json["declined_by"] == null ? null : ApproveBy.fromJson(json["declined_by"]),
+        sentForApprovalBy: json["sent_for_approval_by"] == null
+            ? null
+            : ApproveBy.fromJson(json["sent_for_approval_by"]),
+        declinedBy: json["declined_by"] == null
+            ? null
+            : ApproveBy.fromJson(json["declined_by"]),
         remark: json["remark"],
-    );
+        acceptedBy: json["accepted_by"] == null ? null : ApproveBy.fromJson(json["accepted_by"]),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "accepted": accepted,
         "sent_for_approval": sentForApproval,
         "declined": declined,
@@ -130,91 +141,92 @@ class Approval {
         "sent_for_approval_by": sentForApprovalBy?.toJson(),
         "declined_by": declinedBy?.toJson(),
         "remark": remark,
-    };
+        "accepted_by": acceptedBy?.toJson(),
+      };
 }
 
 class ApproveBy {
-    ApproveBy({
-        this.id,
-        this.firstname,
-        this.lastname,
-        this.email,
-        this.contact,
-    });
+  ApproveBy({
+    this.id,
+    this.firstname,
+    this.lastname,
+    this.email,
+    this.contact,
+  });
 
-    String? id;
-    String? firstname;
-    String? lastname;
-    String? email;
-    int? contact;
+  String? id;
+  String? firstname;
+  String? lastname;
+  String? email;
+  int? contact;
 
-    factory ApproveBy.fromJson(Map<String, dynamic> json) => ApproveBy(
+  factory ApproveBy.fromJson(Map<String, dynamic> json) => ApproveBy(
         id: json["_id"],
         firstname: json["firstname"],
         lastname: json["lastname"],
         email: json["email"],
         contact: json["contact"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "_id": id,
         "firstname": firstname,
         "lastname": lastname,
         "email": email,
         "contact": contact,
-    };
+      };
 }
 
 class RemarkByWarden {
-    RemarkByWarden({
-        this.by,
-        this.msg,
-    });
+  RemarkByWarden({
+    this.by,
+    this.msg,
+  });
 
-    By? by;
-    String? msg;
+  By? by;
+  String? msg;
 
-    factory RemarkByWarden.fromJson(Map<String, dynamic> json) => RemarkByWarden(
+  factory RemarkByWarden.fromJson(Map<String, dynamic> json) => RemarkByWarden(
         by: By.fromJson(json["by"]),
         msg: json["msg"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "by": by,
         "msg": msg,
-    };
+      };
 }
 
 class By {
-    By({
-        this.adminIs,
-        this.id,
-        this.firstname,
-        this.lastname,
-        this.contact,
-    });
+  By({
+    this.adminIs,
+    this.id,
+    this.firstname,
+    this.lastname,
+    this.contact,
+  });
 
-    String? adminIs;
-    String? id;
-    String? firstname;
-    String? lastname;
-    int? contact;
+  String? adminIs;
+  String? id;
+  String? firstname;
+  String? lastname;
+  int? contact;
 
-    factory By.fromJson(Map<String, dynamic> json) => By(
+  factory By.fromJson(Map<String, dynamic> json) => By(
         adminIs: json["adminIs"],
         id: json["_id"],
         firstname: json["firstname"],
         lastname: json["lastname"],
         contact: json["contact"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "adminIs": adminIs,
         "_id": id,
         "firstname": firstname,
         "lastname": lastname,
         "contact": contact,
-    };
+      };
 }
 
 class Student {

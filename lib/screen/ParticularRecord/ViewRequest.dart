@@ -55,6 +55,12 @@ class _ViewRequest extends State<ViewRequest> {
   bool hod_accepted = false;
   bool hod_declined = false;
 
+  //hod remark
+  String? hod_firstname;
+  String? hod_lastname;
+  String? hod_remark;
+  String? hod_contact;
+
   int _currentStep = 0;
 
   _ViewRequest(this.recordId);
@@ -153,7 +159,7 @@ class _ViewRequest extends State<ViewRequest> {
 
   Widget _wardenApprovalBody() {
     if (isAcceptedStatus)
-      return Text("your application has been approved by warden");
+      return Text("your application has been accepted by warden");
     else if (isDeclinedStatus)
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -186,11 +192,37 @@ class _ViewRequest extends State<ViewRequest> {
       return SizedBox();
   }
 
-  Widget _hodApprovalBody(){
+  Widget _hodApprovalBody() {
     if (hod_accepted)
-      return StepState.complete;
+      return Text("your application has been approved by HOD");
     else if (hod_declined)
-      return StepState.error;
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "your application has been declined by $hod_firstname $hod_lastname",
+            textAlign: TextAlign.left,
+          ),
+          Text(
+            "reason : $hod_remark",
+            textAlign: TextAlign.left,
+          ),
+          SizedBox(height: 5.h),
+          ElevatedButton(
+            onPressed: () {
+              launch("tel://$hod_contact");
+            },
+            child: Text(
+              "Contact",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.r)))),
+          )
+        ],
+      );
     else
       return SizedBox();
   }
@@ -209,7 +241,7 @@ class _ViewRequest extends State<ViewRequest> {
         content: Align(
           alignment: Alignment.topLeft,
           child: Container(
-            padding: EdgeInsets.only(left: 45),
+            padding: EdgeInsets.only(left: 45.w),
             child: _wardenApprovalBody(),
           ),
         ),
@@ -225,8 +257,8 @@ class _ViewRequest extends State<ViewRequest> {
               content: Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  padding: EdgeInsets.only(left: 45),
-                  child: Text("ba cbashjcbasc  casbc"),
+                  padding: EdgeInsets.only(left: 45.w),
+                  child: _hodApprovalBody(),
                 ),
               ),
               isActive: hod_accepted || hod_declined,
@@ -327,6 +359,13 @@ class _ViewRequest extends State<ViewRequest> {
             recordModel.record?.approval?.sentForApproval ?? false;
         bool _hod_accepted = recordModel.record?.approval?.accepted ?? false;
         bool _hod_declined = recordModel.record?.approval?.declined ?? false;
+        String? _hodFirstname =
+            recordModel.record?.approval?.declinedBy?.firstname;
+        String? _hodLastname =
+            recordModel.record?.approval?.declinedBy?.lastname;
+        String? _hodRemark = recordModel.record?.approval?.remark;
+        String? _hodContact =
+            recordModel.record?.approval?.declinedBy?.contact.toString();
 
         if (isSuccess!) {
           setState(() {
@@ -344,7 +383,7 @@ class _ViewRequest extends State<ViewRequest> {
               branch = _branch!;
               semester = _semester;
 
-              //remark
+              //warden remark
               remarkMsg = _remarkMsg;
               remarkFirstname = _remarkFirstname;
               remarkLastname = _remarkLastname;
@@ -354,6 +393,12 @@ class _ViewRequest extends State<ViewRequest> {
               sent_for_approval = _sent_for_approval;
               hod_accepted = _hod_accepted;
               hod_declined = _hod_declined;
+
+              //hod remark
+              hod_firstname = _hodFirstname;
+              hod_lastname = _hodLastname;
+              hod_remark = _hodRemark;
+              hod_contact = _hodContact;
 
               if (_status!.contains("ACCEPTED"))
                 isAcceptedStatus = true;
