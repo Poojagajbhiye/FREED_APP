@@ -687,10 +687,13 @@ class _RequestForm extends State<RequestForm> with TickerProviderStateMixin {
     String serverKey =
         "key=AAAAbEj7ATs:APA91bH8GhXCY55CQ3DfxZOeTOLxY0aPEZuViUMi5PHD44iK-4KsGBrhjshkB7vKDeFtAlj9Lol19hhPaUXtKBGMF1XsrEXU2nle4xL44uI9XL0EPVIEQ52z0UjMCrHjg5OK7WqgiySP";
     String topic = "warden";
+    String msgBody =
+        await TempStorage.getFirstName() + " " + await TempStorage.getLastName();
+    print(msgBody);
     Map<String, dynamic> body = {
       'notification': <String, dynamic>{
-        'body': 'Firebase Cloud Messaging Topic Message',
-        'title': 'student'
+        'body': 'Requested by - $msgBody',
+        'title': 'New Leave Application'
       },
       'priority': 'high',
       'data': <String, dynamic>{
