@@ -54,6 +54,8 @@ class _ViewRequest extends State<ViewRequest> {
   bool hod_accepted = false;
   bool hod_declined = false;
 
+  int _currentStep = 0;
+
   _ViewRequest(this.recordId);
 
   @override
@@ -159,7 +161,13 @@ class _ViewRequest extends State<ViewRequest> {
         state: StepState.complete));
     step.add(Step(
         title: Text("Warden Approval"),
-        content: SizedBox(),
+        content: Align(
+          alignment: Alignment.topLeft,
+          child: Container(
+            height: 50,
+            child: Text("abhbhjcb cjbahcjba ajkcbajk"),
+          ),
+        ),
         isActive: isAcceptedStatus,
         state: _currentState()));
     if (sent_for_approval) {
@@ -167,8 +175,15 @@ class _ViewRequest extends State<ViewRequest> {
           1,
           Step(
               title: Text("Sent for Approval"),
-              subtitle: Text("your application has been sent for approval to HOD."),
-              content: SizedBox(),
+              subtitle:
+                  Text("your application has been sent for \napproval to HOD."),
+              content: Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  height: 50,
+                  child: Text("ba cbashjcbasc  casbc"),
+                ),
+              ),
               isActive: hod_accepted || hod_declined,
               state: _hodCurrentState()));
     }
@@ -185,7 +200,12 @@ class _ViewRequest extends State<ViewRequest> {
           physics: ScrollPhysics(),
           margin: EdgeInsets.all(0.0),
           type: StepperType.vertical,
-          currentStep: 0,
+          currentStep: _currentStep,
+          onStepTapped: (step) {
+            setState(() {
+              _currentStep = step;
+            });
+          },
           steps: _step()),
     );
   }
@@ -545,7 +565,7 @@ class _ViewRequest extends State<ViewRequest> {
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
       width: 1.sw,
       decoration: BoxDecoration(
-          color: Colors.yellow, borderRadius: BorderRadius.circular(10)),
+          color: Colors.light_saffron, borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
