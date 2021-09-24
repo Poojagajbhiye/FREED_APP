@@ -10,6 +10,7 @@ import 'package:freed/utils/DioExceptions.dart';
 import 'package:freed/utils/Colors.dart';
 import 'package:freed/utils/Image.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewRequest extends StatefulWidget {
   final recordId;
@@ -150,6 +151,50 @@ class _ViewRequest extends State<ViewRequest> {
       return StepState.disabled;
   }
 
+  Widget _wardenApprovalBody() {
+    if (isAcceptedStatus)
+      return Text("your application has been approved by warden");
+    else if (isDeclinedStatus)
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "your application has been declined by $remarkFirstname $remarkLastname",
+            textAlign: TextAlign.left,
+          ),
+          Text(
+            "reason : $remarkMsg",
+            textAlign: TextAlign.left,
+          ),
+          SizedBox(height: 5.h),
+          ElevatedButton(
+            onPressed: () {
+              launch("tel://$remarkContact");
+            },
+            child: Text(
+              "Contact",
+              style: TextStyle(color: Colors.white),
+            ),
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.r)))),
+          )
+        ],
+      );
+    else
+      return SizedBox();
+  }
+
+  Widget _hodApprovalBody(){
+    if (hod_accepted)
+      return StepState.complete;
+    else if (hod_declined)
+      return StepState.error;
+    else
+      return SizedBox();
+  }
+
   List<Step> _step() {
     List<Step> step = [];
 
@@ -164,8 +209,8 @@ class _ViewRequest extends State<ViewRequest> {
         content: Align(
           alignment: Alignment.topLeft,
           child: Container(
-            height: 50,
-            child: Text("abhbhjcb cjbahcjba ajkcbajk"),
+            padding: EdgeInsets.only(left: 45),
+            child: _wardenApprovalBody(),
           ),
         ),
         isActive: isAcceptedStatus,
@@ -180,7 +225,7 @@ class _ViewRequest extends State<ViewRequest> {
               content: Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                  height: 50,
+                  padding: EdgeInsets.only(left: 45),
                   child: Text("ba cbashjcbasc  casbc"),
                 ),
               ),
