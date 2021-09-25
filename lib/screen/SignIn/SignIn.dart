@@ -93,7 +93,7 @@ class _SignIn extends State<SignIn> {
                           ),
                         ),
                       ),
-                      Positioned(bottom: 395.h, child: _doodleImage())
+                      Positioned(bottom: 420.h, child: _doodleImage())
                     ],
                   ),
                 ))
@@ -137,7 +137,7 @@ class _SignIn extends State<SignIn> {
                         maxLines: 1,
                         style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
-                            hintText: "Registration No",
+                            hintText: "University Roll No.",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15.r, horizontal: 15.r),
@@ -280,11 +280,11 @@ class _SignIn extends State<SignIn> {
                       fontSize: 30.sp),
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 30.h,
                 ),
                 Image.asset(
                   dancingDoodle,
-                  width: 270.r,
+                  width: 230.r,
                   // height: 270.h,
                 ),
               ],
@@ -334,8 +334,10 @@ class _SignIn extends State<SignIn> {
         String? _branch = studentInfo.decoded?.branch ?? "";
         String? _course = studentInfo.decoded?.course ?? "";
         String? _semester = studentInfo.decoded?.semester.toString() ?? "";
-        String? _personalNo = studentInfo.decoded?.contact?.personal.toString() ?? "";
-        String? _parentsNo = studentInfo.decoded?.contact?.guardian.toString() ?? "";
+        String? _personalNo =
+            studentInfo.decoded?.contact?.personal.toString() ?? "";
+        String? _parentsNo =
+            studentInfo.decoded?.contact?.guardian.toString() ?? "";
         String? _gender = studentInfo.decoded?.gender ?? "";
         String? _roomNo = studentInfo.decoded?.roomNo ?? "";
 

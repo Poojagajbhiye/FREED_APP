@@ -170,7 +170,7 @@ class _SignUpForm extends State<SignUpForm> {
                         maxLines: 1,
                         style: TextStyle(fontSize: 16.sp),
                         decoration: InputDecoration(
-                            hintText: "Registration No",
+                            hintText: "University Roll No.",
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 15.r, horizontal: 15.r),

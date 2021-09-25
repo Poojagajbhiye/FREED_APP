@@ -319,6 +319,7 @@ class _ProfileForm extends State<ProfileForm> {
                       onChanged: (value) {
                         personal_phoneNo = value;
                       },
+                      maxLength: 10,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "*required";
@@ -372,9 +373,12 @@ class _ProfileForm extends State<ProfileForm> {
                           return "*required";
                         } else if (value.length < 10 || value.length > 10) {
                           return "Enter valid phone number";
+                        } else if (personal_phoneNo == value) {
+                          return "Parent and student contact can't be same";
                         }
                         return null;
                       },
+                      maxLength: 10,
                       decoration: InputDecoration(
                         hintText: "1234567890",
                         isDense: true,
@@ -683,7 +687,6 @@ class _ProfileForm extends State<ProfileForm> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (profileKey.currentState!.validate()) {
-                        
                         //hide on screen keyboard
                         FocusScope.of(context).unfocus();
 
@@ -822,7 +825,7 @@ class _ProfileForm extends State<ProfileForm> {
     String _parentsNo = await TempStorage.getParentsNo();
 
     String _genderChar = await TempStorage.getGender();
-    String _gender = _genderChar.contains("M") ? "Male" : "Female";
+    String _gender = _genderChar.isEmpty ? "default" : _genderChar.contains("M") ? "Male" : "Female";
     String _roomno = await TempStorage.getRoomNo();
 
     setState(() {
