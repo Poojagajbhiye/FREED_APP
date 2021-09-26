@@ -245,7 +245,7 @@ class _ViewRequest extends State<ViewRequest> {
             child: _wardenApprovalBody(),
           ),
         ),
-        isActive: isAcceptedStatus,
+        isActive: isAcceptedStatus || isDeclinedStatus,
         state: _currentState()));
     if (sent_for_approval) {
       step.insert(
