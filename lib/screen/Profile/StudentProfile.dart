@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart' hide Colors;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:freed/screen/SignIn/SignIn.dart';
@@ -40,6 +41,7 @@ class _StudentProfile extends State<StudentProfile> {
                           onPressed: () {
                             TempStorage.removePreferences();
                             SocketServer.socketConnectionClose();
+                            FirebaseMessaging.instance.deleteToken();
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -825,7 +827,11 @@ class _ProfileForm extends State<ProfileForm> {
     String _parentsNo = await TempStorage.getParentsNo();
 
     String _genderChar = await TempStorage.getGender();
-    String _gender = _genderChar.isEmpty ? "default" : _genderChar.contains("M") ? "Male" : "Female";
+    String _gender = _genderChar.isEmpty
+        ? "default"
+        : _genderChar.contains("M")
+            ? "Male"
+            : "Female";
     String _roomno = await TempStorage.getRoomNo();
 
     setState(() {
