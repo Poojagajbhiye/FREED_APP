@@ -8,9 +8,9 @@ FREED is an app which is helping to maintain student leave records in our univer
 If you notice issues, have questions or want to suggest enhancements, please raise an issue in this repo.
 
 ## ScreenShot
-<p><img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_1.png" width = "360" height = "600" />
-<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_4.png" width = "360" height = "600" />
-<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_7.png" width = "360" height = "600" />
-<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_5.png" width = "360" height = "600" />
-<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_6.png" width = "360" height = "600" />
-<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/main/Screenshot/Mockup_8.png" width = "360" height = "600" /></p>
+<p><img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/splash_screen.png" width = "360" height = "630" />
+<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/splash_screen1.png" width = "360" height = "630" />
+<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/signin.png" width = "360" height = "630" />
+<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/signup_screen.png" width = "360" height = "630" />
+<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/dashboard.png" width = "360" height = "630" />
+<img src = "https://github.com/Developers-Community-OPJU/FREED_APP/blob/alpha/Screenshot/view_request1.png" width = "360" height = "630" /></p>
